@@ -1,0 +1,336 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Authenticated user account profile and role assignment.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 254 },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "role": { "type": "string", "enum": ["ADMIN", "SUPER_ADMIN", "HR", "HR_MANAGER", "EMPLOYEE", "Admin", "HR Manager", "Employee"] },
+        "employeeId": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobTitle": { "type": "string", "maxLength": 120 },
+        "department": { "type": "string", "maxLength": 80 },
+        "mustChangePassword": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["Pending Activation", "Active", "Terminated", "On Leave"] },
+        "avatar": { "type": "string", "maxLength": 8192 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["uid", "email", "displayName", "role"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Workforce directory record for an onboarded organization member.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "uid": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "email": { "type": "string", "format": "email", "maxLength": 254 },
+        "role": { "type": "string", "maxLength": 40 },
+        "jobTitle": { "type": "string", "maxLength": 120 },
+        "department": { "type": "string", "maxLength": 80 },
+        "employmentType": { "type": "string", "maxLength": 40 },
+        "status": { "type": "string", "enum": ["Pending Activation", "Active", "Terminated", "On Leave"] },
+        "hireDate": { "type": "string", "maxLength": 32 },
+        "probationEndDate": { "type": "string", "maxLength": 32 },
+        "annualSalary": { "type": "number" },
+        "salary": { "type": "number" },
+        "currency": { "type": "string", "maxLength": 8 },
+        "deviceUserId": { "type": "string", "maxLength": 32 },
+        "assignedShiftId": { "type": "string", "maxLength": 64 },
+        "branch": { "type": "string", "maxLength": 120 },
+        "avatar": { "type": "string", "maxLength": 8192 },
+        "mustChangePassword": { "type": "boolean" },
+        "activatedAt": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "name", "email", "status"]
+    },
+    "CompanySettings": {
+      "title": "CompanySettings",
+      "description": "Organization metadata and initialization profile.",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "legalEntity": { "type": "string", "maxLength": 200 },
+        "address": { "type": "string", "maxLength": 300 },
+        "ein": { "type": "string", "maxLength": 40 },
+        "currency": { "type": "string", "maxLength": 8 },
+        "isInitialized": { "type": "boolean" },
+        "setupCompletedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["companyName", "isInitialized"]
+    },
+    "HcmConfig": {
+      "title": "HcmConfig",
+      "description": "Master 10-Tab HCM Setup configuration (devices, deviceUsers, attendance rules, late, overtime, shifts, off/half-day, holidays, leave policy, salary setup).",
+      "type": "object",
+      "properties": {
+        "version": { "type": "number" },
+        "effectiveFrom": { "type": "string", "maxLength": 32 },
+        "updatedAt": { "type": "string", "maxLength": 64 },
+        "updatedBy": { "type": "string", "maxLength": 120 },
+        "devices": { "type": "array" },
+        "deviceUsers": { "type": "array" },
+        "attendanceRule": { "type": "object" },
+        "latePolicy": { "type": "object" },
+        "overtimePolicy": { "type": "object" },
+        "shifts": { "type": "array" },
+        "offHalfDayRule": { "type": "object" },
+        "holidays": { "type": "array" },
+        "leavePolicy": { "type": "object" },
+        "salarySetup": { "type": "object" }
+      },
+      "required": ["version", "attendanceRule", "latePolicy", "overtimePolicy", "shifts", "holidays", "leavePolicy", "salarySetup"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Immutable compliance audit record for HCM setup changes, device syncs, leave adjustments, and payroll locks.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "actor": { "type": "string", "maxLength": 120 },
+        "role": { "type": "string", "maxLength": 40 },
+        "module": { "type": "string", "maxLength": 80 },
+        "action": { "type": "string", "maxLength": 200 },
+        "target": { "type": "string", "maxLength": 250 },
+        "oldValue": { "type": "string", "maxLength": 500 },
+        "newValue": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["success", "info", "warning", "neutral"] },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "actor", "module", "action", "timestamp"]
+    },
+    "AttendanceRecord": {
+      "title": "AttendanceRecord",
+      "description": "Daily clock-in and clock-out attendance log evaluated against active shift and late/OT policies.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uid": { "type": "string", "maxLength": 128 },
+        "employeeId": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "employeeName": { "type": "string", "maxLength": 120 },
+        "date": { "type": "string", "minLength": 8, "maxLength": 32 },
+        "clockIn": { "type": "string", "maxLength": 32 },
+        "clockOut": { "type": "string", "maxLength": 32 },
+        "status": {
+          "type": "string",
+          "enum": ["Present", "Late", "Half-Day", "Absent", "On Leave", "WFH", "On-Duty", "Holiday Work", "Off-Day Work", "Missing Punch"]
+        },
+        "isLate": { "type": "boolean" },
+        "lateMinutes": { "type": "number" },
+        "isHalfDay": { "type": "boolean" },
+        "overtimeHours": { "type": "number" },
+        "overtimeMultiplier": { "type": "number" },
+        "shiftId": { "type": "string", "maxLength": 64 },
+        "shiftName": { "type": "string", "maxLength": 120 },
+        "totalHours": { "type": "string", "maxLength": 32 },
+        "hoursWorked": { "type": "number" },
+        "location": { "type": "string", "maxLength": 120 },
+        "correctedBy": { "type": "string", "maxLength": 120 }
+      },
+      "required": ["id", "employeeId", "date", "status"]
+    },
+    "AttendanceCorrection": {
+      "title": "AttendanceCorrection",
+      "description": "Employee missing-punch correction, WFH, On-Duty, or Overtime claim request for HR/Manager approval.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "uid": { "type": "string", "maxLength": 128 },
+        "employeeId": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "employeeName": { "type": "string", "maxLength": 120 },
+        "department": { "type": "string", "maxLength": 80 },
+        "requestType": { "type": "string", "maxLength": 64 },
+        "date": { "type": "string", "minLength": 8, "maxLength": 32 },
+        "originalTime": { "type": "string", "maxLength": 64 },
+        "requestedTime": { "type": "string", "maxLength": 32 },
+        "requestedClockOut": { "type": "string", "maxLength": 32 },
+        "workMode": { "type": "string", "maxLength": 40 },
+        "reason": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected"] },
+        "appliedAt": { "type": "string", "maxLength": 32 },
+        "reviewedBy": { "type": "string", "maxLength": 120 },
+        "reviewedAt": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["id", "employeeId", "requestType", "date", "reason", "status"]
+    },
+    "LeaveRequest": {
+      "title": "LeaveRequest",
+      "description": "Employee time-off request and approval tracking across all 12 statutory and discretionary leave types.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uid": { "type": "string", "maxLength": 128 },
+        "employeeId": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "employeeName": { "type": "string", "maxLength": 120 },
+        "leaveType": {
+          "type": "string",
+          "enum": ["Annual", "Sick", "Casual", "Unpaid", "Maternity", "Paternity", "Marriage", "Bereavement", "HajjUmrah", "Study", "CompOff", "ShortLeave"]
+        },
+        "startDate": { "type": "string", "maxLength": 32 },
+        "endDate": { "type": "string", "maxLength": 32 },
+        "daysCount": { "type": "number" },
+        "reason": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["Pending", "Approved", "Rejected", "Cancelled"] },
+        "appliedAt": { "type": "string", "maxLength": 32 },
+        "reviewedBy": { "type": "string", "maxLength": 120 },
+        "reviewedAt": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["id", "employeeId", "leaveType", "startDate", "endDate", "daysCount", "status"]
+    },
+    "LeaveBalance": {
+      "title": "LeaveBalance",
+      "description": "Remaining statutory leave balances per employee.",
+      "type": "object",
+      "properties": {
+        "annual": { "type": "number" },
+        "sick": { "type": "number" },
+        "casual": { "type": "number" },
+        "vacation": { "type": "number" },
+        "compOff": { "type": "number" }
+      },
+      "required": ["annual", "sick", "casual"]
+    },
+    "PayrollRun": {
+      "title": "PayrollRun",
+      "description": "Finalized or draft payroll disbursement batch.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "period": { "type": "string", "maxLength": 120 },
+        "payDate": { "type": "string", "maxLength": 32 },
+        "status": { "type": "string", "enum": ["Draft", "Processing", "Finalized"] },
+        "isLocked": { "type": "boolean" },
+        "totalGross": { "type": "number" },
+        "totalNet": { "type": "number" },
+        "totalTaxes": { "type": "number" },
+        "totalDeductions": { "type": "number" },
+        "employeeCount": { "type": "number" },
+        "processedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "period", "status"]
+    },
+    "Complaint": {
+      "title": "Complaint",
+      "description": "Confidential or anonymous workplace grievance case.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "caseNumber": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 64 },
+        "urgency": { "type": "string", "maxLength": 32 },
+        "isAnonymous": { "type": "boolean" },
+        "status": { "type": "string", "maxLength": 40 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "uid": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "title", "category", "status"]
+    },
+    "DocumentRecord": {
+      "title": "DocumentRecord",
+      "description": "Compliance handbook, policy, or employee document metadata.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 64 },
+        "url": { "type": "string", "maxLength": 1000 },
+        "uploadedBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "category"]
+    },
+    "ActivityNotification": {
+      "title": "ActivityNotification",
+      "description": "System audit stream and user notification item.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "uid": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 200 },
+        "message": { "type": "string", "maxLength": 1000 },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "title", "message"]
+    },
+    "Candidate": {
+      "title": "Candidate",
+      "description": "Applicant tracking pipeline candidate record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "email": { "type": "string", "format": "email", "maxLength": 254 },
+        "role": { "type": "string", "maxLength": 120 },
+        "stage": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "name", "email", "stage"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Authenticated user profiles and RBAC role metadata."
+    },
+    "/employees/{employeeId}": {
+      "schema": { "$ref": "#/entities/Employee" },
+      "description": "Enterprise workforce directory records."
+    },
+    "/company_settings/{settingId}": {
+      "schema": { "$ref": "#/entities/CompanySettings" },
+      "description": "Organization legal metadata and first-run setup status."
+    },
+    "/hcm_config/{configId}": {
+      "schema": { "$ref": "#/entities/HcmConfig" },
+      "description": "Master 10-Tab HCM Setup configuration (devices, device users, shifts, policies, holidays, salary rules)."
+    },
+    "/audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Immutable system audit log entries for compliance tracking."
+    },
+    "/attendance/{attendanceId}": {
+      "schema": { "$ref": "#/entities/AttendanceRecord" },
+      "description": "Daily employee clock-in and clock-out attendance logs."
+    },
+    "/attendance_corrections/{correctionId}": {
+      "schema": { "$ref": "#/entities/AttendanceCorrection" },
+      "description": "Employee missing punch corrections, WFH, On-Duty, and Overtime requests."
+    },
+    "/leave_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/LeaveRequest" },
+      "description": "Employee statutory leave applications and review status."
+    },
+    "/leave_balances/{employeeId}": {
+      "schema": { "$ref": "#/entities/LeaveBalance" },
+      "description": "Remaining annual, sick, casual, and comp-off leave quotas per employee."
+    },
+    "/payroll_runs/{runId}": {
+      "schema": { "$ref": "#/entities/PayrollRun" },
+      "description": "Draft and locked payroll execution batches and totals."
+    },
+    "/complaints/{complaintId}": {
+      "schema": { "$ref": "#/entities/Complaint" },
+      "description": "Confidential and anonymous workplace grievance records."
+    },
+    "/documents/{docId}": {
+      "schema": { "$ref": "#/entities/DocumentRecord" },
+      "description": "HR policy handbooks and compliance document metadata."
+    },
+    "/activity_notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/ActivityNotification" },
+      "description": "User-scoped activity feed and audit notifications."
+    },
+    "/candidates/{candidateId}": {
+      "schema": { "$ref": "#/entities/Candidate" },
+      "description": "Recruitment pipeline candidate profiles."
+    }
+  }
+}
