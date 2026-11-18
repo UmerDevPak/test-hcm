@@ -170,7 +170,7 @@ export function Sidebar({ isOpen, onClose, pendingHref, onNavigate }) {
 
       <aside
         className={cn(
-          "fixed top-0 bottom-0 left-0 z-50 flex w-64 flex-col border-r border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md transition-transform duration-200 lg:static lg:z-40 lg:translate-x-0",
+          "fixed top-0 bottom-0 left-0 z-50 flex h-full w-64 shrink-0 flex-col border-r border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md transition-transform duration-200 lg:relative lg:z-40 lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -263,7 +263,7 @@ export function Sidebar({ isOpen, onClose, pendingHref, onNavigate }) {
         </div>
 
         {/* User Card */}
-        <div className="p-3 border-t border-zinc-200 dark:border-zinc-800">
+        <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 shrink-0">
           <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800/80">
             <div className="flex items-center gap-2.5">
               <Link

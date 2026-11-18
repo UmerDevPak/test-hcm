@@ -61,43 +61,64 @@ export default function LeavePage() {
     loadData();
 
     const handleConfigChange = () => {
-      loadData(true);
+      loadData(false);
+    };
+    const handleLeavesChange = () => {
+      loadData(false);
     };
     window.addEventListener("hcm_config_updated", handleConfigChange);
-    return () => window.removeEventListener("hcm_config_updated", handleConfigChange);
+    window.addEventListener("hcm_leaves_updated", handleLeavesChange);
+    return () => {
+      window.removeEventListener("hcm_config_updated", handleConfigChange);
+      window.removeEventListener("hcm_leaves_updated", handleLeavesChange);
+    };
   }, [employeeId, canReview]);
 
   const handleReview = async (id, newStatus) => {
     if (!canReview) return;
-    setLoadingAction(id);
+    // 1. Optimistic instant UI update (0ms)
+    setRequests((prev) =>
+      prev.map((r) =>
+        r.id === id
+          ? {
+              ...r,
+              status: newStatus,
+              reviewedBy: user?.displayName || "Reviewer",
+              reviewedAt: new Date().toISOString().split("T")[0],
+            }
+          : r
+      )
+    );
+
+    if (newStatus === LEAVE_STATUS.APPROVED) {
+      confetti({ particleCount: 80, spread: 60, origin: { y: 0.8 } });
+      notifySuccess("Leave Approved", "Employee balance updated automatically.");
+    } else {
+      notifySuccess("Leave Request Rejected", "Status updated.");
+    }
+
     try {
       await leaveService.updateRequestStatus(id, newStatus, user?.displayName || "Reviewer");
       reportService.invalidateCache();
-      if (newStatus === LEAVE_STATUS.APPROVED) {
-        confetti({ particleCount: 80, spread: 60, origin: { y: 0.8 } });
-        notifySuccess("Leave Approved", "Employee balance updated automatically.");
-      } else {
-        notifySuccess("Leave Request Rejected", "Status updated.");
-      }
-      loadData(true);
+      loadData(false);
     } catch (err) {
       notifyError("Failed to update leave", err.message);
-    } finally {
-      setLoadingAction(null);
+      loadData(true);
     }
   };
 
   const handleDeleteLeave = async (id, empName) => {
-    setLoadingAction(id);
+    // 1. Optimistic instant UI update (0ms)
+    setRequests((prev) => prev.filter((r) => r.id !== id));
+    notifySuccess("Leave Record Removed", `Leave request for ${empName} was removed.`);
+
     try {
       await leaveService.deleteRequest(id);
       reportService.invalidateCache();
-      notifySuccess("Leave Record Removed", `Leave request for ${empName} was removed.`);
-      loadData(true);
+      loadData(false);
     } catch (err) {
       notifyError("Failed to remove leave", err.message);
-    } finally {
-      setLoadingAction(null);
+      loadData(true);
     }
   };
 

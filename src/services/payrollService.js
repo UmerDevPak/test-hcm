@@ -292,37 +292,35 @@ export const payrollService = {
     };
     runs[idx] = updatedRun;
     saveRuns(runs);
-    this.invalidateCache();
+    memoryPayrollCache = runs;
 
+    // Detached non-blocking background Firestore sync
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, setDoc } = await import("firebase/firestore");
-        await setDoc(doc(db, "payroll_runs", id), {
-          id: updatedRun.id,
-          period: updatedRun.period,
-          payDate: updatedRun.payDate,
-          status: "Finalized",
-          isLocked: true,
-          totalGross: updatedRun.totalGross,
-          totalNet: updatedRun.totalNet,
-          totalTaxes: updatedRun.totalTaxes,
-          totalDeductions: updatedRun.totalDeductions,
-          employeeCount: updatedRun.employeeCount,
-          processedAt: updatedRun.processedAt,
-        }, { merge: true });
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.UPDATE, `payroll_runs/${id}`);
-        }
-      }
+      import("firebase/firestore")
+        .then(({ doc, setDoc }) => {
+          setDoc(doc(db, "payroll_runs", id), {
+            id: updatedRun.id,
+            period: updatedRun.period,
+            payDate: updatedRun.payDate,
+            status: "Finalized",
+            isLocked: true,
+            totalGross: updatedRun.totalGross,
+            totalNet: updatedRun.totalNet,
+            totalTaxes: updatedRun.totalTaxes,
+            totalDeductions: updatedRun.totalDeductions,
+            employeeCount: updatedRun.employeeCount,
+            processedAt: updatedRun.processedAt,
+          }, { merge: true }).catch(() => {});
+        })
+        .catch(() => {});
     }
 
     const lockDate = updatedRun.periodEnd || updatedRun.payDate;
     if (lockDate) {
-      const config = await hcmConfigService.getConfig();
+      const config = hcmConfigService.peekCachedConfig() || {};
       const attRule = config.attendanceRule || {};
       if (!attRule.attendanceLockedUpTo || lockDate > attRule.attendanceLockedUpTo) {
-        await hcmConfigService.updateSection(
+        hcmConfigService.updateSection(
           "attendanceRule",
           { ...attRule, attendanceLockedUpTo: lockDate },
           {
@@ -332,11 +330,11 @@ export const payrollService = {
             action: "Locked Attendance via Payroll Finalization",
             target: `${id} (Locked up to ${lockDate})`,
           }
-        );
+        ).catch(() => {});
       }
     }
 
-    await auditService.logAudit({
+    auditService.logAudit({
       actor,
       role: "ADMIN",
       module: "Payroll Engine",
@@ -345,7 +343,11 @@ export const payrollService = {
       oldValue: "Draft",
       newValue: "Finalized (Locked)",
       status: "success",
-    });
+    }).catch(() => {});
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_payroll_updated"));
+    }
 
     return updatedRun;
   },

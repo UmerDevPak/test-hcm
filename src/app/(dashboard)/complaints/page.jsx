@@ -156,7 +156,7 @@ export default function ComplaintsPage() {
     return { ...u, count, percent };
   });
 
-  // Actions
+  // Actions - instant optimistic UI feedback
   const handleCreateSubmit = (e) => {
     e.preventDefault();
     if (!createFormData.title.trim() || !createFormData.description.trim()) {
@@ -175,8 +175,10 @@ export default function ComplaintsPage() {
         },
       });
 
-      notifySuccess("Grievance Logged", `Case ${newCase.caseNumber} registered in secure intake.`);
+      // 1. Instant optimistic update
       setIsCreateModalOpen(false);
+      setComplaints((prev) => [newCase, ...prev]);
+      notifySuccess("Grievance Logged", `Case ${newCase.caseNumber} registered in secure intake.`);
       setCreateFormData({
         title: "",
         category: "MANAGER_MISCONDUCT",
@@ -192,15 +194,29 @@ export default function ComplaintsPage() {
   };
 
   const handleStartInvestigation = (complaint) => {
+    // 1. Instant optimistic update
+    setComplaints((prev) =>
+      prev.map((c) =>
+        c.id === complaint.id
+          ? {
+              ...c,
+              status: "INVESTIGATING",
+              assignedInvestigator: user?.displayName || "Aaliyah Patel (HR)",
+            }
+          : c
+      )
+    );
+    notifySuccess("Investigation Commenced", `You are assigned as lead investigator for ${complaint.caseNumber}.`);
+
     try {
       complaintService.startInvestigation(complaint.id, {
         investigatorName: user?.displayName || "Aaliyah Patel (HR)",
         hrNotes: "HR formally acknowledged case and began preliminary fact-finding.",
       });
-      notifySuccess("Investigation Commenced", `You are assigned as lead investigator for ${complaint.caseNumber}.`);
       loadComplaints();
     } catch (err) {
       notifyError("Action Failed", err.message);
+      loadComplaints();
     }
   };
 
@@ -211,37 +227,68 @@ export default function ComplaintsPage() {
       return;
     }
 
+    const cId = selectedComplaint.id;
+    // 1. Instant optimistic update
+    setIsEscalateModalOpen(false);
+    setComplaints((prev) =>
+      prev.map((c) =>
+        c.id === cId
+          ? {
+              ...c,
+              status: "ESCALATED_TO_ADMIN",
+            }
+          : c
+      )
+    );
+    notifySuccess("Case Escalated", `Case ${selectedComplaint.caseNumber} escalated to Executive Admin.`);
+    setEscalateData({ reason: "", requestedRemedy: "" });
+
     try {
-      complaintService.escalateToAdmin(selectedComplaint.id, {
+      complaintService.escalateToAdmin(cId, {
         reason: escalateData.reason,
         requestedRemedy: escalateData.requestedRemedy || "Executive review and authorization.",
         escalatedBy: user?.displayName || "Aaliyah Patel (HR)",
       });
-
-      notifySuccess("Case Escalated", `Case ${selectedComplaint.caseNumber} escalated to Executive Admin.`);
-      setIsEscalateModalOpen(false);
-      setEscalateData({ reason: "", requestedRemedy: "" });
       loadComplaints();
     } catch (err) {
       notifyError("Action Failed", err.message);
+      loadComplaints();
     }
   };
 
   const handleAdminApproveSubmit = (e) => {
     e.preventDefault();
+    const cId = selectedComplaint.id;
+    // 1. Instant optimistic update
+    setIsAdminApproveModalOpen(false);
+    setComplaints((prev) =>
+      prev.map((c) =>
+        c.id === cId
+          ? {
+              ...c,
+              adminReview: {
+                reviewedAt: new Date().toISOString(),
+                reviewedBy: user?.displayName || "Sarah Connor (Admin)",
+                decision: adminReviewData.decision,
+                notes: adminReviewData.adminNotes,
+              },
+            }
+          : c
+      )
+    );
+    notifySuccess("Executive Sign-Off Granted", `Executive sign-off recorded for ${selectedComplaint.caseNumber}.`);
+    setAdminReviewData({ decision: "APPROVED", adminNotes: "" });
+
     try {
-      complaintService.adminApprove(selectedComplaint.id, {
+      complaintService.adminApprove(cId, {
         decision: adminReviewData.decision,
         adminNotes: adminReviewData.adminNotes || "Executive approval granted. HR authorized to execute resolution.",
         approvedBy: user?.displayName || "Sarah Connor (Admin)",
       });
-
-      notifySuccess("Executive Sign-Off Granted", `Executive sign-off recorded for ${selectedComplaint.caseNumber}.`);
-      setIsAdminApproveModalOpen(false);
-      setAdminReviewData({ decision: "APPROVED", adminNotes: "" });
       loadComplaints();
     } catch (err) {
       notifyError("Action Failed", err.message);
+      loadComplaints();
     }
   };
 
@@ -252,18 +299,36 @@ export default function ComplaintsPage() {
       return;
     }
 
+    const cId = selectedComplaint.id;
+    // 1. Instant optimistic update
+    setIsResolveModalOpen(false);
+    setComplaints((prev) =>
+      prev.map((c) =>
+        c.id === cId
+          ? {
+              ...c,
+              status: "RESOLVED",
+              resolution: {
+                resolvedAt: new Date().toISOString(),
+                resolvedBy: user?.displayName || "Aaliyah Patel (HR)",
+                summary: resolveData.summary,
+              },
+            }
+          : c
+      )
+    );
+    notifySuccess("Grievance Resolved", `Case ${selectedComplaint.caseNumber} closed with final resolution.`);
+    setResolveData({ summary: "" });
+
     try {
-      complaintService.resolveComplaint(selectedComplaint.id, {
+      complaintService.resolveComplaint(cId, {
         summary: resolveData.summary,
         resolvedBy: user?.displayName || "Aaliyah Patel (HR)",
       });
-
-      notifySuccess("Grievance Resolved", `Case ${selectedComplaint.caseNumber} closed with final resolution.`);
-      setIsResolveModalOpen(false);
-      setResolveData({ summary: "" });
       loadComplaints();
     } catch (err) {
       notifyError("Action Failed", err.message);
+      loadComplaints();
     }
   };
 
@@ -593,7 +658,7 @@ export default function ComplaintsPage() {
       </motion.div>
 
       {/* Complaints List Cards */}
-      <div className="space-y-4">
+      <div className="space-y-4 min-h-[380px]">
         {filteredComplaints.length === 0 ? (
           <EmptyState
             title="Oops! There is nothing to see here"

@@ -114,33 +114,39 @@ export default function PayrollPage() {
   };
 
   const handleFinalizeRun = async (run) => {
-    setBusyId(run.id);
+    // 1. Instant optimistic UI feedback
+    setRuns((prev) =>
+      prev.map((r) =>
+        r.id === run.id ? { ...r, status: "Finalized", isLocked: true } : r
+      )
+    );
+    notifySuccess(
+      "Payroll Finalized & Locked",
+      `Batch ${run.id} is permanently locked and attendance up to ${run.periodEnd || run.payDate} is frozen.`
+    );
+
     try {
       await payrollService.finalizePayrollRun(run.id, actorName);
       reportService.invalidateCache();
-      await fetchPayroll(true);
-      notifySuccess(
-        "Payroll Finalized & Locked",
-        `Batch ${run.id} is permanently locked and attendance up to ${run.periodEnd || run.payDate} is frozen.`
-      );
+      fetchPayroll(false);
     } catch (err) {
       notifyError("Finalization Failed", err.message);
-    } finally {
-      setBusyId(null);
+      fetchPayroll(true);
     }
   };
 
   const handleDeleteDraft = async (run) => {
-    setBusyId(run.id);
+    // 1. Instant optimistic UI feedback
+    setRuns((prev) => prev.filter((r) => r.id !== run.id));
+    notifyInfo("Draft Deleted", `Payroll draft ${run.id} removed.`);
+
     try {
       await payrollService.deletePayrollRun(run.id, actorName);
       reportService.invalidateCache();
-      await fetchPayroll(true);
-      notifyInfo("Draft Deleted", `Payroll draft ${run.id} removed.`);
+      fetchPayroll(false);
     } catch (err) {
       notifyError("Delete Failed", err.message);
-    } finally {
-      setBusyId(null);
+      fetchPayroll(true);
     }
   };
 

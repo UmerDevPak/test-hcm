@@ -81,11 +81,16 @@ export default function AttendancePage() {
     const handleConfigChange = () => {
       refreshData(true);
     };
+    const handleAttendanceChange = () => {
+      refreshData(false);
+    };
     window.addEventListener("hcm_config_updated", handleConfigChange);
+    window.addEventListener("hcm_attendance_updated", handleAttendanceChange);
 
     return () => {
       clearInterval(interval);
       window.removeEventListener("hcm_config_updated", handleConfigChange);
+      window.removeEventListener("hcm_attendance_updated", handleAttendanceChange);
     };
   }, [employeeId, canManage]);
 
@@ -99,9 +104,13 @@ export default function AttendancePage() {
         workMode: locationType,
       });
       setTodayPunch(punch);
+      setRecords((prev) => [
+        punch,
+        ...prev.filter((r) => !(r.employeeId === punch.employeeId && r.date === punch.date)),
+      ]);
       reportService.invalidateCache();
       notifySuccess("Clock In Registered", `Recorded ${locationType} punch at ${punch.clockIn}`);
-      refreshData(true);
+      refreshData(false);
     } catch (err) {
       notifyError("Clock In Rejected", err.message);
     } finally {
@@ -116,9 +125,18 @@ export default function AttendancePage() {
         employeeId: user?.employeeId || "EMP-001",
       });
       setTodayPunch(punch);
+      if (punch) {
+        setRecords((prev) =>
+          prev.map((r) =>
+            r.id === punch.id || (r.employeeId === punch.employeeId && r.date === punch.date)
+              ? punch
+              : r
+          )
+        );
+        notifySuccess("Clock Out Registered", `Recorded check-out at ${punch.clockOut}`);
+      }
       reportService.invalidateCache();
-      notifySuccess("Clock Out Registered", `Recorded check-out at ${punch.clockOut}`);
-      refreshData(true);
+      refreshData(false);
     } catch (err) {
       notifyError("Clock Out Error", err.message);
     } finally {

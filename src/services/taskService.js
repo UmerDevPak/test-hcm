@@ -165,64 +165,78 @@ function saveStoredTasks(tasks) {
   }
 }
 
-async function syncTaskToFirestore(taskId, taskData) {
+function syncTaskToFirestore(taskId, taskData) {
   if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-    try {
-      const { doc, setDoc } = await import("firebase/firestore");
-      await setDoc(doc(db, "tasks", taskId), taskData, { merge: true });
-    } catch (err) {
-      console.warn("[taskService] Firestore write notice:", err.message);
-    }
+    import("firebase/firestore")
+      .then(({ doc, setDoc }) => {
+        setDoc(doc(db, "tasks", taskId), taskData, { merge: true }).catch((err) => {
+          console.warn("[taskService] Firestore write notice:", err.message);
+        });
+      })
+      .catch(() => {});
   }
 }
 
-async function deleteTaskFromFirestore(taskId) {
+function deleteTaskFromFirestore(taskId) {
   if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-    try {
-      const { doc, deleteDoc } = await import("firebase/firestore");
-      await deleteDoc(doc(db, "tasks", taskId));
-    } catch (err) {
-      console.warn("[taskService] Firestore delete notice:", err.message);
-    }
+    import("firebase/firestore")
+      .then(({ doc, deleteDoc }) => {
+        deleteDoc(doc(db, "tasks", taskId)).catch((err) => {
+          console.warn("[taskService] Firestore delete notice:", err.message);
+        });
+      })
+      .catch(() => {});
   }
 }
 
 export const taskService = {
   /**
-   * Get all tasks filtered by role and user
+   * Get all tasks filtered by role and user (instant local with background Firestore sync)
    */
   async getTasks({ role = "EMPLOYEE", userEmail = "", employeeId = "" } = {}) {
     const normRole = (role || "").toUpperCase();
     let tasks = getStoredTasks();
 
+    // Trigger non-blocking background fetch from Firestore without holding up the UI
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { collection, getDocs } = await import("firebase/firestore");
-        const snap = await Promise.race([
-          getDocs(collection(db, "tasks")),
-          new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 1200)),
-        ]);
-        if (!snap.empty) {
-          const remote = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-          remote.forEach((rem) => {
-            const idx = tasks.findIndex((t) => t.id === rem.id);
-            if (idx !== -1) tasks[idx] = rem;
-            else tasks.unshift(rem);
-          });
-          saveStoredTasks(tasks);
-        }
-      } catch (err) {
-        console.warn("[taskService] Firestore fetch notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(async ({ collection, getDocs }) => {
+          try {
+            const snap = await Promise.race([
+              getDocs(collection(db, "tasks")),
+              new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 1500)),
+            ]);
+            if (!snap.empty) {
+              const remote = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+              const current = getStoredTasks();
+              let changed = false;
+              remote.forEach((rem) => {
+                const idx = current.findIndex((t) => t.id === rem.id);
+                if (idx !== -1) {
+                  if (JSON.stringify(current[idx]) !== JSON.stringify(rem)) {
+                    current[idx] = rem;
+                    changed = true;
+                  }
+                } else {
+                  current.unshift(rem);
+                  changed = true;
+                }
+              });
+              if (changed) {
+                saveStoredTasks(current);
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("hcm_tasks_updated"));
+                }
+              }
+            }
+          } catch (err) {
+            console.warn("[taskService] Firestore fetch notice:", err.message);
+          }
+        })
+        .catch(() => {});
     }
 
-    if (normRole === "ADMIN") {
-      // Admin sees all tasks across all departments + executive OKRs
-      return tasks;
-    }
-
-    if (normRole === "HR") {
-      // HR sees all tasks for operational quality review + tasks assigned to HR
+    if (normRole === "ADMIN" || normRole === "HR") {
       return tasks;
     }
 
@@ -235,7 +249,7 @@ export const taskService = {
   },
 
   /**
-   * Employee submits deliverable for a task
+   * Employee submits deliverable for a task (Instant 0ms response)
    */
   async submitDeliverable(taskId, { notes, link, fileName, submittedBy }) {
     const tasks = getStoredTasks();
@@ -256,12 +270,15 @@ export const taskService = {
 
     tasks[idx] = updated;
     saveStoredTasks(tasks);
-    await syncTaskToFirestore(taskId, updated);
+    syncTaskToFirestore(taskId, updated);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_tasks_updated"));
+    }
     return updated;
   },
 
   /**
-   * HR reviews and approves or requests revision on a submitted task
+   * HR reviews and approves or requests revision on a submitted task (Instant 0ms response)
    */
   async reviewTask(taskId, { decision, feedback, score = 5, reviewerName }) {
     const tasks = getStoredTasks();
@@ -285,12 +302,15 @@ export const taskService = {
 
     tasks[idx] = updated;
     saveStoredTasks(tasks);
-    await syncTaskToFirestore(taskId, updated);
+    syncTaskToFirestore(taskId, updated);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_tasks_updated"));
+    }
     return updated;
   },
 
   /**
-   * Create a new task (by HR or Admin)
+   * Create a new task (by HR or Admin) - Instant 0ms response
    */
   async createTask(data) {
     const tasks = getStoredTasks();
@@ -319,7 +339,10 @@ export const taskService = {
 
     tasks.unshift(newTask);
     saveStoredTasks(tasks);
-    await syncTaskToFirestore(newId, newTask);
+    syncTaskToFirestore(newId, newTask);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_tasks_updated"));
+    }
     return newTask;
   },
 
@@ -333,7 +356,10 @@ export const taskService = {
 
     tasks[idx].status = newStatus;
     saveStoredTasks(tasks);
-    await syncTaskToFirestore(taskId, tasks[idx]);
+    syncTaskToFirestore(taskId, tasks[idx]);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_tasks_updated"));
+    }
     return tasks[idx];
   },
 
@@ -344,7 +370,10 @@ export const taskService = {
     const tasks = getStoredTasks();
     const filtered = tasks.filter((t) => t.id !== taskId);
     saveStoredTasks(filtered);
-    await deleteTaskFromFirestore(taskId);
+    deleteTaskFromFirestore(taskId);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_tasks_updated"));
+    }
     return true;
   },
 

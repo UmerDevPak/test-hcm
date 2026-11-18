@@ -172,7 +172,8 @@ export default function EmployeeDashboardPage() {
         notifySuccess("Web Check-Out Confirmed", `Registered check-out at ${punch.clockOut}`);
       }
       reportService.invalidateCache(`emp_${empId}`);
-      loadData(true);
+      // Silent non-blocking refresh
+      loadData(false);
     } catch (err) {
       notifyError("Attendance Action Failed", err.message);
     } finally {

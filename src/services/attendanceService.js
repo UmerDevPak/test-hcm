@@ -145,11 +145,10 @@ export const attendanceService = {
     const nowMs = now.getTime();
     const nowStr = formatTime(now);
 
-    const [config, employee, records] = await Promise.all([
-      hcmConfigService.getConfig(),
-      employeeService.getEmployeeById(employeeId),
-      this.getAllRecords({}, false),
-    ]);
+    // Fast synchronous lookups from cache (0ms)
+    const config = hcmConfigService.peekCachedConfig() || DEFAULT_HCM_CONFIG;
+    const employee = employeeService.peekEmployeeById(employeeId) || { id: employeeId, name: employeeName };
+    const records = memoryAllRecordsCache || getLocalAttendance();
 
     // Check attendance lock
     if (config?.attendanceRule?.attendanceLockedUpTo && today <= config.attendanceRule.attendanceLockedUpTo) {
@@ -209,18 +208,22 @@ export const attendanceService = {
 
     saveLocalAttendance(localList);
     setLastPunchTs(employeeId, nowMs);
-    this.invalidateCache();
+    memoryAllRecordsCache = localList;
+    lastRecordsFetchTime = Date.now();
 
+    // Detached non-blocking background sync to Firestore
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, setDoc } = await import("firebase/firestore");
-        await setDoc(doc(db, "attendance", `${today}_${employeeId}`), recordToSave, { merge: true });
-      } catch (e) {
-        if (isPermissionError(e)) {
-          handleFirestoreError(e, OperationType.WRITE, `attendance/${today}_${employeeId}`);
-        }
-        console.warn("[attendanceService] Firestore clock-in notice:", e.message);
-      }
+      import("firebase/firestore")
+        .then(({ doc, setDoc }) => {
+          setDoc(doc(db, "attendance", `${today}_${employeeId}`), recordToSave, { merge: true }).catch((e) => {
+            console.warn("[attendanceService] Firestore clock-in notice:", e.message);
+          });
+        })
+        .catch(() => {});
+    }
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_attendance_updated"));
     }
 
     return recordToSave;
@@ -232,10 +235,9 @@ export const attendanceService = {
     const nowMs = now.getTime();
     const nowStr = formatTime(now);
 
-    const [config, employee] = await Promise.all([
-      hcmConfigService.getConfig(),
-      employeeService.getEmployeeById(employeeId),
-    ]);
+    // Fast synchronous lookups from cache (0ms)
+    const config = hcmConfigService.peekCachedConfig() || DEFAULT_HCM_CONFIG;
+    const employee = employeeService.peekEmployeeById(employeeId);
 
     const gapMinutes = Number(config?.attendanceRule?.duplicatePunchGapMinutes || 5);
     const prevTs = getLastPunchTs(employeeId);
@@ -274,18 +276,22 @@ export const attendanceService = {
     localList[index] = record;
     saveLocalAttendance(localList);
     setLastPunchTs(employeeId, nowMs);
-    this.invalidateCache();
+    memoryAllRecordsCache = localList;
+    lastRecordsFetchTime = Date.now();
 
+    // Detached non-blocking background sync to Firestore
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, setDoc } = await import("firebase/firestore");
-        await setDoc(doc(db, "attendance", `${record.date || today}_${employeeId}`), record, { merge: true });
-      } catch (e) {
-        if (isPermissionError(e)) {
-          handleFirestoreError(e, OperationType.UPDATE, `attendance/${record.date || today}_${employeeId}`);
-        }
-        console.warn("[attendanceService] Firestore clock-out save notice:", e.message);
-      }
+      import("firebase/firestore")
+        .then(({ doc, setDoc }) => {
+          setDoc(doc(db, "attendance", `${record.date || today}_${employeeId}`), record, { merge: true }).catch((e) => {
+            console.warn("[attendanceService] Firestore clock-out save notice:", e.message);
+          });
+        })
+        .catch(() => {});
+    }
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_attendance_updated"));
     }
 
     return record;

@@ -99,36 +99,62 @@ export default function AdminDashboardPage() {
   }, [isAdmin]);
 
   const handleApprovePromotion = async (rec) => {
-    setApprovingId(rec.id);
+    // 1. Instant optimistic UI feedback (0ms)
+    setPromotionRecs((prev) => prev.filter((r) => r.id !== rec.id));
+    setRankingStats((prev) => {
+      if (!prev) return prev;
+      const oldRank = rec.currentRank || "Rank B";
+      const newRank = rec.recommendedRank;
+      const newCounts = { ...prev.counts };
+      if (newCounts[oldRank] > 0) newCounts[oldRank]--;
+      newCounts[newRank] = (newCounts[newRank] || 0) + 1;
+      return {
+        ...prev,
+        counts: newCounts,
+        pendingRecommendationsCount: Math.max(0, (prev.pendingRecommendationsCount || 1) - 1),
+      };
+    });
+    notifySuccess(
+      "Promotion Approved & Enacted",
+      `${rec.employeeName} has been promoted to ${rec.recommendedRank}. A celebratory banner is now active in their portal.`
+    );
+
     try {
       await performanceService.approvePromotionRecommendation(rec.id, {
         adminName: `${user?.displayName || "Sarah Connor"} (Super Admin)`,
         adminNotes: `Executive approval by ${user?.displayName || "Super Admin"}. Promoted to ${rec.recommendedRank}.`,
       });
-      notifySuccess(
-        "Promotion Approved & Enacted",
-        `${rec.employeeName} has been promoted to ${rec.recommendedRank}. A celebratory banner is now active in their portal.`
-      );
-      loadData(true);
+      loadData(false);
     } catch (err) {
       notifyError("Approval Failed", err.message);
-    } finally {
-      setApprovingId(null);
+      loadData(true);
     }
   };
 
   const handleRejectPromotion = async (rec) => {
     const reason = prompt("Enter executive feedback / reason for rejection or return:", "Does not meet current tier benchmark.");
     if (reason === null) return;
+
+    // 1. Instant optimistic UI feedback (0ms)
+    setPromotionRecs((prev) => prev.filter((r) => r.id !== rec.id));
+    setRankingStats((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        pendingRecommendationsCount: Math.max(0, (prev.pendingRecommendationsCount || 1) - 1),
+      };
+    });
+    notifyInfo("Promotion Declined", `Recommendation for ${rec.employeeName} has been returned.`);
+
     try {
       await performanceService.rejectPromotionRecommendation(rec.id, {
         adminName: `${user?.displayName || "Sarah Connor"} (Super Admin)`,
         reason,
       });
-      notifyInfo("Promotion Declined", `Recommendation for ${rec.employeeName} has been returned.`);
-      loadData(true);
+      loadData(false);
     } catch (err) {
       notifyError("Action Failed", err.message);
+      loadData(true);
     }
   };
 

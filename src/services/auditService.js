@@ -146,19 +146,20 @@ export const auditService = {
     memoryAuditCache = updated;
     lastAuditFetch = Date.now();
 
+    // Non-blocking detached background sync to Firestore
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const canWrite = await isLiveUserHrOrAdmin();
-        if (canWrite) {
-          const { doc, setDoc } = await import("firebase/firestore");
-          await setDoc(doc(db, "audit_logs", entry.id), entry);
-        }
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.CREATE, `audit_logs/${entry.id}`);
-        }
-        console.warn("[auditService] Firestore log write notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(async ({ doc, setDoc }) => {
+          try {
+            const canWrite = await isLiveUserHrOrAdmin();
+            if (canWrite) {
+              await setDoc(doc(db, "audit_logs", entry.id), entry);
+            }
+          } catch (err) {
+            console.warn("[auditService] Firestore log write notice:", err.message);
+          }
+        })
+        .catch(() => {});
     }
 
     return entry;

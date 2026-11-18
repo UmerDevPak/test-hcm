@@ -110,16 +110,25 @@ export default function TasksPage() {
 
   useEffect(() => {
     loadData();
+    const handleTasksUpdate = () => loadData();
+    window.addEventListener("hcm_tasks_updated", handleTasksUpdate);
+    return () => window.removeEventListener("hcm_tasks_updated", handleTasksUpdate);
   }, [employeeId, userEmail, activeRole]);
 
-  // Handlers
+  // Handlers - with instant 0ms optimistic UI updates
   const handleStartWork = async (task) => {
+    // 1. Optimistic instant UI update
+    setTasks((prev) =>
+      prev.map((t) => (t.id === task.id ? { ...t, status: TASK_STATUS.IN_PROGRESS } : t))
+    );
+    notifySuccess("Work Started", `Task ${task.id} is now In Progress.`);
+
     try {
       await taskService.updateStatus(task.id, TASK_STATUS.IN_PROGRESS);
-      notifySuccess("Work Started", `Task ${task.id} is now In Progress.`);
-      loadData();
+      taskService.getTaskStats().then((st) => setStats(st));
     } catch (err) {
       notifyError("Failed", err.message);
+      loadData();
     }
   };
 
@@ -140,19 +149,42 @@ export default function TasksPage() {
       return;
     }
 
+    const taskId = selectedTask.id;
+    const nowIso = new Date().toISOString();
+    const optimisticDeliverable = {
+      notes: submitFormData.notes,
+      link: submitFormData.link,
+      fileName: submitFormData.fileName || "work-package.zip",
+      submittedBy: user?.displayName || "Employee",
+    };
+
+    // 1. Instant close and instant optimistic UI feedback
+    setIsSubmitModalOpen(false);
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === taskId
+          ? {
+              ...t,
+              status: TASK_STATUS.SUBMITTED,
+              submittedAt: nowIso,
+              deliverable: optimisticDeliverable,
+            }
+          : t
+      )
+    );
+    notifySuccess("Deliverable Submitted", `Task ${taskId} submitted for HR evaluation.`);
+
     try {
-      await taskService.submitDeliverable(selectedTask.id, {
+      await taskService.submitDeliverable(taskId, {
         notes: submitFormData.notes,
         link: submitFormData.link,
         fileName: submitFormData.fileName || "work-package.zip",
         submittedBy: user?.displayName || "Employee",
       });
-
-      notifySuccess("Deliverable Submitted", `Task ${selectedTask.id} submitted for HR evaluation.`);
-      setIsSubmitModalOpen(false);
-      loadData();
+      taskService.getTaskStats().then((st) => setStats(st));
     } catch (err) {
       notifyError("Submission Failed", err.message);
+      loadData();
     }
   };
 
@@ -168,23 +200,49 @@ export default function TasksPage() {
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
+    const taskId = selectedTask.id;
+    const newStatus =
+      reviewFormData.decision === "APPROVED" ? TASK_STATUS.APPROVED : TASK_STATUS.REVISION_REQUESTED;
+
+    const optimisticReview = {
+      reviewedBy: user?.displayName || "Aaliyah Patel (HR)",
+      reviewedAt: new Date().toISOString(),
+      decision: reviewFormData.decision,
+      feedback: reviewFormData.feedback,
+      score: Number(reviewFormData.score) || 5,
+    };
+
+    // 1. Instant close and instant optimistic UI feedback
+    setIsReviewModalOpen(false);
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === taskId
+          ? {
+              ...t,
+              status: newStatus,
+              hrReview: optimisticReview,
+            }
+          : t
+      )
+    );
+
+    if (reviewFormData.decision === "APPROVED") {
+      notifySuccess("Deliverable Approved", `Task ${taskId} marked as completed & verified.`);
+    } else {
+      notifyInfo("Revisions Requested", `Feedback transmitted back to ${selectedTask.assignedTo?.name}.`);
+    }
+
     try {
-      await taskService.reviewTask(selectedTask.id, {
+      await taskService.reviewTask(taskId, {
         decision: reviewFormData.decision,
         feedback: reviewFormData.feedback,
         score: reviewFormData.score,
         reviewerName: user?.displayName || "Aaliyah Patel (HR)",
       });
-
-      if (reviewFormData.decision === "APPROVED") {
-        notifySuccess("Deliverable Approved", `Task ${selectedTask.id} marked as completed & verified.`);
-      } else {
-        notifyInfo("Revisions Requested", `Feedback transmitted back to ${selectedTask.assignedTo?.name}.`);
-      }
-      setIsReviewModalOpen(false);
-      loadData();
+      taskService.getTaskStats().then((st) => setStats(st));
     } catch (err) {
       notifyError("Review Failed", err.message);
+      loadData();
     }
   };
 
@@ -195,14 +253,60 @@ export default function TasksPage() {
       return;
     }
 
-    const assignedEmp = employees.find((e) => e.id === createFormData.assignedToId);
+    const assignedEmp = employees.find((emp) => emp.id === createFormData.assignedToId);
+    const tempId = `TSK-${Math.floor(100 + Math.random() * 900)}`;
+
+    const optimisticTask = {
+      id: tempId,
+      title: createFormData.title,
+      description: createFormData.description || "",
+      department: createFormData.department,
+      priority: createFormData.priority,
+      status: TASK_STATUS.TODO,
+      assignedTo: assignedEmp
+        ? {
+            id: assignedEmp.id,
+            name: assignedEmp.name,
+            email: assignedEmp.email,
+            jobTitle: assignedEmp.jobTitle,
+            avatar: assignedEmp.avatar,
+          }
+        : {
+            id: "EMP-003",
+            name: "Elena Rostova",
+            email: "employee@hcmlite.internal",
+            jobTitle: "Staff Software Engineer",
+          },
+      dueDate: createFormData.dueDate,
+      createdAt: new Date().toISOString(),
+      submittedAt: null,
+      deliverable: null,
+      hrReview: null,
+      isExecutiveOkr: createFormData.isExecutiveOkr,
+    };
+
+    // 1. Instant close and instant optimistic update
+    setIsCreateModalOpen(false);
+    setTasks((prev) => [optimisticTask, ...prev]);
+    notifySuccess("Task Assigned", `New corporate task issued.`);
+
+    const taskPayload = { ...createFormData };
+    setCreateFormData({
+      title: "",
+      description: "",
+      department: "Engineering",
+      priority: "Medium",
+      assignedToId: "EMP-003",
+      dueDate: new Date(Date.now() + 7 * 86400000).toISOString().split("T")[0],
+      isExecutiveOkr: false,
+    });
 
     try {
-      await taskService.createTask({
-        title: createFormData.title,
-        description: createFormData.description,
-        department: createFormData.department,
-        priority: createFormData.priority,
+      const created = await taskService.createTask({
+        title: taskPayload.title,
+        description: taskPayload.description,
+        department: taskPayload.department,
+        priority: taskPayload.priority,
         assignedTo: assignedEmp
           ? {
               id: assignedEmp.id,
@@ -212,24 +316,15 @@ export default function TasksPage() {
               avatar: assignedEmp.avatar,
             }
           : undefined,
-        dueDate: createFormData.dueDate,
-        isExecutiveOkr: createFormData.isExecutiveOkr,
+        dueDate: taskPayload.dueDate,
+        isExecutiveOkr: taskPayload.isExecutiveOkr,
       });
-
-      notifySuccess("Task Assigned", `New corporate task issued.`);
-      setIsCreateModalOpen(false);
-      setCreateFormData({
-        title: "",
-        description: "",
-        department: "Engineering",
-        priority: "Medium",
-        assignedToId: "EMP-003",
-        dueDate: new Date(Date.now() + 7 * 86400000).toISOString().split("T")[0],
-        isExecutiveOkr: false,
-      });
-      loadData();
+      // Replace optimistic tempId with real id if different
+      setTasks((prev) => prev.map((t) => (t.id === tempId ? created : t)));
+      taskService.getTaskStats().then((st) => setStats(st));
     } catch (err) {
       notifyError("Creation Failed", err.message);
+      loadData();
     }
   };
 
@@ -508,7 +603,7 @@ export default function TasksPage() {
       </motion.div>
 
       {/* 5. Task Cards Feed */}
-      <div className="space-y-4">
+      <div className="space-y-4 min-h-[380px]">
         {filteredTasks.length === 0 ? (
           <EmptyState
             title="Oops! There is nothing to see here"

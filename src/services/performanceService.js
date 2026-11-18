@@ -264,23 +264,24 @@ export const performanceService = {
     saveLocalPromotions(updated);
     memoryPromotionsCache = updated;
 
+    // Detached non-blocking background Firestore sync
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const canWrite = await isLiveUserHrOrAdmin();
-        if (canWrite) {
-          const { doc, setDoc } = await import("firebase/firestore");
-          await setDoc(doc(db, "promotion_recommendations", newId), recommendation);
-        }
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.CREATE, `promotion_recommendations/${newId}`);
-        }
-        console.warn("[performanceService] Firestore promotion write notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(async ({ doc, setDoc }) => {
+          try {
+            const canWrite = await isLiveUserHrOrAdmin();
+            if (canWrite) {
+              await setDoc(doc(db, "promotion_recommendations", newId), recommendation);
+            }
+          } catch (err) {
+            console.warn("[performanceService] Firestore promotion write notice:", err.message);
+          }
+        })
+        .catch(() => {});
     }
 
-    // Log to Audit trail
-    await auditService.logAudit({
+    // Detached non-blocking Audit log
+    auditService.logAudit({
       actor: submittedBy,
       role: "HR",
       module: "Talent & Performance",
@@ -289,7 +290,7 @@ export const performanceService = {
       oldValue: recommendation.currentRank,
       newValue: `Recommend ${recommendation.recommendedRank}`,
       status: "info",
-    });
+    }).catch(() => {});
 
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("hcm_promotion_updated", { detail: recommendation }));
@@ -300,7 +301,7 @@ export const performanceService = {
   },
 
   /**
-   * Admin approves HR recommendation, promoting the employee
+   * Admin approves HR recommendation, promoting the employee (Instant 0ms response)
    */
   async approvePromotionRecommendation(recommendationId, { adminName = "Sarah Connor", adminNotes = "" } = {}) {
     const list = getLocalPromotions();
@@ -319,8 +320,8 @@ export const performanceService = {
     saveLocalPromotions(list);
     memoryPromotionsCache = list;
 
-    // Apply promotion directly to employee record
-    const targetEmp = await employeeService.getEmployeeById(rec.employeeId);
+    // Apply promotion directly to employee record (instant synchronous peek)
+    const targetEmp = employeeService.peekEmployeeById(rec.employeeId) || (await employeeService.getEmployeeById(rec.employeeId));
     if (targetEmp) {
       const historyItem = {
         id: `PRM-${Date.now()}`,
@@ -334,7 +335,7 @@ export const performanceService = {
 
       const updatedHistory = [historyItem, ...(targetEmp.promotionHistory || [])];
 
-      await employeeService.updateEmployee(targetEmp.id, {
+      employeeService.updateEmployee(targetEmp.id, {
         ranking: rec.recommendedRank,
         workScore: rec.workScore != null ? Number(rec.workScore) : targetEmp.workScore,
         behaviorScore: rec.behaviorScore != null ? Number(rec.behaviorScore) : targetEmp.behaviorScore,
@@ -350,25 +351,29 @@ export const performanceService = {
       });
     }
 
+    // Detached non-blocking background Firestore sync
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const canWrite = await isLiveUserHrOrAdmin();
-        if (canWrite) {
-          const { doc, updateDoc } = await import("firebase/firestore");
-          await updateDoc(doc(db, "promotion_recommendations", recommendationId), {
-            status: "Approved",
-            reviewedBy: adminName,
-            reviewedAt: rec.reviewedAt,
-            adminDecisionNotes: rec.adminDecisionNotes,
-          });
-        }
-      } catch (err) {
-        console.warn("[performanceService] Firestore approve notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(async ({ doc, updateDoc }) => {
+          try {
+            const canWrite = await isLiveUserHrOrAdmin();
+            if (canWrite) {
+              await updateDoc(doc(db, "promotion_recommendations", recommendationId), {
+                status: "Approved",
+                reviewedBy: adminName,
+                reviewedAt: rec.reviewedAt,
+                adminDecisionNotes: rec.adminDecisionNotes,
+              });
+            }
+          } catch (err) {
+            console.warn("[performanceService] Firestore approve notice:", err.message);
+          }
+        })
+        .catch(() => {});
     }
 
-    // Audit trail
-    await auditService.logAudit({
+    // Detached non-blocking Audit log
+    auditService.logAudit({
       actor: adminName,
       role: "ADMIN",
       module: "Executive Governance",
@@ -377,7 +382,7 @@ export const performanceService = {
       oldValue: rec.currentRank,
       newValue: rec.recommendedRank,
       status: "success",
-    });
+    }).catch(() => {});
 
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("hcm_promotion_updated", { detail: rec }));
@@ -388,7 +393,7 @@ export const performanceService = {
   },
 
   /**
-   * Admin rejects or returns recommendation with feedback
+   * Admin rejects or returns recommendation with feedback (Instant 0ms response)
    */
   async rejectPromotionRecommendation(recommendationId, { adminName = "Sarah Connor", reason = "" } = {}) {
     const list = getLocalPromotions();
@@ -407,24 +412,29 @@ export const performanceService = {
     saveLocalPromotions(list);
     memoryPromotionsCache = list;
 
+    // Detached non-blocking background Firestore sync
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const canWrite = await isLiveUserHrOrAdmin();
-        if (canWrite) {
-          const { doc, updateDoc } = await import("firebase/firestore");
-          await updateDoc(doc(db, "promotion_recommendations", recommendationId), {
-            status: "Rejected",
-            reviewedBy: adminName,
-            reviewedAt: rec.reviewedAt,
-            adminDecisionNotes: rec.adminDecisionNotes,
-          });
-        }
-      } catch (err) {
-        console.warn("[performanceService] Firestore reject notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(async ({ doc, updateDoc }) => {
+          try {
+            const canWrite = await isLiveUserHrOrAdmin();
+            if (canWrite) {
+              await updateDoc(doc(db, "promotion_recommendations", recommendationId), {
+                status: "Rejected",
+                reviewedBy: adminName,
+                reviewedAt: rec.reviewedAt,
+                adminDecisionNotes: rec.adminDecisionNotes,
+              });
+            }
+          } catch (err) {
+            console.warn("[performanceService] Firestore reject notice:", err.message);
+          }
+        })
+        .catch(() => {});
     }
 
-    await auditService.logAudit({
+    // Detached non-blocking Audit log
+    auditService.logAudit({
       actor: adminName,
       role: "ADMIN",
       module: "Executive Governance",
@@ -433,7 +443,7 @@ export const performanceService = {
       oldValue: rec.currentRank,
       newValue: `Retained ${rec.currentRank}`,
       status: "warning",
-    });
+    }).catch(() => {});
 
     if (typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("hcm_promotion_updated", { detail: rec }));

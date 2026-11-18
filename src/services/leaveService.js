@@ -235,12 +235,11 @@ export const leaveService = {
   },
 
   async requestLeave({ employeeId, employeeName, leaveType, startDate, endDate, reason }) {
-    const [config, employee, balances, currentRequests] = await Promise.all([
-      hcmConfigService.getConfig(),
-      employeeService.getEmployeeById(employeeId),
-      this.getEmployeeBalances(employeeId),
-      this.getAllRequests(),
-    ]);
+    // Fast synchronous lookups from cache (0ms)
+    const config = hcmConfigService.peekCachedConfig();
+    const employee = employeeService.peekEmployeeById(employeeId);
+    const balances = this.peekCachedRequests() ? getBalances()[employeeId] : getBalances()[employeeId];
+    const currentRequests = memoryLeaveRequestsCache || getRequests();
 
     const evaluation = evaluateLeaveRequest({
       config,
@@ -281,42 +280,42 @@ export const leaveService = {
     const localList = getRequests();
     localList.unshift(newReq);
     saveRequests(localList);
-    memoryLeaveRequestsCache = null;
+    memoryLeaveRequestsCache = localList;
 
+    // Non-blocking detached background sync to Firestore
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, setDoc } = await import("firebase/firestore");
-        await setDoc(doc(db, "leave_requests", newReq.id), {
-          id: newReq.id,
-          uid: newReq.uid,
-          employeeId: newReq.employeeId,
-          employeeName: newReq.employeeName,
-          leaveType: newReq.leaveType,
-          startDate: newReq.startDate,
-          endDate: newReq.endDate,
-          daysCount: newReq.daysCount,
-          reason: newReq.reason,
-          status: newReq.status,
-          appliedAt: newReq.appliedAt,
-          reviewedBy: null,
-          reviewedAt: null,
-        });
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.CREATE, `leave_requests/${newReq.id}`);
-        }
-        console.warn("[leaveService] Firestore leave request save notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(({ doc, setDoc }) => {
+          setDoc(doc(db, "leave_requests", newReq.id), {
+            id: newReq.id,
+            uid: newReq.uid,
+            employeeId: newReq.employeeId,
+            employeeName: newReq.employeeName,
+            leaveType: newReq.leaveType,
+            startDate: newReq.startDate,
+            endDate: newReq.endDate,
+            daysCount: newReq.daysCount,
+            reason: newReq.reason,
+            status: newReq.status,
+            appliedAt: newReq.appliedAt,
+            reviewedBy: null,
+            reviewedAt: null,
+          }).catch((err) => {
+            console.warn("[leaveService] Firestore leave request save notice:", err.message);
+          });
+        })
+        .catch(() => {});
     }
 
-    await auditService.logAudit({
+    // Detached non-blocking audit log
+    auditService.logAudit({
       actor: employeeName,
       role: "EMPLOYEE",
       module: "Leave Management",
       action: `Submitted ${normalizedType} Leave Request`,
       target: `${startDate} to ${endDate} (${evaluation.chargeableDays} days)`,
       status: "info",
-    });
+    }).catch(() => {});
 
     activityNotificationService.addNotification({
       title: `New ${normalizedType} Leave Application`,
@@ -327,6 +326,10 @@ export const leaveService = {
       type: "leave",
       link: "/leave",
     });
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_leaves_updated"));
+    }
 
     return { ...newReq, evaluation };
   },
@@ -369,26 +372,26 @@ export const leaveService = {
     }
 
     saveRequests(requests);
-    memoryLeaveRequestsCache = null;
+    memoryLeaveRequestsCache = requests;
 
+    // Detached non-blocking background Firestore sync
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, setDoc } = await import("firebase/firestore");
-        await setDoc(doc(db, "leave_requests", requestId), {
-          ...request,
-        }, { merge: true });
-        if (updatedBalance && request.employeeId) {
-          await setDoc(doc(db, "leave_balances", request.employeeId), updatedBalance, { merge: true });
-        }
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.UPDATE, `leave_requests/${requestId}`);
-        }
-        console.warn("[leaveService] Firestore update status notice:", err.message);
-      }
+      import("firebase/firestore")
+        .then(async ({ doc, setDoc }) => {
+          try {
+            await setDoc(doc(db, "leave_requests", requestId), { ...request }, { merge: true });
+            if (updatedBalance && request.employeeId) {
+              await setDoc(doc(db, "leave_balances", request.employeeId), updatedBalance, { merge: true });
+            }
+          } catch (err) {
+            console.warn("[leaveService] Firestore update status notice:", err.message);
+          }
+        })
+        .catch(() => {});
     }
 
-    await auditService.logAudit({
+    // Detached non-blocking audit log
+    auditService.logAudit({
       actor: reviewerName,
       role: "HR",
       module: "Leave Management",
@@ -397,7 +400,7 @@ export const leaveService = {
       oldValue: "Pending",
       newValue: status,
       status: status === LEAVE_STATUS.APPROVED ? "success" : "neutral",
-    });
+    }).catch(() => {});
 
     activityNotificationService.addNotification({
       title: `Leave Request ${status}`,
@@ -408,6 +411,10 @@ export const leaveService = {
       type: "leave",
       link: "/leave",
     });
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_leaves_updated"));
+    }
 
     return request;
   },
@@ -487,6 +494,7 @@ export const leaveService = {
     const target = requests.find((r) => r.id === requestId);
     if (!target) return false;
 
+    let updatedBalance = null;
     if (target.status === LEAVE_STATUS.APPROVED && target.leaveType !== "Unpaid") {
       const balances = getBalances();
       const empBalance = balances[target.employeeId] || {
@@ -505,37 +513,35 @@ export const leaveService = {
       empBalance.vacation = empBalance.annual;
       balances[target.employeeId] = empBalance;
       saveBalances(balances);
-
-      if (isLiveFirebaseConfigured && db && auth?.currentUser && target.employeeId) {
-        try {
-          const { doc, setDoc } = await import("firebase/firestore");
-          await setDoc(doc(db, "leave_balances", target.employeeId), {
-            annual: empBalance.annual,
-            sick: empBalance.sick,
-            casual: empBalance.casual,
-            vacation: empBalance.annual,
-          }, { merge: true });
-        } catch (err) {
-          if (isPermissionError(err)) {
-            handleFirestoreError(err, OperationType.UPDATE, `leave_balances/${target.employeeId}`);
-          }
-        }
-      }
+      updatedBalance = {
+        annual: empBalance.annual,
+        sick: empBalance.sick,
+        casual: empBalance.casual,
+        vacation: empBalance.annual,
+      };
     }
 
     const filtered = requests.filter((r) => r.id !== requestId);
     saveRequests(filtered);
-    memoryLeaveRequestsCache = null;
+    memoryLeaveRequestsCache = filtered;
 
     if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, deleteDoc } = await import("firebase/firestore");
-        await deleteDoc(doc(db, "leave_requests", requestId));
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.DELETE, `leave_requests/${requestId}`);
-        }
-      }
+      import("firebase/firestore")
+        .then(async ({ doc, deleteDoc, setDoc }) => {
+          try {
+            await deleteDoc(doc(db, "leave_requests", requestId));
+            if (updatedBalance && target.employeeId) {
+              await setDoc(doc(db, "leave_balances", target.employeeId), updatedBalance, { merge: true });
+            }
+          } catch (err) {
+            console.warn("[leaveService] Firestore delete leave notice:", err.message);
+          }
+        })
+        .catch(() => {});
+    }
+
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("hcm_leaves_updated"));
     }
 
     return true;

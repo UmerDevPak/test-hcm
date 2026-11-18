@@ -159,12 +159,15 @@ export default function EmployeesPage() {
 
   const handleDelete = async (id, name) => {
     if (confirm(`Are you sure you want to offboard/delete ${name}?`)) {
+      // 1. Instant optimistic UI feedback (0ms)
+      setEmployees((prev) => prev.filter((e) => e.id !== id));
+      notifySuccess("Employee removed", `${name} record deleted.`);
+
       try {
         await employeeService.deleteEmployee(id);
-        notifySuccess("Employee removed", `${name} record deleted.`);
-        fetchEmployees();
       } catch (err) {
         notifyError("Error deleting employee", err.message);
+        fetchEmployees();
       }
     }
   };

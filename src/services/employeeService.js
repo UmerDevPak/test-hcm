@@ -365,43 +365,51 @@ export const employeeService = {
   },
 
   async updateEmployee(id, updates) {
-    if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, updateDoc } = await import("firebase/firestore");
-        await updateDoc(doc(db, "employees", id), updates);
-      } catch (err) {
-        console.warn("[employeeService] Firestore update fallback:", err);
-      }
-    }
-
     const current = getLocalEmployees();
     const index = current.findIndex((e) => e.id === id);
     if (index !== -1) {
       current[index] = { ...current[index], ...updates };
       saveLocalEmployees(current);
-      memoryEmployeesCache = null;
+      if (memoryEmployeesCache) {
+        const mIdx = memoryEmployeesCache.findIndex((e) => e.id === id);
+        if (mIdx !== -1) memoryEmployeesCache[mIdx] = { ...memoryEmployeesCache[mIdx], ...updates };
+      }
+
+      // Detached non-blocking background Firestore sync
+      if (isLiveFirebaseConfigured && db && auth?.currentUser) {
+        import("firebase/firestore")
+          .then(({ doc, updateDoc }) => {
+            updateDoc(doc(db, "employees", id), updates).catch((err) => {
+              console.warn("[employeeService] Firestore update fallback:", err);
+            });
+          })
+          .catch(() => {});
+      }
+
       return current[index];
     }
     return null;
   },
 
   async deleteEmployee(id) {
-    if (isLiveFirebaseConfigured && db && auth?.currentUser) {
-      try {
-        const { doc, deleteDoc } = await import("firebase/firestore");
-        await deleteDoc(doc(db, "employees", id));
-      } catch (err) {
-        if (isPermissionError(err)) {
-          handleFirestoreError(err, OperationType.DELETE, `employees/${id}`);
-        }
-        console.warn("[employeeService] Firestore delete fallback:", err);
-      }
-    }
-
     const current = getLocalEmployees();
     const filtered = current.filter((e) => e.id !== id);
     saveLocalEmployees(filtered);
-    memoryEmployeesCache = null;
+    if (memoryEmployeesCache) {
+      memoryEmployeesCache = memoryEmployeesCache.filter((e) => e.id !== id);
+    }
+
+    // Detached non-blocking background Firestore delete
+    if (isLiveFirebaseConfigured && db && auth?.currentUser) {
+      import("firebase/firestore")
+        .then(({ doc, deleteDoc }) => {
+          deleteDoc(doc(db, "employees", id)).catch((err) => {
+            console.warn("[employeeService] Firestore delete fallback:", err);
+          });
+        })
+        .catch(() => {});
+    }
+
     return true;
   },
 
