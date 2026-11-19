@@ -8,55 +8,49 @@ export const containerStagger = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.018,
-      delayChildren: 0,
+      staggerChildren: 0.1,
+      delayChildren: 0.08,
     },
   },
 };
 
 export const itemFadeUp = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
-      stiffness: 550,
-      damping: 34,
-      mass: 0.6,
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
   exit: {
     opacity: 0,
-    y: -6,
-    transition: { duration: 0.12 },
+    y: -10,
+    transition: { duration: 0.25 },
   },
 };
 
 export const itemFadeLeft = {
-  hidden: { opacity: 0, x: -8 },
+  hidden: { opacity: 0, x: -20 },
   show: {
     opacity: 1,
     x: 0,
     transition: {
-      type: "spring",
-      stiffness: 520,
-      damping: 32,
-      mass: 0.6,
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
 export const fadeInScale = {
-  hidden: { opacity: 0, scale: 0.98 },
+  hidden: { opacity: 0, scale: 0.94 },
   show: {
     opacity: 1,
     scale: 1,
     transition: {
-      type: "spring",
-      stiffness: 550,
-      damping: 34,
-      mass: 0.6,
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
@@ -81,10 +75,10 @@ export const springLayoutTransition = {
 
 /**
  * Standard Viewport Observer configuration for scroll-triggered entrance.
- * Uses a low threshold so tall tables and cards never stay hidden on narrow viewports.
+ * Uses a low threshold (0.05) so elements trigger smoothly as soon as they scroll into view.
  */
 export const scrollViewport = {
   once: true,
   margin: "0px",
-  amount: 0.02,
+  amount: 0.05,
 };

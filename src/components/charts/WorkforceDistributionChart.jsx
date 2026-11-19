@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 import {
   ResponsiveContainer,
   BarChart,
@@ -46,6 +47,8 @@ export function WorkforceDistributionChart({
   totalHeadcount = 0,
   height = 230,
 }) {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.15 });
   const [mounted, setMounted] = useState(false);
   const [viewMode, setViewMode] = useState("bar");
 
@@ -61,6 +64,7 @@ export function WorkforceDistributionChart({
   if (!mounted) {
     return (
       <div
+        ref={containerRef}
         className="w-full flex items-center justify-center text-xs text-zinc-500"
         style={{ height }}
       >
@@ -70,7 +74,7 @@ export function WorkforceDistributionChart({
   }
 
   return (
-    <div className="space-y-3">
+    <div ref={containerRef} className="space-y-3">
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-medium text-zinc-400">
           Total Tracked Personnel:{" "}
@@ -105,7 +109,11 @@ export function WorkforceDistributionChart({
       <div className="w-full" style={{ height }}>
         <ResponsiveContainer width="100%" height={height}>
           {viewMode === "bar" ? (
-            <BarChart data={chartData} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
+            <BarChart
+              key={`bar-${isInView ? "active" : "idle"}`}
+              data={chartData}
+              margin={{ top: 8, right: 12, left: -16, bottom: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
               <XAxis
                 dataKey="name"
@@ -120,14 +128,23 @@ export function WorkforceDistributionChart({
                 tickLine={false}
               />
               <Tooltip content={<CustomWorkforceTooltip />} />
-              <Bar dataKey="headcount" name="Headcount" radius={[6, 6, 0, 0]} maxBarSize={42}>
+              <Bar
+                dataKey="headcount"
+                name="Headcount"
+                radius={[6, 6, 0, 0]}
+                maxBarSize={42}
+                isAnimationActive={isInView}
+                animationDuration={1600}
+                animationEasing="ease-out"
+                animationBegin={200}
+              >
                 {chartData.map((entry, idx) => (
                   <Cell key={entry.name || idx} fill={PALETTE[idx % PALETTE.length]} />
                 ))}
               </Bar>
             </BarChart>
           ) : (
-            <PieChart>
+            <PieChart key={`donut-${isInView ? "active" : "idle"}`}>
               <Pie
                 data={chartData}
                 dataKey="headcount"
@@ -138,6 +155,10 @@ export function WorkforceDistributionChart({
                 outerRadius={88}
                 paddingAngle={3}
                 stroke="none"
+                isAnimationActive={isInView}
+                animationDuration={1600}
+                animationEasing="ease-out"
+                animationBegin={200}
               >
                 {chartData.map((entry, idx) => (
                   <Cell key={entry.name || idx} fill={PALETTE[idx % PALETTE.length]} />

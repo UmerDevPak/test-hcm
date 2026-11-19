@@ -74,13 +74,15 @@ export function LeavePolicyTab({ config, onConfigUpdated, actorName = "Sarah Con
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CalendarDays className="w-4 h-4 text-indigo-400" />
-          Tab 09 — Annual Leave Policy & Statutory Quotas (12 Leave Types)
-        </CardTitle>
-        <p className="text-xs text-zinc-400 mt-1">
-          Configure leave accrual, probation rules, medical certificate thresholds, carry-forward caps, sandwich rules, and blackout dates.
-        </p>
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <CalendarDays className="w-4 h-4 text-indigo-400" />
+            Tab 09 — Annual Leave Policy & Statutory Quotas (12 Leave Types)
+          </CardTitle>
+          <p className="text-xs text-zinc-400 mt-1">
+            Configure leave accrual, probation rules, medical certificate thresholds, carry-forward caps, sandwich rules, and blackout dates.
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-6">
@@ -271,13 +273,15 @@ export function SalarySetupTab({ config, onConfigUpdated, actorName = "Sarah Con
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <DollarSign className="w-4 h-4 text-emerald-400" />
-          Tab 10 (Extra) — Salary Setup & Payroll Calculation Rules
-        </CardTitle>
-        <p className="text-xs text-zinc-400 mt-1">
-          Configure how daily wage, allowances (HRA, Medical, Utilities, Transport), PF/EOBI, pro-rata joiners, and rounding flow into Payroll Runs.
-        </p>
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-emerald-400" />
+            Tab 10 (Extra) — Salary Setup & Payroll Calculation Rules
+          </CardTitle>
+          <p className="text-xs text-zinc-400 mt-1">
+            Configure how daily wage, allowances (HRA, Medical, Utilities, Transport), PF/EOBI, pro-rata joiners, and rounding flow into Payroll Runs.
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-5">

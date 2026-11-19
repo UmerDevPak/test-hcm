@@ -12,11 +12,102 @@ import {
   isWeeklyOffForEmployee,
   formatMinutesTo12h,
   parseTimeToMinutes,
+  DEFAULT_HCM_CONFIG,
 } from "@/lib/hcmEngine";
+import { INITIAL_EMPLOYEES } from "@/lib/seedData";
 
 // In-memory cache for ultra-fast tab switching with zero lag
 const reportCache = new Map();
 const REPORT_CACHE_TTL_MS = 60000;
+
+function buildAdminMetrics({ employees = [], payrollRuns = [], config = {}, rawAuditLogs = [] } = {}) {
+  const empList = Array.isArray(employees) && employees.length > 0 ? employees : INITIAL_EMPLOYEES;
+  const activeAndProbation = empList.filter(
+    (e) => e.status === "Active" || e.status === "Probation" || e.status === "Pending Activation" || !e.status
+  );
+  const activeHeadcount = activeAndProbation.length;
+
+  const terminatedCount = empList.filter((e) => e.status === "Terminated").length;
+  const totalAllTime = empList.length || 1;
+  const attritionRate = Number(((terminatedCount / totalAllTime) * 100).toFixed(1));
+
+  let totalMonthlyPayroll = 0;
+  empList.forEach((emp) => {
+    const annual = Number(emp.annualSalary) || 95000;
+    totalMonthlyPayroll += annual / 12;
+  });
+  if (Array.isArray(payrollRuns) && payrollRuns.length > 0 && payrollRuns[0]?.totalGross) {
+    totalMonthlyPayroll = payrollRuns[0].totalGross;
+  }
+
+  const totalAnnual = empList.reduce((acc, e) => acc + (Number(e.annualSalary) || 95000), 0);
+  const averageSalary = Math.round(totalAnnual / (empList.length || 1));
+
+  const deptMap = {};
+  empList.forEach((emp) => {
+    const dept = emp.department || "Engineering";
+    if (!deptMap[dept]) {
+      deptMap[dept] = { name: dept, headcount: 0, totalSalary: 0 };
+    }
+    deptMap[dept].headcount += 1;
+    deptMap[dept].totalSalary += (Number(emp.annualSalary) || 95000) / 12;
+  });
+  const departmentStats = Object.values(deptMap).sort((a, b) => b.headcount - a.headcount);
+
+  const nowYear = new Date().getFullYear();
+  const tenureStats = {
+    under1Year: 0,
+    oneToThreeYears: 0,
+    threeToFiveYears: 0,
+    overFiveYears: 0,
+  };
+  empList.forEach((emp) => {
+    const hireYear = emp.hireDate ? new Date(emp.hireDate).getFullYear() : nowYear - 1;
+    const diff = nowYear - hireYear;
+    if (diff < 1) tenureStats.under1Year += 1;
+    else if (diff <= 3) tenureStats.oneToThreeYears += 1;
+    else if (diff <= 5) tenureStats.threeToFiveYears += 1;
+    else tenureStats.overFiveYears += 1;
+  });
+
+  const auditLogs = (rawAuditLogs || []).map((log) => ({
+    ...log,
+    timestamp: formatRelativeTimestamp(log.timestamp),
+  }));
+
+  const primaryShift = config?.shifts?.[0];
+  const leaveTypes = config?.leavePolicy?.leaveTypes || [];
+  const annualQuota = leaveTypes.find((t) => t.code === "Annual")?.quota ?? 14;
+  const sickQuota = leaveTypes.find((t) => t.code === "Sick")?.quota ?? 8;
+  const casualQuota = leaveTypes.find((t) => t.code === "Casual")?.quota ?? 10;
+
+  const activePolicySummary = {
+    shiftName: primaryShift?.name || "General Office Shift",
+    shiftStart: primaryShift?.startTime || "09:00",
+    shiftEnd: primaryShift?.endTime || "18:00",
+    graceMinutes: config?.latePolicy?.graceMinutes ?? 15,
+    annualQuota,
+    sickQuota,
+    casualQuota,
+    salaryMethod: config?.salarySetup?.calculationMethod || "WorkingDays",
+    devicesOnline: (config?.devices || []).filter((d) => d.status === "Online" && d.enabled).length,
+    devicesTotal: (config?.devices || []).length,
+    holidaysCount: (config?.holidays || []).length,
+    attendanceLockedUpTo: config?.attendanceRule?.attendanceLockedUpTo || "",
+  };
+
+  return {
+    activeHeadcount,
+    totalHeadcount: empList.length,
+    attritionRate,
+    totalMonthlyPayroll,
+    averageSalary,
+    departmentStats,
+    tenureStats,
+    auditLogs,
+    activePolicySummary,
+  };
+}
 
 export const reportService = {
   invalidateCache(key = null) {
@@ -28,6 +119,21 @@ export const reportService = {
     const cached = reportCache.get(key);
     if (cached && Date.now() - cached.time < REPORT_CACHE_TTL_MS) {
       return cached.data;
+    }
+    if (key === "admin" && typeof window !== "undefined") {
+      const emps = employeeService.peekCachedEmployees() || [];
+      const employees = emps.length ? emps : INITIAL_EMPLOYEES;
+      const runs = payrollService.peekCachedPayrollRuns() || [];
+      const cfg = hcmConfigService.peekCachedConfig() || DEFAULT_HCM_CONFIG;
+      const logs = auditService.peekCachedLogs() || [];
+      const syncResult = buildAdminMetrics({
+        employees,
+        payrollRuns: runs,
+        config: cfg,
+        rawAuditLogs: logs,
+      });
+      reportCache.set("admin", { data: syncResult, time: Date.now() });
+      return syncResult;
     }
     return null;
   },
@@ -112,91 +218,12 @@ export const reportService = {
       auditService.getAuditLogs(12, forceRefresh),
     ]);
 
-    const activeAndProbation = employees.filter(
-      (e) => e.status === "Active" || e.status === "Probation" || e.status === "Pending Activation" || !e.status
-    );
-    const activeHeadcount = activeAndProbation.length;
-
-    const terminatedCount = employees.filter((e) => e.status === "Terminated").length;
-    const totalAllTime = employees.length || 1;
-    const attritionRate = Number(((terminatedCount / totalAllTime) * 100).toFixed(1));
-
-    let totalMonthlyPayroll = 0;
-    employees.forEach((emp) => {
-      const annual = Number(emp.annualSalary) || 95000;
-      totalMonthlyPayroll += annual / 12;
+    const result = buildAdminMetrics({
+      employees,
+      payrollRuns,
+      config,
+      rawAuditLogs,
     });
-    if (payrollRuns.length > 0 && payrollRuns[0].totalGross) {
-      totalMonthlyPayroll = payrollRuns[0].totalGross;
-    }
-
-    const totalAnnual = employees.reduce((acc, e) => acc + (Number(e.annualSalary) || 95000), 0);
-    const averageSalary = Math.round(totalAnnual / (employees.length || 1));
-
-    const deptMap = {};
-    employees.forEach((emp) => {
-      const dept = emp.department || "Engineering";
-      if (!deptMap[dept]) {
-        deptMap[dept] = { name: dept, headcount: 0, totalSalary: 0 };
-      }
-      deptMap[dept].headcount += 1;
-      deptMap[dept].totalSalary += (Number(emp.annualSalary) || 95000) / 12;
-    });
-    const departmentStats = Object.values(deptMap).sort((a, b) => b.headcount - a.headcount);
-
-    const nowYear = new Date().getFullYear();
-    const tenureStats = {
-      under1Year: 0,
-      oneToThreeYears: 0,
-      threeToFiveYears: 0,
-      overFiveYears: 0,
-    };
-    employees.forEach((emp) => {
-      const hireYear = emp.hireDate ? new Date(emp.hireDate).getFullYear() : nowYear - 1;
-      const diff = nowYear - hireYear;
-      if (diff < 1) tenureStats.under1Year += 1;
-      else if (diff <= 3) tenureStats.oneToThreeYears += 1;
-      else if (diff <= 5) tenureStats.threeToFiveYears += 1;
-      else tenureStats.overFiveYears += 1;
-    });
-
-    const auditLogs = rawAuditLogs.map((log) => ({
-      ...log,
-      timestamp: formatRelativeTimestamp(log.timestamp),
-    }));
-
-    const primaryShift = config?.shifts?.[0];
-    const leaveTypes = config?.leavePolicy?.leaveTypes || [];
-    const annualQuota = leaveTypes.find((t) => t.code === "Annual")?.quota ?? 14;
-    const sickQuota = leaveTypes.find((t) => t.code === "Sick")?.quota ?? 8;
-    const casualQuota = leaveTypes.find((t) => t.code === "Casual")?.quota ?? 10;
-
-    const activePolicySummary = {
-      shiftName: primaryShift?.name || "General Office Shift",
-      shiftStart: primaryShift?.startTime || "09:00",
-      shiftEnd: primaryShift?.endTime || "18:00",
-      graceMinutes: config?.latePolicy?.graceMinutes ?? 15,
-      annualQuota,
-      sickQuota,
-      casualQuota,
-      salaryMethod: config?.salarySetup?.calculationMethod || "WorkingDays",
-      devicesOnline: (config?.devices || []).filter((d) => d.status === "Online" && d.enabled).length,
-      devicesTotal: (config?.devices || []).length,
-      holidaysCount: (config?.holidays || []).length,
-      attendanceLockedUpTo: config?.attendanceRule?.attendanceLockedUpTo || "",
-    };
-
-    const result = {
-      activeHeadcount,
-      totalHeadcount: employees.length,
-      attritionRate,
-      totalMonthlyPayroll,
-      averageSalary,
-      departmentStats,
-      tenureStats,
-      auditLogs,
-      activePolicySummary,
-    };
     reportCache.set("admin", { data: result, time: Date.now() });
     return result;
   },

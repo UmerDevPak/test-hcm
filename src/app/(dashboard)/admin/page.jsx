@@ -65,16 +65,15 @@ export default function AdminDashboardPage() {
   }, [user, isAdmin, authLoading, router]);
 
   const loadData = async (force = false) => {
-    if (!isAdmin) return;
     try {
       const [data, rankStats, recs] = await Promise.all([
         reportService.getAdminDashboardMetrics(force),
         performanceService.getRankingStats(),
         performanceService.getPromotionRecommendations({}, force),
       ]);
-      setMetrics(data);
-      setRankingStats(rankStats);
-      setRecommendations(recs);
+      if (data) setMetrics(data);
+      if (rankStats) setRankingStats(rankStats);
+      if (recs) setRecommendations(recs);
     } catch (err) {
       console.warn("[AdminDashboard] Error loading metrics:", err);
     } finally {
@@ -83,9 +82,7 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    if (isAdmin) {
-      loadData();
-    }
+    loadData();
   }, [isAdmin]);
 
   useEffect(() => {
@@ -100,7 +97,7 @@ export default function AdminDashboardPage() {
 
   const handleApprovePromotion = async (rec) => {
     // 1. Instant optimistic UI feedback (0ms)
-    setPromotionRecs((prev) => prev.filter((r) => r.id !== rec.id));
+    setRecommendations((prev) => prev.filter((r) => r.id !== rec.id));
     setRankingStats((prev) => {
       if (!prev) return prev;
       const oldRank = rec.currentRank || "Rank B";
@@ -136,7 +133,7 @@ export default function AdminDashboardPage() {
     if (reason === null) return;
 
     // 1. Instant optimistic UI feedback (0ms)
-    setPromotionRecs((prev) => prev.filter((r) => r.id !== rec.id));
+    setRecommendations((prev) => prev.filter((r) => r.id !== rec.id));
     setRankingStats((prev) => {
       if (!prev) return prev;
       return {
@@ -263,7 +260,7 @@ export default function AdminDashboardPage() {
         <Card className="border-indigo-500/20 bg-zinc-900/70">
           <CardContent className="py-3.5 px-4">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 flex-1 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 flex-1 text-xs">
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
                   <div>

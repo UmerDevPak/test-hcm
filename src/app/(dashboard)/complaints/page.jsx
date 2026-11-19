@@ -494,7 +494,7 @@ export default function ComplaintsPage() {
         </motion.div>
       </motion.div>
 
-      {/* Visual Telemetry: Category & Urgency Distribution (Trigger on Scroll) */}
+      {/* Visual Telemetry: Category & Urgency Distribution */}
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -537,8 +537,9 @@ export default function ComplaintsPage() {
                     <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${Math.max(cat.percent, cat.count > 0 ? 8 : 0)}%` }}
-                        transition={{ duration: 0.55, ease: "easeOut" }}
+                        whileInView={{ width: `${Math.max(cat.percent, cat.count > 0 ? 8 : 0)}%` }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                         className="h-full rounded-full bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-500"
                       />
                     </div>

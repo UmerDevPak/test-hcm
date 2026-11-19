@@ -43,7 +43,7 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 px-3 sm:px-6 backdrop-blur-md">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between gap-2 sm:gap-4 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 px-3 sm:px-6 backdrop-blur-md">
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           onClick={onOpenSidebar}
@@ -57,26 +57,36 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
           <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-glow">
             <Building2 className="w-3.5 h-3.5" />
           </div>
-          <span className="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 hidden min-[400px]:inline whitespace-nowrap">
+          <span className="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 hidden min-[480px]:inline whitespace-nowrap">
             HCM Lite
           </span>
         </Link>
 
+        {/* Desktop & Laptop Command Palette Search */}
         <button
           onClick={onOpenCommandPalette}
-          className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all w-64 justify-between shrink-0"
+          className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all w-36 sm:w-48 lg:w-64 justify-between min-w-0"
         >
-          <div className="flex items-center gap-2">
-            <Search className="w-3.5 h-3.5 text-zinc-400" />
-            <span className="whitespace-nowrap">Search or command...</span>
+          <div className="flex items-center gap-2 min-w-0">
+            <Search className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+            <span className="truncate">Search or command...</span>
           </div>
-          <kbd className="inline-flex items-center gap-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 shrink-0">
+          <kbd className="hidden lg:inline-flex items-center gap-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 shrink-0">
             <Command className="w-2.5 h-2.5" /> K
           </kbd>
         </button>
+
+        {/* Mobile & Small Tablet Quick Search Icon */}
+        <button
+          onClick={onOpenCommandPalette}
+          aria-label="Search or command palette"
+          className="md:hidden p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors shrink-0"
+        >
+          <Search className="w-4 h-4" />
+        </button>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 min-w-0">
         <NotificationCenter />
         <RoleSwitcher />
 

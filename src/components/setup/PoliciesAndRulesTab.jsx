@@ -276,13 +276,15 @@ export function LatePolicyTab({ config, onConfigUpdated, actorName = "Sarah Conn
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-amber-400" />
-          Tab 04 — Late Arrival Policy
-        </CardTitle>
-        <p className="text-xs text-zinc-400 mt-1">
-          Define grace minutes, deduction basis (Shift Start vs After Grace), frequency penalties (e.g., 3 lates = 0.5 day), and slab table.
-        </p>
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-amber-400" />
+            Tab 04 — Late Arrival Policy
+          </CardTitle>
+          <p className="text-xs text-zinc-400 mt-1">
+            Define grace minutes, deduction basis (Shift Start vs After Grace), frequency penalties (e.g., 3 lates = 0.5 day), and slab table.
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-5">
@@ -430,13 +432,15 @@ export function OvertimePolicyTab({ config, onConfigUpdated, actorName = "Sarah 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Zap className="w-4 h-4 text-emerald-400" />
-          Tab 05 — Overtime (OT) Policy
-        </CardTitle>
-        <p className="text-xs text-zinc-400 mt-1">
-          Configure post-shift buffer, rounding, daily/monthly caps, multipliers (Working/Off/Holiday/Night), and Cash vs Comp-Off payout.
-        </p>
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="w-4 h-4 text-emerald-400" />
+            Tab 05 — Overtime (OT) Policy
+          </CardTitle>
+          <p className="text-xs text-zinc-400 mt-1">
+            Configure post-shift buffer, rounding, daily/monthly caps, multipliers (Working/Off/Holiday/Night), and Cash vs Comp-Off payout.
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-5">
@@ -595,13 +599,15 @@ export function OffHalfDayTab({ config, onConfigUpdated, actorName = "Sarah Conn
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <AlertTriangle className="w-4 h-4 text-purple-400" />
-          Tab 07 — OFF / Half Day & Absence Thresholds
-        </CardTitle>
-        <p className="text-xs text-zinc-400 mt-1">
-          Define thresholds where severe lateness or short hours automatically convert to Half-Day or Absent, plus weekly-off & sandwich rules.
-        </p>
+        <div>
+          <CardTitle className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-purple-400" />
+            Tab 07 — OFF / Half Day & Absence Thresholds
+          </CardTitle>
+          <p className="text-xs text-zinc-400 mt-1">
+            Define thresholds where severe lateness or short hours automatically convert to Half-Day or Absent, plus weekly-off & sandwich rules.
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-5">

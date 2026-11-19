@@ -18,6 +18,11 @@
   --border: 240 3.7% 15.9%;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: #09090b;
   color: #f4f4f5;

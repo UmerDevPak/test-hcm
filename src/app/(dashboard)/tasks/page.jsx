@@ -506,7 +506,7 @@ export default function TasksPage() {
         </motion.div>
       </motion.div>
 
-      {/* 3. Department Velocity Telemetry Bars (Trigger on Scroll into View) */}
+      {/* 3. Department Velocity Telemetry Bars */}
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -548,8 +548,9 @@ export default function TasksPage() {
               <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${Math.max(dept.rate, 6)}%` }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  whileInView={{ width: `${Math.max(dept.rate, 6)}%` }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                   className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"
                 />
               </div>
@@ -577,6 +578,7 @@ export default function TasksPage() {
           ].map((tab) => (
             <button
               key={tab.id}
+              type="button"
               onClick={() => setActiveTab(tab.id)}
               className={cn(
                 "px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all duration-150",
@@ -603,7 +605,7 @@ export default function TasksPage() {
       </motion.div>
 
       {/* 5. Task Cards Feed */}
-      <div className="space-y-4 min-h-[380px]">
+      <div className="space-y-4 min-h-[480px]">
         {filteredTasks.length === 0 ? (
           <EmptyState
             title="Oops! There is nothing to see here"

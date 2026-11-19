@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 import {
   ResponsiveContainer,
   BarChart,
@@ -36,6 +37,8 @@ export function WorkforceTenureChart({
   totalEmployees = 0,
   height = 220,
 }) {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.15 });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -76,6 +79,7 @@ export function WorkforceTenureChart({
   if (!mounted) {
     return (
       <div
+        ref={containerRef}
         className="w-full flex items-center justify-center text-xs text-zinc-500"
         style={{ height }}
       >
@@ -85,10 +89,14 @@ export function WorkforceTenureChart({
   }
 
   return (
-    <div className="space-y-4">
+    <div ref={containerRef} className="space-y-4">
       <div className="w-full" style={{ height }}>
         <ResponsiveContainer width="100%" height={height}>
-          <BarChart data={data} margin={{ top: 8, right: 12, left: -16, bottom: 0 }}>
+          <BarChart
+            key={`tenure-${isInView ? "active" : "idle"}`}
+            data={data}
+            margin={{ top: 8, right: 12, left: -16, bottom: 0 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
             <XAxis
               dataKey="bracket"
@@ -103,7 +111,16 @@ export function WorkforceTenureChart({
               tickLine={false}
             />
             <Tooltip content={<CustomTenureTooltip />} />
-            <Bar dataKey="count" name="Staff Count" radius={[6, 6, 0, 0]} maxBarSize={44}>
+            <Bar
+              dataKey="count"
+              name="Staff Count"
+              radius={[6, 6, 0, 0]}
+              maxBarSize={44}
+              isAnimationActive={isInView}
+              animationDuration={1600}
+              animationEasing="ease-out"
+              animationBegin={200}
+            >
               {data.map((entry, idx) => (
                 <Cell key={entry.bracket} fill={TENURE_COLORS[idx % TENURE_COLORS.length]} />
               ))}

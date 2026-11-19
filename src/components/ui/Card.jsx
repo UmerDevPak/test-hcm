@@ -21,7 +21,7 @@ export function CardHeader({ children, className = "", ...props }) {
   return (
     <div
       className={cn(
-        "px-6 py-5 border-b border-zinc-100 dark:border-zinc-800/70 flex items-center justify-between",
+        "px-4 sm:px-6 py-4 sm:py-5 border-b border-zinc-100 dark:border-zinc-800/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3",
         className
       )}
       {...props}

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useInView } from "framer-motion";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -47,6 +48,8 @@ function CustomAttendanceTooltip({ active, payload, label }) {
 }
 
 export function AttendanceTrendChart({ data = null, height = 240 }) {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.15 });
   const [mounted, setMounted] = useState(false);
   const [chartData, setChartData] = useState(
     Array.isArray(data) && data.length > 0 ? data : DEFAULT_WEEKLY_TELEMETRY
@@ -113,6 +116,7 @@ export function AttendanceTrendChart({ data = null, height = 240 }) {
   if (!mounted) {
     return (
       <div
+        ref={containerRef}
         className="w-full flex items-center justify-center text-xs text-zinc-500"
         style={{ height }}
       >
@@ -122,9 +126,13 @@ export function AttendanceTrendChart({ data = null, height = 240 }) {
   }
 
   return (
-    <div className="w-full" style={{ height }}>
+    <div ref={containerRef} className="w-full" style={{ height }}>
       <ResponsiveContainer width="100%" height={height}>
-        <AreaChart data={chartData} margin={{ top: 10, right: 12, left: -16, bottom: 0 }}>
+        <AreaChart
+          key={`trend-${isInView ? "active" : "idle"}`}
+          data={chartData}
+          margin={{ top: 10, right: 12, left: -16, bottom: 0 }}
+        >
           <defs>
             <linearGradient id="hqPresenceGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#10b981" stopOpacity={0.35} />
@@ -157,6 +165,10 @@ export function AttendanceTrendChart({ data = null, height = 240 }) {
             strokeWidth={2}
             fillOpacity={1}
             fill="url(#hqPresenceGrad)"
+            isAnimationActive={isInView}
+            animationDuration={1700}
+            animationEasing="ease-out"
+            animationBegin={200}
           />
           <Area
             type="monotone"
@@ -166,6 +178,10 @@ export function AttendanceTrendChart({ data = null, height = 240 }) {
             strokeWidth={2}
             fillOpacity={1}
             fill="url(#wfhShiftGrad)"
+            isAnimationActive={isInView}
+            animationDuration={1700}
+            animationEasing="ease-out"
+            animationBegin={380}
           />
         </AreaChart>
       </ResponsiveContainer>

@@ -174,7 +174,7 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="relative flex h-screen bg-zinc-950 text-zinc-100 overflow-hidden w-full">
+    <div className="fixed inset-0 flex bg-zinc-950 text-zinc-100 overflow-hidden w-full h-full">
       {/* Global Enterprise Network Mesh Background (Reference Image 3 - Harmonized to Dark Theme) */}
       <div
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-right-bottom bg-no-repeat opacity-[0.16] mix-blend-screen transition-opacity duration-1000"

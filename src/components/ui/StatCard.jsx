@@ -27,9 +27,10 @@ export function StatCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/75 p-5 transition-colors duration-150 hover:border-indigo-500/30 dark:hover:border-indigo-500/40 group flex flex-col justify-between h-full min-h-[136px] relative overflow-hidden",
         className

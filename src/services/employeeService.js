@@ -47,9 +47,16 @@ function getLocalEmployees() {
   }
   try {
     const parsed = JSON.parse(stored);
-    return Array.isArray(parsed) ? parsed.map(normalizeEmployee) : INITIAL_EMPLOYEES.map(normalizeEmployee);
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      const list = INITIAL_EMPLOYEES.map(normalizeEmployee);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      return list;
+    }
+    return parsed.map(normalizeEmployee);
   } catch {
-    return INITIAL_EMPLOYEES.map(normalizeEmployee);
+    const list = INITIAL_EMPLOYEES.map(normalizeEmployee);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    return list;
   }
 }
 

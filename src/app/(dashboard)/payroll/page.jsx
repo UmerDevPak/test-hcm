@@ -311,21 +311,24 @@ export default function PayrollPage() {
         <div className="h-3 w-full rounded-full bg-zinc-800 overflow-hidden flex gap-1 p-0.5">
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: `${netPercent}%` }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            whileInView={{ width: `${netPercent}%` }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400"
           />
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: `${taxPercent}%` }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            whileInView={{ width: `${taxPercent}%` }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
             className="h-full rounded-full bg-gradient-to-r from-rose-500 to-rose-400"
           />
           {deductPercent > 0 && (
             <motion.div
               initial={{ width: 0 }}
-              animate={{ width: `${deductPercent}%` }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              whileInView={{ width: `${deductPercent}%` }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
               className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400"
             />
           )}
