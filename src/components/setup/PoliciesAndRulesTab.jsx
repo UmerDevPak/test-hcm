@@ -71,24 +71,24 @@ export function AttendanceRuleTab({ config, onConfigUpdated, actorName = "Sarah 
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-indigo-400" />
-            Tab 03 — Master Attendance Rule
+      <CardHeader className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <CardTitle className="flex items-center gap-2 flex-wrap">
+            <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0" />
+            <span>Tab 03 — Master Attendance Rule</span>
           </CardTitle>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Configure weekly off days, alternate Saturdays, minimum shift hours, duplicate punch filter, and payroll attendance lock.
           </p>
         </div>
         {rule.attendanceLockedUpTo && (
-          <Badge variant="warning" dot>Locked up to {rule.attendanceLockedUpTo}</Badge>
+          <Badge variant="warning" dot className="shrink-0 self-start sm:self-center">Locked up to {rule.attendanceLockedUpTo}</Badge>
         )}
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-6">
           <div className="space-y-2">
-            <label className="block text-xs font-medium text-zinc-300">Weekly Off Days</label>
+            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">Weekly Off Days</label>
             <div className="flex flex-wrap gap-2">
               {DAYS_LIST.map((d) => {
                 const isOff = (rule.weeklyOffDays || []).includes(d.val);
@@ -99,8 +99,8 @@ export function AttendanceRuleTab({ config, onConfigUpdated, actorName = "Sarah 
                     onClick={() => toggleOffDay(d.val)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
                       isOff
-                        ? "bg-indigo-600/20 border-indigo-500 text-indigo-300"
-                        : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700"
+                        ? "bg-indigo-50 border-indigo-400 text-indigo-700 dark:bg-indigo-600/20 dark:border-indigo-500 dark:text-indigo-300"
+                        : "bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
                     }`}
                   >
                     {d.label} {isOff ? "(OFF)" : "(Work)"}
@@ -202,27 +202,27 @@ export function AttendanceRuleTab({ config, onConfigUpdated, actorName = "Sarah 
           </div>
 
           <div className="flex flex-wrap items-center gap-6 pt-2">
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(rule.allowEmployeeCorrection)}
                 onChange={(e) => setRule({ ...rule, allowEmployeeCorrection: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Allow Employee Self-Service Corrections & WFH Requests
             </label>
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(rule.breakPaid)}
                 onChange={(e) => setRule({ ...rule, breakPaid: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Paid Meal / Tea Break ({rule.breakMinutes || 60} mins)
             </label>
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-zinc-800">
+          <div className="flex justify-end pt-4 border-t border-zinc-200 dark:border-zinc-800">
             <Button type="submit" icon={Save} isLoading={saving}>
               Save Attendance Rule
             </Button>
@@ -276,34 +276,34 @@ export function LatePolicyTab({ config, onConfigUpdated, actorName = "Sarah Conn
   return (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-amber-400" />
-            Tab 04 — Late Arrival Policy
+        <div className="min-w-0 flex-1">
+          <CardTitle className="flex items-center gap-2 flex-wrap">
+            <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>Tab 04 — Late Arrival Policy</span>
           </CardTitle>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Define grace minutes, deduction basis (Shift Start vs After Grace), frequency penalties (e.g., 3 lates = 0.5 day), and slab table.
           </p>
         </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-5">
-          <div className="flex items-center gap-6">
-            <label className="flex items-center gap-2 text-xs font-medium text-zinc-200 cursor-pointer">
+          <div className="flex flex-wrap items-center gap-6">
+            <label className="flex items-center gap-2 text-xs font-medium text-zinc-700 dark:text-zinc-200 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(policy.enabled)}
                 onChange={(e) => setPolicy({ ...policy, enabled: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Enable Late Policy Enforcement
             </label>
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(policy.frequencyPenaltyEnabled)}
                 onChange={(e) => setPolicy({ ...policy, frequencyPenaltyEnabled: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Enable Frequency Penalty (N lates = X day)
             </label>
@@ -432,12 +432,12 @@ export function OvertimePolicyTab({ config, onConfigUpdated, actorName = "Sarah 
   return (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-emerald-400" />
-            Tab 05 — Overtime (OT) Policy
+        <div className="min-w-0 flex-1">
+          <CardTitle className="flex items-center gap-2 flex-wrap">
+            <Zap className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>Tab 05 — Overtime (OT) Policy</span>
           </CardTitle>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Configure post-shift buffer, rounding, daily/monthly caps, multipliers (Working/Off/Holiday/Night), and Cash vs Comp-Off payout.
           </p>
         </div>
@@ -445,21 +445,21 @@ export function OvertimePolicyTab({ config, onConfigUpdated, actorName = "Sarah 
       <CardContent>
         <form onSubmit={handleSave} className="space-y-5">
           <div className="flex flex-wrap items-center gap-6">
-            <label className="flex items-center gap-2 text-xs font-medium text-zinc-200 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs font-medium text-zinc-700 dark:text-zinc-200 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(ot.enabled)}
                 onChange={(e) => setOt({ ...ot, enabled: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Enable Overtime Calculation
             </label>
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(ot.netLateAgainstOt)}
                 onChange={(e) => setOt({ ...ot, netLateAgainstOt: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Net Late Minutes Against Overtime First
             </label>
@@ -599,12 +599,12 @@ export function OffHalfDayTab({ config, onConfigUpdated, actorName = "Sarah Conn
   return (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-purple-400" />
-            Tab 07 — OFF / Half Day & Absence Thresholds
+        <div className="min-w-0 flex-1">
+          <CardTitle className="flex items-center gap-2 flex-wrap">
+            <AlertTriangle className="w-4 h-4 text-purple-400 shrink-0" />
+            <span>Tab 07 — OFF / Half Day & Absence Thresholds</span>
           </CardTitle>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Define thresholds where severe lateness or short hours automatically convert to Half-Day or Absent, plus weekly-off & sandwich rules.
           </p>
         </div>
@@ -660,27 +660,27 @@ export function OffHalfDayTab({ config, onConfigUpdated, actorName = "Sarah Conn
           </div>
 
           <div className="flex flex-wrap items-center gap-6 pt-2">
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(rule.sandwichRuleEnabled)}
                 onChange={(e) => setRule({ ...rule, sandwichRuleEnabled: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Enable Sandwich Rule (Absent/Leave on Friday & Monday marks weekend unpaid)
             </label>
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(rule.halfDayAutoLeaveAdjust)}
                 onChange={(e) => setRule({ ...rule, halfDayAutoLeaveAdjust: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Auto-Deduct Half-Day from Leave Balance First
             </label>
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-zinc-800">
+          <div className="flex justify-end pt-4 border-t border-zinc-200 dark:border-zinc-800">
             <Button type="submit" icon={Save} isLoading={saving}>
               Save OFF / Half-Day Rules
             </Button>

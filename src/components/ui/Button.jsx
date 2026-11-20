@@ -20,7 +20,7 @@ export function Button({
     primary:
       "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white shadow-sm focus:ring-indigo-500 border border-indigo-500/20",
     secondary:
-      "bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-900 text-zinc-100 shadow-sm focus:ring-zinc-600 border border-zinc-700/60 dark:bg-zinc-800 dark:hover:bg-zinc-700",
+      "bg-zinc-100 hover:bg-zinc-200 active:bg-zinc-300 text-zinc-800 border border-zinc-200 shadow-sm focus:ring-zinc-400 dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-900 dark:text-zinc-100 dark:border-zinc-700/60 dark:focus:ring-zinc-600",
     outline:
       "border border-zinc-300 dark:border-zinc-700/80 hover:bg-zinc-100 dark:hover:bg-zinc-800 active:bg-zinc-200 dark:active:bg-zinc-700 text-zinc-800 dark:text-zinc-200 focus:ring-zinc-400",
     ghost:

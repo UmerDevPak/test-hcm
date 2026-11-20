@@ -498,7 +498,7 @@ export function EmployeesOnDeviceTab({ config, onConfigUpdated, actorName = "Aal
                 loadPool(e.target.value);
               }}
               aria-label="Filter by biometric device"
-              className="rounded-lg text-xs bg-zinc-900 border border-zinc-800 text-zinc-200 px-3 py-1.5"
+              className="rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               <option value="">All Registered Devices</option>
               {(config?.devices || []).map((d) => (
@@ -520,7 +520,7 @@ export function EmployeesOnDeviceTab({ config, onConfigUpdated, actorName = "Aal
             {mismatchCount > 0 && <Badge variant="warning">{mismatchCount} Warnings (Mismatch / Duplicate)</Badge>}
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-zinc-800">
+          <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
             <Table>
               <TableHeader>
                 <TableRow>

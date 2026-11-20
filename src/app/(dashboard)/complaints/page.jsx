@@ -852,23 +852,23 @@ export default function ComplaintsPage() {
       {/* ========================================================= */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-lg rounded-3xl border border-zinc-700 bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-lg rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setIsCreateModalOpen(false)}
-              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 text-xs text-rose-400 font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 text-xs text-rose-500 dark:text-rose-400 font-semibold uppercase tracking-wider">
                 <ShieldAlert className="w-3.5 h-3.5" />
                 <span>Confidential Grievance Submission</span>
               </div>
-              <h3 className="text-xl font-bold tracking-tight text-zinc-100">
+              <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
                 File a Formal Complaint
               </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 All submissions are encrypted and handled under enterprise whistleblowing policy. HR will review and investigate according to severity.
               </p>
             </div>
@@ -884,13 +884,13 @@ export default function ComplaintsPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-zinc-300 block">
+                  <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                     Grievance Category
                   </label>
                   <select
                     value={createFormData.category}
                     onChange={(e) => setCreateFormData({ ...createFormData, category: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   >
                     {COMPLAINT_CATEGORIES.map((cat) => (
                       <option key={cat.id} value={cat.id}>
@@ -901,13 +901,13 @@ export default function ComplaintsPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-zinc-300 block">
+                  <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                     Urgency Level
                   </label>
                   <select
                     value={createFormData.urgency}
                     onChange={(e) => setCreateFormData({ ...createFormData, urgency: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   >
                     <option value="Low">Low - General Inquiry</option>
                     <option value="Medium">Medium - Operational Impact</option>
@@ -918,12 +918,12 @@ export default function ComplaintsPage() {
               </div>
 
               {/* Anonymous Whistleblower Option */}
-              <div className="p-3.5 rounded-2xl border border-zinc-800 bg-zinc-900/60 flex items-center justify-between cursor-pointer">
+              <div className="p-3.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 flex items-center justify-between cursor-pointer">
                 <div className="space-y-0.5">
-                  <span className="font-semibold text-xs text-zinc-200 block">
+                  <span className="font-semibold text-xs text-zinc-800 dark:text-zinc-200 block">
                     Anonymous Whistleblower Mode
                   </span>
-                  <span className="text-[11px] text-zinc-400 block">
+                  <span className="text-[11px] text-zinc-500 dark:text-zinc-400 block">
                     Hides your name and email. HR and Admin see "Anonymous Whistleblower".
                   </span>
                 </div>
@@ -931,12 +931,12 @@ export default function ComplaintsPage() {
                   type="checkbox"
                   checked={createFormData.isAnonymous}
                   onChange={(e) => setCreateFormData({ ...createFormData, isAnonymous: e.target.checked })}
-                  className="w-4 h-4 rounded border-zinc-700 bg-zinc-800 text-indigo-600 focus:ring-0 cursor-pointer"
+                  className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-indigo-600 focus:ring-0 cursor-pointer"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300 block">
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                   Detailed Statement of Facts
                 </label>
                 <textarea
@@ -944,13 +944,13 @@ export default function ComplaintsPage() {
                   placeholder="Provide objective dates, occurrences, parties involved, and impact..."
                   value={createFormData.description}
                   onChange={(e) => setCreateFormData({ ...createFormData, description: e.target.value })}
-                  className="w-full p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   required
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300 block">
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                   Desired Remedy or Proposed Outcome (Optional)
                 </label>
                 <textarea
@@ -958,7 +958,7 @@ export default function ComplaintsPage() {
                   placeholder="What resolution or corrective action are you requesting from HR / Executive Leadership?"
                   value={createFormData.desiredRemedy}
                   onChange={(e) => setCreateFormData({ ...createFormData, desiredRemedy: e.target.value })}
-                  className="w-full p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
@@ -966,7 +966,7 @@ export default function ComplaintsPage() {
                 <button
                   type="button"
                   onClick={() => setIsCreateModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Cancel
                 </button>
@@ -984,10 +984,10 @@ export default function ComplaintsPage() {
       {/* ========================================================= */}
       {selectedComplaint && !isEscalateModalOpen && !isAdminApproveModalOpen && !isResolveModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-2xl rounded-3xl border border-zinc-700 bg-zinc-950 p-6 sm:p-8 shadow-2xl space-y-6 animate-scale-in max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-2xl rounded-3xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 p-6 sm:p-8 shadow-2xl space-y-6 animate-scale-in max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setSelectedComplaint(null)}
-              className="absolute top-6 right-6 p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="absolute top-6 right-6 p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -995,70 +995,70 @@ export default function ComplaintsPage() {
             {/* Header */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="font-mono font-bold text-xs px-2 py-0.5 rounded-lg bg-zinc-800 text-zinc-200 border border-zinc-700">
+                <span className="font-mono font-bold text-xs px-2 py-0.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700">
                   {selectedComplaint.caseNumber}
                 </span>
                 {getUrgencyBadge(selectedComplaint.urgency)}
-                <span className="text-xs text-zinc-400 font-mono">
+                <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">
                   Filed on {formatDate(selectedComplaint.createdAt)}
                 </span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-bold text-zinc-100 tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
                 {selectedComplaint.title}
               </h2>
             </div>
 
             {/* Description dossier */}
-            <div className="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-xs text-zinc-300 space-y-2">
-              <span className="font-bold text-zinc-400 block uppercase tracking-wider text-[10px]">
+            <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-800 dark:text-zinc-300 space-y-2">
+              <span className="font-bold text-zinc-500 dark:text-zinc-400 block uppercase tracking-wider text-[10px]">
                 Official Statement of Grievance:
               </span>
-              <p className="leading-relaxed text-zinc-200">{selectedComplaint.description}</p>
+              <p className="leading-relaxed text-zinc-800 dark:text-zinc-200">{selectedComplaint.description}</p>
             </div>
 
             {/* Remedy Callout */}
             {selectedComplaint.desiredRemedy && (
-              <div className="p-3.5 rounded-2xl bg-indigo-950/20 border border-indigo-500/20 text-xs text-indigo-300 space-y-1">
-                <strong className="block text-[10px] uppercase font-bold text-indigo-400">
+              <div className="p-3.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-500/20 text-xs text-indigo-700 dark:text-indigo-300 space-y-1">
+                <strong className="block text-[10px] uppercase font-bold text-indigo-600 dark:text-indigo-400">
                   Requested Remedy:
                 </strong>
-                <p className="text-zinc-200">{selectedComplaint.desiredRemedy}</p>
+                <p className="text-zinc-800 dark:text-zinc-200">{selectedComplaint.desiredRemedy}</p>
               </div>
             )}
 
             {/* HR Investigation notes if present */}
             {selectedComplaint.hrNotes && (
-              <div className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs space-y-1.5">
-                <div className="flex items-center justify-between font-bold text-zinc-300 text-xs">
+              <div className="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-zinc-700 dark:text-zinc-300 text-xs">
                   <span>HR Lead Investigator Notes ({selectedComplaint.assignedInvestigator || "HR"}):</span>
                 </div>
-                <p className="text-zinc-300 leading-relaxed">{selectedComplaint.hrNotes}</p>
+                <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{selectedComplaint.hrNotes}</p>
               </div>
             )}
 
             {/* Admin Escalation & Review section */}
             {selectedComplaint.escalationDetails && (
-              <div className="p-4 rounded-2xl border border-purple-500/30 bg-purple-950/20 text-xs text-purple-200 space-y-2">
-                <span className="font-bold text-purple-300 block text-xs flex items-center gap-1.5">
-                  <ShieldAlert className="w-3.5 h-3.5 text-purple-400" />
+              <div className="p-4 rounded-2xl border border-purple-200 dark:border-purple-500/30 bg-purple-50 dark:bg-purple-950/20 text-xs text-purple-900 dark:text-purple-200 space-y-2">
+                <span className="font-bold text-purple-700 dark:text-purple-300 block text-xs flex items-center gap-1.5">
+                  <ShieldAlert className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                   <span>Executive Admin Escalation Dossier:</span>
                 </span>
-                <p className="text-zinc-200">{selectedComplaint.escalationDetails.reason}</p>
-                <div className="text-[11px] text-purple-300/80 pt-1">
+                <p className="text-zinc-800 dark:text-zinc-200">{selectedComplaint.escalationDetails.reason}</p>
+                <div className="text-[11px] text-purple-700 dark:text-purple-300/80 pt-1">
                   <strong>Requested Executive Action:</strong> {selectedComplaint.escalationDetails.requestedAdminAction}
                 </div>
               </div>
             )}
 
             {selectedComplaint.adminReview && (
-              <div className="p-4 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 text-xs text-emerald-200 space-y-1.5">
-                <span className="font-bold text-emerald-300 block text-xs flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <div className="p-4 rounded-2xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/20 text-xs text-emerald-900 dark:text-emerald-200 space-y-1.5">
+                <span className="font-bold text-emerald-700 dark:text-emerald-300 block text-xs flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Executive Administrator Official Sign-Off:</span>
                 </span>
-                <p className="text-zinc-200">{selectedComplaint.adminReview.notes}</p>
-                <span className="text-[10px] text-emerald-400/80 block font-mono">
+                <p className="text-zinc-800 dark:text-zinc-200">{selectedComplaint.adminReview.notes}</p>
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400/80 block font-mono">
                   Authorized by {selectedComplaint.adminReview.reviewedBy} on {formatDate(selectedComplaint.adminReview.reviewedAt)}
                 </span>
               </div>
@@ -1066,20 +1066,20 @@ export default function ComplaintsPage() {
 
             {/* Complete Chronological Case Timeline */}
             <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center gap-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />
                 <span>Chronological Case Audit Trail</span>
               </h4>
 
-              <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-zinc-800">
+              <div className="relative pl-6 space-y-4 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-zinc-200 dark:before:bg-zinc-800">
                 {selectedComplaint.timeline.map((item, idx) => (
                   <div key={item.id || idx} className="relative space-y-1">
-                    <span className="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-indigo-500 ring-4 ring-zinc-950" />
+                    <span className="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-indigo-500 ring-4 ring-white dark:ring-zinc-950" />
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-zinc-200">{item.stage}</span>
+                      <span className="font-bold text-zinc-800 dark:text-zinc-200">{item.stage}</span>
                       <span className="text-[10px] text-zinc-500 font-mono">{formatDate(item.timestamp)}</span>
                     </div>
-                    <p className="text-xs text-zinc-400 leading-relaxed">{item.note}</p>
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">{item.note}</p>
                     <span className="text-[10px] text-zinc-500 font-medium">Logged by: {item.author} ({item.role})</span>
                   </div>
                 ))}
@@ -1087,10 +1087,10 @@ export default function ComplaintsPage() {
             </div>
 
             {/* Action Bar inside dossier */}
-            <div className="pt-4 border-t border-zinc-800 flex items-center justify-end gap-2.5">
+            <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-end gap-2.5">
               <button
                 onClick={() => setSelectedComplaint(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 Close Dossier
               </button>
@@ -1098,7 +1098,7 @@ export default function ComplaintsPage() {
               {activeRole === "HR" && selectedComplaint.status === "INVESTIGATING" && (
                 <button
                   onClick={() => setIsEscalateModalOpen(true)}
-                  className="px-4 py-2 rounded-xl border border-purple-500/40 bg-purple-600/30 text-purple-200 text-xs font-bold hover:bg-purple-600/40 transition-colors"
+                  className="px-4 py-2 rounded-xl border border-purple-500/40 bg-purple-600/30 text-purple-700 dark:text-purple-200 text-xs font-bold hover:bg-purple-600/40 transition-colors"
                 >
                   Escalate to Executive Admin
                 </button>
@@ -1122,30 +1122,30 @@ export default function ComplaintsPage() {
       {/* ========================================================= */}
       {isEscalateModalOpen && selectedComplaint && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-md rounded-3xl border border-purple-500/50 bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in">
+          <div className="relative w-full max-w-md rounded-3xl border border-purple-200 dark:border-purple-500/50 bg-white dark:bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in">
             <button
               onClick={() => setIsEscalateModalOpen(false)}
-              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 text-xs text-purple-400 font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 text-xs text-purple-600 dark:text-purple-400 font-semibold uppercase tracking-wider">
                 <ShieldAlert className="w-3.5 h-3.5" />
                 <span>Executive Escalation Gateway</span>
               </div>
-              <h3 className="text-lg font-bold text-zinc-100">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
                 Escalate Case to Executive Admin
               </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 Escalate {selectedComplaint.caseNumber} to Sarah Connor (Executive Admin) for budget authorization, policy change, or disciplinary sign-off.
               </p>
             </div>
 
             <form onSubmit={handleEscalateSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300 block">
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                   HR Findings & Reason for Escalation
                 </label>
                 <textarea
@@ -1153,13 +1153,13 @@ export default function ComplaintsPage() {
                   placeholder="Explain why this requires Executive Admin approval (e.g., budget impact, legal risk, management disciplinary action)..."
                   value={escalateData.reason}
                   onChange={(e) => setEscalateData({ ...escalateData, reason: e.target.value })}
-                  className="w-full p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                  className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-purple-500"
                   required
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300 block">
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                   Requested Executive Action / Remedy
                 </label>
                 <textarea
@@ -1167,7 +1167,7 @@ export default function ComplaintsPage() {
                   placeholder="e.g. Sign off on $4,800 overtime retroactive budget, approve formal written reprimand..."
                   value={escalateData.requestedRemedy}
                   onChange={(e) => setEscalateData({ ...escalateData, requestedRemedy: e.target.value })}
-                  className="w-full p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                  className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-purple-500"
                   required
                 />
               </div>
@@ -1176,7 +1176,7 @@ export default function ComplaintsPage() {
                 <button
                   type="button"
                   onClick={() => setIsEscalateModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Cancel
                 </button>
@@ -1197,35 +1197,35 @@ export default function ComplaintsPage() {
       {/* ========================================================= */}
       {isAdminApproveModalOpen && selectedComplaint && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-md rounded-3xl border border-emerald-500/50 bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in">
+          <div className="relative w-full max-w-md rounded-3xl border border-emerald-300 dark:border-emerald-500/50 bg-white dark:bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in">
             <button
               onClick={() => setIsAdminApproveModalOpen(false)}
-              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4" />
                 <span>Executive Sign-Off Authority</span>
               </div>
-              <h3 className="text-lg font-bold text-zinc-100">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
                 Authorize Grievance Remedy
               </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 As Executive Administrator, grant official company approval for Case {selectedComplaint.caseNumber}.
               </p>
             </div>
 
             <form onSubmit={handleAdminApproveSubmit} className="space-y-4">
-              <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/30 text-xs space-y-1">
-                <span className="font-bold text-purple-300 block">HR Escalation Request:</span>
-                <p className="text-zinc-300">{selectedComplaint.escalationDetails?.reason || selectedComplaint.description}</p>
+              <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-500/30 text-xs space-y-1">
+                <span className="font-bold text-purple-700 dark:text-purple-300 block">HR Escalation Request:</span>
+                <p className="text-zinc-800 dark:text-zinc-300">{selectedComplaint.escalationDetails?.reason || selectedComplaint.description}</p>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300 block">
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                   Executive Directives / Direct Authorization Notes
                 </label>
                 <textarea
@@ -1233,7 +1233,7 @@ export default function ComplaintsPage() {
                   placeholder="Record executive decision terms, policy instructions, or authorized budget..."
                   value={adminReviewData.adminNotes}
                   onChange={(e) => setAdminReviewData({ ...adminReviewData, adminNotes: e.target.value })}
-                  className="w-full p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                   required
                 />
               </div>
@@ -1242,7 +1242,7 @@ export default function ComplaintsPage() {
                 <button
                   type="button"
                   onClick={() => setIsAdminApproveModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Cancel
                 </button>
@@ -1263,30 +1263,30 @@ export default function ComplaintsPage() {
       {/* ========================================================= */}
       {isResolveModalOpen && selectedComplaint && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-md rounded-3xl border border-emerald-500/40 bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in">
+          <div className="relative w-full max-w-md rounded-3xl border border-emerald-300 dark:border-emerald-500/40 bg-white dark:bg-zinc-950 p-6 shadow-2xl space-y-5 animate-scale-in">
             <button
               onClick={() => setIsResolveModalOpen(false)}
-              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+              className="absolute top-5 right-5 p-1 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-semibold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Final Resolution & Case Closure</span>
               </div>
-              <h3 className="text-lg font-bold text-zinc-100">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
                 Close Grievance #{selectedComplaint.caseNumber}
               </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 Document final remediation terms executed. The employee and executive admin will be notified.
               </p>
             </div>
 
             <form onSubmit={handleResolveSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300 block">
+                <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block">
                   Final Official Remediation Summary
                 </label>
                 <textarea
@@ -1294,7 +1294,7 @@ export default function ComplaintsPage() {
                   placeholder="Document actions executed (e.g., payroll adjustment processed, mediation session completed, policy memo issued)..."
                   value={resolveData.summary}
                   onChange={(e) => setResolveData({ ...resolveData, summary: e.target.value })}
-                  className="w-full p-3 rounded-xl border border-zinc-800 bg-zinc-900 text-xs text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                   required
                 />
               </div>
@@ -1303,7 +1303,7 @@ export default function ComplaintsPage() {
                 <button
                   type="button"
                   onClick={() => setIsResolveModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Cancel
                 </button>

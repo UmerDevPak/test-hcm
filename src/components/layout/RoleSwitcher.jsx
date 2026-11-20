@@ -43,14 +43,14 @@ export function RoleSwitcher() {
   return (
     <div
       title={`Active Role: ${currentRoleObj.label} (Protected session - role switching restricted)`}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-xs font-medium text-zinc-700 dark:text-zinc-200 cursor-default select-none shadow-sm"
+      className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-xs font-medium text-zinc-700 dark:text-zinc-200 cursor-default select-none shadow-sm whitespace-nowrap shrink-0"
     >
-      <CurrentIcon className={cn("w-3.5 h-3.5", currentRoleObj.color)} />
+      <CurrentIcon className={cn("w-3.5 h-3.5 shrink-0", currentRoleObj.color)} />
       <span className="hidden sm:inline text-zinc-400">Role:</span>
       <span className="font-semibold text-zinc-900 dark:text-zinc-100">
         {currentRoleObj.label}
       </span>
-      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-0.5" title="Verified Session" />
+      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-0.5 shrink-0" title="Verified Session" />
     </div>
   );
 }

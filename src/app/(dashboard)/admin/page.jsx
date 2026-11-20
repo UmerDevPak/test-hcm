@@ -371,12 +371,12 @@ export default function AdminDashboardPage() {
         viewport={scrollViewport}
         variants={itemFadeUp}
       >
-        <Card className="border-purple-500/30 bg-gradient-to-r from-zinc-900 via-zinc-900 to-purple-950/20 shadow-glow">
-          <CardHeader className="pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800">
+        <Card className="border-purple-500/30 bg-white dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-900 dark:to-purple-950/20 shadow-glow">
+          <CardHeader className="pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800">
             <div>
               <div className="flex items-center gap-2">
-                <Crown className="w-5 h-5 text-amber-400" />
-                <CardTitle className="text-base font-bold text-zinc-100">
+                <Crown className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+                <CardTitle className="text-base font-bold text-zinc-900 dark:text-zinc-100">
                   Executive Talent Promotion & Ranking Approvals
                 </CardTitle>
                 <Badge
@@ -391,7 +391,7 @@ export default function AdminDashboardPage() {
                   {recommendations.filter((r) => r.status === "Pending Admin Review").length} Pending HR Nominations
                 </Badge>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
                 Executive authority to promote employee tiers (Rank A / B / C) based on HR evaluations of work deliverables and behavioral conduct.
               </p>
             </div>
@@ -412,31 +412,31 @@ export default function AdminDashboardPage() {
           <CardContent className="space-y-6 pt-5">
             {/* Quick Rank Distribution summary strip */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="p-3 rounded-xl border border-purple-500/20 bg-purple-950/15 flex items-center justify-between">
+              <div className="p-3 rounded-xl border border-purple-500/20 bg-purple-50 dark:bg-purple-950/15 flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] font-semibold text-purple-300 block">Rank A (High Performer)</span>
-                  <span className="text-lg font-bold font-mono text-purple-100">
-                    {rankingStats?.counts?.["Rank A"] ?? 0} <span className="text-xs font-normal text-purple-400">({rankingStats?.percentages?.["Rank A"] ?? 0}%)</span>
+                  <span className="text-[11px] font-semibold text-purple-700 dark:text-purple-300 block">Rank A (High Performer)</span>
+                  <span className="text-lg font-bold font-mono text-purple-950 dark:text-purple-100">
+                    {rankingStats?.counts?.["Rank A"] ?? 0} <span className="text-xs font-normal text-purple-600 dark:text-purple-400">({rankingStats?.percentages?.["Rank A"] ?? 0}%)</span>
                   </span>
                 </div>
                 <RankBadge rank="Rank A" size="xs" />
               </div>
 
-              <div className="p-3 rounded-xl border border-emerald-500/20 bg-emerald-950/15 flex items-center justify-between">
+              <div className="p-3 rounded-xl border border-emerald-500/20 bg-emerald-50 dark:bg-emerald-950/15 flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] font-semibold text-emerald-300 block">Rank B (Core Performer)</span>
-                  <span className="text-lg font-bold font-mono text-emerald-100">
-                    {rankingStats?.counts?.["Rank B"] ?? 0} <span className="text-xs font-normal text-emerald-400">({rankingStats?.percentages?.["Rank B"] ?? 0}%)</span>
+                  <span className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300 block">Rank B (Core Performer)</span>
+                  <span className="text-lg font-bold font-mono text-emerald-950 dark:text-emerald-100">
+                    {rankingStats?.counts?.["Rank B"] ?? 0} <span className="text-xs font-normal text-emerald-600 dark:text-emerald-400">({rankingStats?.percentages?.["Rank B"] ?? 0}%)</span>
                   </span>
                 </div>
                 <RankBadge rank="Rank B" size="xs" />
               </div>
 
-              <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-950/15 flex items-center justify-between">
+              <div className="p-3 rounded-xl border border-amber-500/20 bg-amber-50 dark:bg-amber-950/15 flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] font-semibold text-amber-300 block">Rank C (Developing Tier)</span>
-                  <span className="text-lg font-bold font-mono text-amber-100">
-                    {rankingStats?.counts?.["Rank C"] ?? 0} <span className="text-xs font-normal text-amber-400">({rankingStats?.percentages?.["Rank C"] ?? 0}%)</span>
+                  <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-300 block">Rank C (Developing Tier)</span>
+                  <span className="text-lg font-bold font-mono text-amber-950 dark:text-amber-100">
+                    {rankingStats?.counts?.["Rank C"] ?? 0} <span className="text-xs font-normal text-amber-600 dark:text-amber-400">({rankingStats?.percentages?.["Rank C"] ?? 0}%)</span>
                   </span>
                 </div>
                 <RankBadge rank="Rank C" size="xs" />
@@ -445,9 +445,9 @@ export default function AdminDashboardPage() {
 
             {/* Pending Approvals Queue */}
             {recommendations.filter((r) => r.status === "Pending Admin Review").length === 0 ? (
-              <div className="p-6 text-center text-xs text-zinc-400 rounded-xl border border-zinc-800 bg-zinc-950/40 space-y-1">
-                <Sparkles className="w-6 h-6 text-emerald-400 mx-auto opacity-80 mb-2" />
-                <p className="font-semibold text-zinc-200">Executive Queue Clear</p>
+              <div className="p-6 text-center text-xs text-zinc-500 dark:text-zinc-400 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-950/40 space-y-1">
+                <Sparkles className="w-6 h-6 text-emerald-500 dark:text-emerald-400 mx-auto opacity-80 mb-2" />
+                <p className="font-semibold text-zinc-800 dark:text-zinc-200">Executive Queue Clear</p>
                 <p>All talent ranking nominations submitted by HR have been reviewed and approved.</p>
               </div>
             ) : (
@@ -463,19 +463,19 @@ export default function AdminDashboardPage() {
                     .map((rec) => (
                       <div
                         key={rec.id}
-                        className="p-4 rounded-xl border border-zinc-700/60 bg-zinc-950/70 space-y-3 hover:border-purple-500/40 transition-colors"
+                        className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-700/60 bg-white dark:bg-zinc-950/70 shadow-sm space-y-3 hover:border-purple-500/40 transition-colors"
                       >
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800/80">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
                           <div>
                             <div className="flex items-center gap-2">
-                              <h4 className="font-semibold text-sm text-zinc-100">
+                              <h4 className="font-semibold text-sm text-zinc-900 dark:text-zinc-100">
                                 {rec.employeeName}
                               </h4>
-                              <span className="text-[11px] font-mono text-zinc-400">
+                              <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
                                 ({rec.employeeId})
                               </span>
                             </div>
-                            <p className="text-xs text-zinc-400 mt-0.5">
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                               {rec.jobTitle} • {rec.department} • Recommended by {rec.submittedBy}
                             </p>
                           </div>
@@ -600,11 +600,11 @@ export default function AdminDashboardPage() {
                             {formatCurrency(dept.totalSalary)}/mo
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-[11px] text-zinc-400">
+                        <div className="flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400">
                           <span>{dept.headcount} {dept.headcount === 1 ? "member" : "members"}</span>
-                          <span className="font-mono text-zinc-300 font-semibold">{headcountPercent}%</span>
+                          <span className="font-mono text-zinc-700 dark:text-zinc-300 font-semibold">{headcountPercent}%</span>
                         </div>
-                        <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+                        <div className="h-1.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${Math.max(headcountPercent, 6)}%` }}
@@ -635,12 +635,12 @@ export default function AdminDashboardPage() {
                 totalEmployees={totalHeadcount}
               />
 
-              <div className="p-3.5 rounded-xl border border-indigo-500/20 bg-indigo-950/20 text-xs text-indigo-300 space-y-1 mt-auto">
+              <div className="p-3.5 rounded-xl border border-indigo-200 dark:border-indigo-500/20 bg-indigo-50/70 dark:bg-indigo-950/20 text-xs text-indigo-700 dark:text-indigo-300 space-y-1 mt-auto">
                 <div className="font-semibold flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                   Live HCM Policy Compliance
                 </div>
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                   {activePolicySummary.shiftName || "General Office Shift"} ({activePolicySummary.shiftStart || "09:00"} start, {activePolicySummary.graceMinutes ?? 15}m grace) and leave quotas ({activePolicySummary.annualQuota ?? 14} Annual, {activePolicySummary.sickQuota ?? 8} Sick, {activePolicySummary.casualQuota ?? 10} Casual) are live and synchronized.
                 </p>
               </div>
@@ -682,11 +682,11 @@ export default function AdminDashboardPage() {
                 <TableBody>
                   {auditLogs.map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell className="font-medium text-xs text-zinc-100">
+                      <TableCell className="font-medium text-xs text-zinc-900 dark:text-zinc-100">
                         <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-indigo-400 shrink-0" />
+                          <span className="w-2 h-2 rounded-full bg-indigo-500 dark:bg-indigo-400 shrink-0" />
                           <span>{item.actor}</span>
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700">
                             {item.role}
                           </span>
                         </div>
@@ -697,10 +697,10 @@ export default function AdminDashboardPage() {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-xs">
-                        <div className="font-semibold text-zinc-200">{item.action}</div>
-                        <div className="text-[11px] text-zinc-400 font-mono truncate max-w-xs">{item.target}</div>
+                        <div className="font-semibold text-zinc-800 dark:text-zinc-200">{item.action}</div>
+                        <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono truncate max-w-xs">{item.target}</div>
                       </TableCell>
-                      <TableCell className="text-[11px] text-zinc-400 font-mono">
+                      <TableCell className="text-[11px] text-zinc-600 dark:text-zinc-400 font-mono">
                         {item.oldValue || item.newValue
                           ? `${item.oldValue || "—"} → ${item.newValue || "—"}`
                           : "—"}

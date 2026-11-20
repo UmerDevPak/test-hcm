@@ -141,10 +141,10 @@ export function ShiftsTab({ config, onConfigUpdated, actorName = "Sarah Connor" 
                 </Badge>
               </div>
 
-              <div className="grid grid-cols-3 gap-2 text-[11px] bg-zinc-950/60 rounded-lg p-2.5 border border-zinc-800/80">
+              <div className="grid grid-cols-3 gap-2 text-[11px] bg-zinc-50 dark:bg-zinc-950/60 rounded-lg p-2.5 border border-zinc-200 dark:border-zinc-800/80">
                 <div>
                   <span className="text-zinc-500 block">Grace Override</span>
-                  <span className="font-mono text-zinc-200">
+                  <span className="font-mono text-zinc-800 dark:text-zinc-200">
                     {sh.graceMinutesOverride !== null && sh.graceMinutesOverride !== undefined
                       ? `${sh.graceMinutesOverride} mins`
                       : "Company Default"}
@@ -152,11 +152,11 @@ export function ShiftsTab({ config, onConfigUpdated, actorName = "Sarah Connor" 
                 </div>
                 <div>
                   <span className="text-zinc-500 block">Break</span>
-                  <span className="font-mono text-zinc-200">{sh.breakMinutes || 60} mins</span>
+                  <span className="font-mono text-zinc-800 dark:text-zinc-200">{sh.breakMinutes || 60} mins</span>
                 </div>
                 <div>
                   <span className="text-zinc-500 block">Allowance</span>
-                  <span className="font-mono text-emerald-400">${sh.shiftAllowance || 0}/mo</span>
+                  <span className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">${sh.shiftAllowance || 0}/mo</span>
                 </div>
               </div>
 
@@ -266,18 +266,18 @@ export function ShiftsTab({ config, onConfigUpdated, actorName = "Sarah Connor" 
             />
           </div>
 
-          <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+          <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
             <input
               type="checkbox"
               checked={Boolean(form.crossesMidnight)}
               onChange={(e) => setForm({ ...form, crossesMidnight: e.target.checked })}
-              className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+              className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
             />
             Shift crosses midnight (Night shift out-time next calendar day)
           </label>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-zinc-300">Auto-Assign Departments</label>
+            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300">Auto-Assign Departments</label>
             <div className="flex flex-wrap gap-1.5">
               {DEPARTMENTS.map((d) => {
                 const selected = (form.assignedDepartments || []).includes(d);
@@ -286,10 +286,10 @@ export function ShiftsTab({ config, onConfigUpdated, actorName = "Sarah Connor" 
                     key={d}
                     type="button"
                     onClick={() => toggleDept(d)}
-                    className={`px-2.5 py-1 rounded-md text-[11px] border ${
+                    className={`px-2.5 py-1 rounded-md text-[11px] border transition-colors ${
                       selected
-                        ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 font-semibold"
-                        : "bg-zinc-900 border-zinc-800 text-zinc-400"
+                        ? "bg-indigo-50 border-indigo-400 text-indigo-700 dark:bg-indigo-600/20 dark:border-indigo-500 dark:text-indigo-300 font-semibold"
+                        : "bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"
                     }`}
                   >
                     {d}
@@ -299,7 +299,7 @@ export function ShiftsTab({ config, onConfigUpdated, actorName = "Sarah Connor" 
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-zinc-800">
+          <div className="flex justify-end gap-2 pt-3 border-t border-zinc-200 dark:border-zinc-800">
             <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>
@@ -507,16 +507,16 @@ export function PublicHolidaysTab({ config, onConfigUpdated, actorName = "Sarah 
               onChange={(e) => setForm({ ...form, overrideWeeklyOff: e.target.value })}
             />
           </div>
-          <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+          <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
             <input
               type="checkbox"
               checked={Boolean(form.paid)}
               onChange={(e) => setForm({ ...form, paid: e.target.checked })}
-              className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+              className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
             />
             Paid Public Holiday (Does not deduct from salary or leave quota)
           </label>
-          <div className="flex justify-end gap-2 pt-3 border-t border-zinc-800">
+          <div className="flex justify-end gap-2 pt-3 border-t border-zinc-200 dark:border-zinc-800">
             <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>

@@ -25,20 +25,20 @@ function CustomAttendanceTooltip({ active, payload, label }) {
   if (!active || !payload || !payload.length) return null;
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-md p-3 shadow-2xl text-xs space-y-1.5 z-50">
-      <div className="font-semibold text-zinc-100 border-b border-zinc-800 pb-1">
+    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md p-3 shadow-2xl text-xs space-y-1.5 z-50">
+      <div className="font-semibold text-zinc-900 dark:text-zinc-100 border-b border-zinc-100 dark:border-zinc-800 pb-1">
         {label} Shift Telemetry
       </div>
       {payload.map((item) => (
         <div key={item.dataKey} className="flex items-center justify-between gap-5">
-          <div className="flex items-center gap-1.5 text-zinc-300">
+          <div className="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-300">
             <span
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: item.color }}
             />
             <span>{item.name}</span>
           </div>
-          <span className="font-mono tabular-nums font-bold text-zinc-100">
+          <span className="font-mono tabular-nums font-bold text-zinc-900 dark:text-zinc-100">
             {item.value} staff
           </span>
         </div>

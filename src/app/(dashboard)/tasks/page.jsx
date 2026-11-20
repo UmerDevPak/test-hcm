@@ -857,7 +857,7 @@ export default function TasksPage() {
       >
         <form onSubmit={handleSubmitDeliverable} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-zinc-300">
+            <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
               Delivery Summary & Implementation Notes *
             </label>
             <textarea
@@ -866,7 +866,7 @@ export default function TasksPage() {
               placeholder="Detail what was completed, architecture considerations, and verification steps..."
               value={submitFormData.notes}
               onChange={(e) => setSubmitFormData({ ...submitFormData, notes: e.target.value })}
-              className="w-full rounded-xl text-xs bg-zinc-900 border border-zinc-800 p-3 text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full rounded-xl text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
 
@@ -907,7 +907,7 @@ export default function TasksPage() {
       >
         <form onSubmit={handleReviewSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-zinc-300">
+            <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
               Review Decision *
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -917,11 +917,11 @@ export default function TasksPage() {
                 className={cn(
                   "flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all",
                   reviewFormData.decision === "APPROVED"
-                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500"
-                    : "border-zinc-800 bg-zinc-900 text-zinc-400"
+                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 ring-1 ring-emerald-500"
+                    : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400"
                 )}
               >
-                <Check className="w-4 h-4 text-emerald-400" />
+                <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
                 Approve & Complete
               </button>
               <button
@@ -932,18 +932,18 @@ export default function TasksPage() {
                 className={cn(
                   "flex items-center justify-center gap-2 p-2.5 rounded-xl border text-xs font-semibold transition-all",
                   reviewFormData.decision === "REVISION_REQUESTED"
-                    ? "border-rose-500 bg-rose-500/10 text-rose-300 ring-1 ring-rose-500"
-                    : "border-zinc-800 bg-zinc-900 text-zinc-400"
+                    ? "border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-300 ring-1 ring-rose-500"
+                    : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400"
                 )}
               >
-                <RotateCcw className="w-4 h-4 text-rose-400" />
+                <RotateCcw className="w-4 h-4 text-rose-500 dark:text-rose-400" />
                 Request Revision
               </button>
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-zinc-300">
+            <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
               Quality Rating (1 to 5 Stars)
             </label>
             <div className="flex items-center gap-2">
@@ -955,8 +955,8 @@ export default function TasksPage() {
                   className={cn(
                     "p-2 rounded-lg border text-xs font-bold transition-all",
                     reviewFormData.score >= num
-                      ? "border-amber-500 bg-amber-500/10 text-amber-300"
-                      : "border-zinc-800 bg-zinc-900 text-zinc-500"
+                      ? "border-amber-500 bg-amber-500/10 text-amber-600 dark:text-amber-300"
+                      : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-500"
                   )}
                 >
                   ★ {num}
@@ -966,7 +966,7 @@ export default function TasksPage() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold text-zinc-300">
+            <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300">
               Evaluator Feedback & Quality Remarks *
             </label>
             <textarea
@@ -975,11 +975,11 @@ export default function TasksPage() {
               placeholder="Provide constructive feedback, statutory alignment notes, or specific items to revise..."
               value={reviewFormData.feedback}
               onChange={(e) => setReviewFormData({ ...reviewFormData, feedback: e.target.value })}
-              className="w-full rounded-xl text-xs bg-zinc-900 border border-zinc-800 p-3 text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full rounded-xl text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-zinc-800">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-zinc-200 dark:border-zinc-800">
             <Button variant="ghost" type="button" onClick={() => setIsReviewModalOpen(false)}>
               Cancel
             </Button>

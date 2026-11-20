@@ -327,31 +327,6 @@ export default function EmployeesPage() {
           className="relative group/table rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm overflow-hidden"
         >
           {/* Floating Left Scroll Button */}
-          {canScrollLeft && (
-            <button
-              type="button"
-              onClick={() => handleScrollHorizontal(-320)}
-              aria-label="Scroll table left"
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 z-40 p-2.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white shadow-2xl border border-zinc-700/80 backdrop-blur-md transition-all hover:scale-105 active:scale-95 animate-in fade-in"
-              title="Scroll Table Left"
-            >
-              <ChevronLeft className="w-5 h-5 text-indigo-300" />
-            </button>
-          )}
-
-          {/* Floating Right Scroll Button */}
-          {canScrollRight && (
-            <button
-              type="button"
-              onClick={() => handleScrollHorizontal(320)}
-              aria-label="Scroll table right"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 z-40 p-2.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 text-white shadow-2xl border border-zinc-700/80 backdrop-blur-md transition-all hover:scale-105 active:scale-95 animate-in fade-in"
-              title="Scroll Table Right"
-            >
-              <ChevronRight className="w-5 h-5 text-indigo-300" />
-            </button>
-          )}
-
           {/* Table Header Controls Strip */}
           <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-zinc-50/90 dark:bg-zinc-900/90 border-b border-zinc-200 dark:border-zinc-800 text-xs text-zinc-500 dark:text-zinc-400">
             <div className="flex items-center gap-2 font-mono">

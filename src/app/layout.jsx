@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
       className={`dark ${plusJakarta.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen font-sans bg-zinc-950 text-zinc-100 antialiased selection:bg-indigo-500 selection:text-white">
+      <body className="min-h-screen font-sans bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased selection:bg-indigo-500 selection:text-white">
         <ThemeProvider>
           <NotificationProvider>
             <AuthProvider>{children}</AuthProvider>

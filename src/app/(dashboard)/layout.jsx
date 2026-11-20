@@ -147,7 +147,7 @@ export default function DashboardLayout({ children }) {
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-400">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
           <p className="text-xs font-mono text-zinc-500">Loading HCM Lite...</p>
@@ -162,10 +162,10 @@ export default function DashboardLayout({ children }) {
 
   if (!routeAccess.authorized) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-zinc-400">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-zinc-950 text-zinc-600 dark:text-zinc-400">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs font-mono text-rose-400 font-semibold">
+          <p className="text-xs font-mono text-rose-500 dark:text-rose-400 font-semibold">
             {routeAccess.reason} Redirecting...
           </p>
         </div>
@@ -174,14 +174,14 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
-    <div className="fixed inset-0 flex bg-zinc-950 text-zinc-100 overflow-hidden w-full h-full">
-      {/* Global Enterprise Network Mesh Background (Reference Image 3 - Harmonized to Dark Theme) */}
+    <div className="fixed inset-0 flex bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 overflow-hidden w-full h-full">
+      {/* Global Enterprise Network Mesh Background (Harmonized to Theme) */}
       <div
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-right-bottom bg-no-repeat opacity-[0.16] mix-blend-screen transition-opacity duration-1000"
+        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-right-bottom bg-no-repeat opacity-[0.03] dark:opacity-[0.16] mix-blend-multiply dark:mix-blend-screen transition-opacity duration-1000"
         style={{ backgroundImage: `url('/images/dashboard-network-mesh.jpg')` }}
       />
-      {/* Dark gradient vignette ensuring full WCAG AAA text legibility & layout preservation */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-tr from-zinc-950 via-zinc-950/75 to-transparent" />
+      {/* Theme gradient vignette ensuring full WCAG AAA text legibility & layout preservation */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-tr from-slate-100/90 via-slate-50/50 to-transparent dark:from-zinc-950 dark:via-zinc-950/75 dark:to-transparent" />
 
       {/* Sidebar navigation */}
       <Sidebar
@@ -199,7 +199,7 @@ export default function DashboardLayout({ children }) {
         />
 
         {isNavigating && (
-          <div className="h-0.5 w-full bg-zinc-900 overflow-hidden shrink-0">
+          <div className="h-0.5 w-full bg-zinc-200 dark:bg-zinc-900 overflow-hidden shrink-0">
             <div className="h-full w-1/2 bg-gradient-to-r from-indigo-500 via-cyan-400 to-indigo-500 animate-pulse" />
           </div>
         )}

@@ -44,7 +44,7 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between gap-2 sm:gap-4 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 px-3 sm:px-6 backdrop-blur-md">
-      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 mr-2">
         <button
           onClick={onOpenSidebar}
           aria-label="Open menu"
@@ -57,21 +57,21 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
           <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-glow">
             <Building2 className="w-3.5 h-3.5" />
           </div>
-          <span className="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 hidden min-[480px]:inline whitespace-nowrap">
+          <span className="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 hidden min-[540px]:inline whitespace-nowrap">
             HCM Lite
           </span>
         </Link>
 
-        {/* Desktop & Laptop Command Palette Search */}
+        {/* Desktop & Laptop Command Palette Search - Fully responsive, collision-free */}
         <button
           onClick={onOpenCommandPalette}
-          className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all w-36 sm:w-48 lg:w-64 justify-between min-w-0"
+          className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all flex-1 max-w-[200px] lg:max-w-xs justify-between min-w-0 overflow-hidden"
         >
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 truncate">
             <Search className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
             <span className="truncate">Search or command...</span>
           </div>
-          <kbd className="hidden lg:inline-flex items-center gap-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 shrink-0">
+          <kbd className="hidden xl:inline-flex items-center gap-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 shrink-0">
             <Command className="w-2.5 h-2.5" /> K
           </kbd>
         </button>
@@ -86,7 +86,7 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
         </button>
       </div>
 
-      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 min-w-0">
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
         <NotificationCenter />
         <RoleSwitcher />
 

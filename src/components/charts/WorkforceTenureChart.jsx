@@ -20,11 +20,11 @@ function CustomTenureTooltip({ active, payload }) {
   const row = payload[0]?.payload || {};
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-md p-3 shadow-2xl text-xs space-y-1 z-50">
-      <div className="font-semibold text-zinc-100">{row.bracket}</div>
+    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md p-3 shadow-2xl text-xs space-y-1 z-50">
+      <div className="font-semibold text-zinc-900 dark:text-zinc-100">{row.bracket}</div>
       <div className="flex items-center justify-between gap-4">
-        <span className="text-zinc-400">Employees</span>
-        <span className="font-mono font-bold text-zinc-100">
+        <span className="text-zinc-500 dark:text-zinc-400">Employees</span>
+        <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
           {row.count} ({row.share}%)
         </span>
       </div>

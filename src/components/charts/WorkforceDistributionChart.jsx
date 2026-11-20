@@ -24,17 +24,17 @@ function CustomWorkforceTooltip({ active, payload }) {
   const row = payload[0]?.payload || {};
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-950/95 backdrop-blur-md p-3 shadow-2xl text-xs space-y-1.5 z-50">
-      <div className="font-semibold text-zinc-100 border-b border-zinc-800 pb-1">
+    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md p-3 shadow-2xl text-xs space-y-1.5 z-50">
+      <div className="font-semibold text-zinc-900 dark:text-zinc-100 border-b border-zinc-100 dark:border-zinc-800 pb-1">
         {row.name || "Department"}
       </div>
       <div className="flex items-center justify-between gap-4">
-        <span className="text-zinc-400">Headcount</span>
-        <span className="font-mono font-bold text-zinc-100">{row.headcount ?? 0}</span>
+        <span className="text-zinc-500 dark:text-zinc-400">Headcount</span>
+        <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">{row.headcount ?? 0}</span>
       </div>
       <div className="flex items-center justify-between gap-4">
-        <span className="text-zinc-400">Monthly Payroll</span>
-        <span className="font-mono font-semibold text-emerald-400">
+        <span className="text-zinc-500 dark:text-zinc-400">Monthly Payroll</span>
+        <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
           {formatCurrency(row.totalSalary || 0)}
         </span>
       </div>
@@ -76,18 +76,18 @@ export function WorkforceDistributionChart({
   return (
     <div ref={containerRef} className="space-y-3">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-medium text-zinc-400">
+        <span className="text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
           Total Tracked Personnel:{" "}
-          <strong className="text-zinc-200 font-mono">{totalHeadcount}</strong>
+          <strong className="text-zinc-900 dark:text-zinc-200 font-mono">{totalHeadcount}</strong>
         </span>
-        <div className="inline-flex rounded-lg border border-zinc-800 bg-zinc-900 p-0.5 text-[11px]">
+        <div className="inline-flex rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 p-0.5 text-[11px]">
           <button
             type="button"
             onClick={() => setViewMode("bar")}
             className={`flex items-center gap-1 px-2.5 py-1 rounded-md font-medium transition-colors ${
               viewMode === "bar"
                 ? "bg-indigo-600 text-white"
-                : "text-zinc-400 hover:text-zinc-200"
+                : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
             }`}
           >
             <BarChart3 className="w-3 h-3" /> Bar
@@ -98,7 +98,7 @@ export function WorkforceDistributionChart({
             className={`flex items-center gap-1 px-2.5 py-1 rounded-md font-medium transition-colors ${
               viewMode === "donut"
                 ? "bg-indigo-600 text-white"
-                : "text-zinc-400 hover:text-zinc-200"
+                : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
             }`}
           >
             <PieChartIcon className="w-3 h-3" /> Donut

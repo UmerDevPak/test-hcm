@@ -395,9 +395,9 @@ export default function SettingsPage() {
                           <TableCell className="font-semibold text-zinc-900 dark:text-zinc-100">
                             {item.module}
                           </TableCell>
-                          <TableCell className="text-indigo-400 font-medium">{item.admin}</TableCell>
-                          <TableCell className="text-emerald-400">{item.hr}</TableCell>
-                          <TableCell className="text-zinc-400">{item.emp}</TableCell>
+                          <TableCell className="text-indigo-600 dark:text-indigo-400 font-medium">{item.admin}</TableCell>
+                          <TableCell className="text-emerald-600 dark:text-emerald-400">{item.hr}</TableCell>
+                          <TableCell className="text-zinc-600 dark:text-zinc-400">{item.emp}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -435,9 +435,9 @@ export default function SettingsPage() {
                     <TableBody>
                       {auditLogs.slice(0, 12).map((log) => (
                         <TableRow key={log.id}>
-                          <TableCell className="text-xs font-medium text-zinc-100">
+                          <TableCell className="text-xs font-medium text-zinc-900 dark:text-zinc-100">
                             {log.actor}{" "}
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400">
+                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700">
                               {log.role}
                             </span>
                           </TableCell>
@@ -445,15 +445,15 @@ export default function SettingsPage() {
                             <Badge variant="neutral" size="sm">{log.module || "System"}</Badge>
                           </TableCell>
                           <TableCell className="text-xs">
-                            <div className="font-semibold text-zinc-200">{log.action}</div>
-                            <div className="text-[11px] text-zinc-400 font-mono truncate max-w-xs">{log.target}</div>
+                            <div className="font-semibold text-zinc-800 dark:text-zinc-200">{log.action}</div>
+                            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono truncate max-w-xs">{log.target}</div>
                           </TableCell>
-                          <TableCell className="text-[11px] font-mono text-zinc-400">
+                          <TableCell className="text-[11px] font-mono text-zinc-600 dark:text-zinc-400">
                             {log.oldValue || log.newValue
                               ? `${log.oldValue || "—"} → ${log.newValue || "—"}`
                               : "—"}
                           </TableCell>
-                          <TableCell className="text-right text-xs font-mono text-zinc-400">
+                          <TableCell className="text-right text-xs font-mono text-zinc-500 dark:text-zinc-400">
                             {formatRelativeTimestamp(log.timestamp)}
                           </TableCell>
                         </TableRow>

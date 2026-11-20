@@ -74,12 +74,12 @@ export function LeavePolicyTab({ config, onConfigUpdated, actorName = "Sarah Con
   return (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <CalendarDays className="w-4 h-4 text-indigo-400" />
-            Tab 09 — Annual Leave Policy & Statutory Quotas (12 Leave Types)
+        <div className="min-w-0 flex-1">
+          <CardTitle className="flex items-center gap-2 flex-wrap">
+            <CalendarDays className="w-4 h-4 text-indigo-400 shrink-0" />
+            <span>Tab 09 — Annual Leave Policy & Statutory Quotas (12 Leave Types)</span>
           </CardTitle>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Configure leave accrual, probation rules, medical certificate thresholds, carry-forward caps, sandwich rules, and blackout dates.
           </p>
         </div>
@@ -129,27 +129,27 @@ export function LeavePolicyTab({ config, onConfigUpdated, actorName = "Sarah Con
           </div>
 
           <div className="flex flex-wrap gap-6">
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(lp.sandwichRuleApplied)}
                 onChange={(e) => setLp({ ...lp, sandwichRuleApplied: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Apply Sandwich Rule (Count sandwiched weekends/holidays inside leave span)
             </label>
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(lp.negativeBalanceAllowed)}
                 onChange={(e) => setLp({ ...lp, negativeBalanceAllowed: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Allow Negative Balance Overdraft
             </label>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-zinc-800">
+          <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -164,7 +164,7 @@ export function LeavePolicyTab({ config, onConfigUpdated, actorName = "Sarah Con
                 {(lp.leaveTypes || []).map((lt) => (
                   <TableRow key={lt.code}>
                     <TableCell>
-                      <div className="font-semibold text-zinc-100">{lt.name}</div>
+                      <div className="font-semibold text-zinc-900 dark:text-zinc-100">{lt.name}</div>
                       <div className="text-[10px] font-mono text-zinc-500">{lt.code}</div>
                     </TableCell>
                     <TableCell>
@@ -175,7 +175,7 @@ export function LeavePolicyTab({ config, onConfigUpdated, actorName = "Sarah Con
                         aria-label={`${lt.name} annual quota`}
                         value={lt.quota}
                         onChange={(e) => updateLeaveTypeQuota(lt.code, e.target.value)}
-                        className="w-24 rounded-lg bg-zinc-900 border border-zinc-800 px-2.5 py-1 text-xs font-mono text-zinc-100"
+                        className="w-24 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-2.5 py-1 text-xs font-mono text-zinc-900 dark:text-zinc-100"
                       />
                     </TableCell>
                     <TableCell>
@@ -273,12 +273,12 @@ export function SalarySetupTab({ config, onConfigUpdated, actorName = "Sarah Con
   return (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle className="flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-emerald-400" />
-            Tab 10 (Extra) — Salary Setup & Payroll Calculation Rules
+        <div className="min-w-0 flex-1">
+          <CardTitle className="flex items-center gap-2 flex-wrap">
+            <DollarSign className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>Tab 10 (Extra) — Salary Setup & Payroll Calculation Rules</span>
           </CardTitle>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
             Configure how daily wage, allowances (HRA, Medical, Utilities, Transport), PF/EOBI, pro-rata joiners, and rounding flow into Payroll Runs.
           </p>
         </div>
@@ -371,27 +371,27 @@ export function SalarySetupTab({ config, onConfigUpdated, actorName = "Sarah Con
           </div>
 
           <div className="flex flex-wrap gap-6">
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(sal.proRataJoinerLeaver)}
                 onChange={(e) => setSal({ ...sal, proRataJoinerLeaver: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Pro-Rata Salary for Mid-Month Joiners & Leavers
             </label>
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={Boolean(sal.paidWeeklyOffs)}
                 onChange={(e) => setSal({ ...sal, paidWeeklyOffs: e.target.checked })}
-                className="rounded border-zinc-700 bg-zinc-900 text-indigo-600"
+                className="rounded border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-indigo-500"
               />
               Paid Weekly Offs & Public Holidays
             </label>
           </div>
 
-          <div className="flex justify-end pt-4 border-t border-zinc-800">
+          <div className="flex justify-end pt-4 border-t border-zinc-200 dark:border-zinc-800">
             <Button type="submit" icon={Save} isLoading={saving}>
               Save Salary Setup
             </Button>
