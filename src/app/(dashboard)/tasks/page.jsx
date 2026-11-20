@@ -368,9 +368,9 @@ export default function TasksPage() {
       {/* 1. Header Banner */}
       <motion.div
         variants={itemFadeUp}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-white dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-900/95 dark:to-indigo-950/40 border border-zinc-200 dark:border-zinc-800 shadow-sm dark:shadow-elevated relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-zinc-50 via-white to-indigo-50/40 dark:from-zinc-900 dark:via-zinc-900/95 dark:to-indigo-950/40 border border-zinc-200 dark:border-zinc-800 shadow-sm dark:shadow-elevated relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-1.5 min-w-0 max-w-2xl">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">

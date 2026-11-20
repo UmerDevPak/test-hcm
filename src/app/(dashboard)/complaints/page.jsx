@@ -358,45 +358,26 @@ export default function ComplaintsPage() {
       variants={containerStagger}
       className="space-y-8 pb-16"
     >
-      {/* Header Banner */}
+      {/* Header */}
       <motion.div
         variants={itemFadeUp}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-gradient-to-r dark:from-zinc-900/90 dark:via-zinc-900/50 dark:to-zinc-950 shadow-sm dark:shadow-elevated relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-zinc-200 dark:border-zinc-800"
       >
-        <div className="absolute top-0 right-0 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 space-y-2 max-w-2xl min-w-0">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-semibold">
-            <ShieldAlert className="w-3.5 h-3.5" />
-            <span>Corporate Grievance Redressal System</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 dark:bg-rose-400 animate-pulse" />
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+              Workforce Complaints & Grievances
+            </h1>
+            <Badge variant="danger" size="sm" dot>
+              Confidential Helpdesk
+            </Badge>
           </div>
-
-          <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100">
-            Workforce Complaints & Grievances
-          </h1>
-
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            {activeRole === "ADMIN" && (
-              <>
-                <strong className="text-zinc-900 dark:text-zinc-200">Executive Authority Portal:</strong> Review HR investigation findings, authorize disciplinary remedies, and grant final executive approval for escalated workplace grievances.
-              </>
-            )}
-            {activeRole === "HR" && (
-              <>
-                <strong className="text-zinc-900 dark:text-zinc-200">Primary Grievance Custodian:</strong> Intake workplace complaints, conduct confidential inquiries, mediate disputes, and escalate complex issues to Executive Admin for authorization.
-              </>
-            )}
-            {activeRole === "EMPLOYEE" && (
-              <>
-                <strong className="text-zinc-900 dark:text-zinc-200">Confidential Employee Helpdesk:</strong> File grievances with optional anonymous whistleblowing protection. Track case progress in real-time through HR triage and executive resolution.
-              </>
-            )}
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+            Corporate grievance redressal, confidential whistleblowing protection, and administrative dispute resolution.
           </p>
         </div>
 
-        <div className="relative z-10 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           <Button
             onClick={() => setIsCreateModalOpen(true)}
             icon={Plus}
