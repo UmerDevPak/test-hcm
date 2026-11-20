@@ -323,32 +323,32 @@ export default function EmployeeDashboardPage() {
 
       {/* Assigned Shift & Active Policy Strip */}
       <motion.div variants={itemFadeUp}>
-        <Card className="border-indigo-500/20 bg-zinc-900/70">
+        <Card className="border-indigo-500/20 bg-white dark:bg-zinc-900/70">
           <CardContent className="py-3 px-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
+                <Clock className="w-4 h-4 text-cyan-500 dark:text-cyan-400 shrink-0" />
                 <div>
                   <span className="text-[10px] text-zinc-500 block">Assigned Shift (Tab 06)</span>
-                  <span className="font-semibold text-zinc-200">
+                  <span className="font-semibold text-zinc-800 dark:text-zinc-200">
                     {assignedShift.name} ({assignedShift.effectiveStartTime}–{assignedShift.effectiveEndTime})
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
                 <div>
                   <span className="text-[10px] text-zinc-500 block">Grace & Penalty (Tab 04)</span>
-                  <span className="font-semibold text-zinc-200">
+                  <span className="font-semibold text-zinc-800 dark:text-zinc-200">
                     {effectivePolicies.graceMinutes}m Grace • {lateThreshold} Lates = {effectivePolicies.latePenaltyDays ?? 0.5}d
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Calendar className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
                 <div>
                   <span className="text-[10px] text-zinc-500 block">Next Holiday (Tab 08)</span>
-                  <span className="font-semibold text-zinc-200">
+                  <span className="font-semibold text-zinc-800 dark:text-zinc-200">
                     {upcomingHolidays[0]
                       ? `${upcomingHolidays[0].name} (${upcomingHolidays[0].date})`
                       : "No upcoming holidays"}
@@ -356,10 +356,10 @@ export default function EmployeeDashboardPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-purple-400 shrink-0" />
+                <Lock className="w-4 h-4 text-purple-500 dark:text-purple-400 shrink-0" />
                 <div>
                   <span className="text-[10px] text-zinc-500 block">Payroll Attendance Lock</span>
-                  <span className="font-mono font-semibold text-amber-300">
+                  <span className="font-mono font-semibold text-amber-600 dark:text-amber-300">
                     {lockDate ? `Locked ≤ ${lockDate}` : "Open for Corrections"}
                   </span>
                 </div>
@@ -371,34 +371,34 @@ export default function EmployeeDashboardPage() {
 
       {/* 1.5 Performance Tier & Career Ranking Card */}
       <motion.div variants={itemFadeUp}>
-        <Card className="border-indigo-500/20 bg-gradient-to-r from-zinc-900 via-zinc-900 to-indigo-950/20">
+        <Card className="border-indigo-500/20 bg-white dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-900 dark:to-indigo-950/20">
           <CardContent className="py-4 px-5">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-zinc-100 dark:border-zinc-800">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500 dark:text-indigo-400 shrink-0">
                   <Award className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-zinc-100">
+                    <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
                       My Performance Tier & Workforce Ranking
                     </h3>
                     <RankBadge rank={fullEmployee?.ranking || employee.ranking || "Rank B"} size="sm" />
                   </div>
-                  <p className="text-xs text-zinc-400 mt-0.5">
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                     Your dynamic rank is evaluated by HR based on sprint delivery output, task completion velocity, and team collaboration.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-4 text-xs font-mono shrink-0">
-                <div className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-                  <span className="text-zinc-400 block text-[10px]">Work Delivery</span>
-                  <span className="font-bold text-indigo-400">{fullEmployee?.workScore ?? 96}%</span>
+                <div className="px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50">
+                  <span className="text-zinc-500 dark:text-zinc-400 block text-[10px]">Work Delivery</span>
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400">{fullEmployee?.workScore ?? 96}%</span>
                 </div>
-                <div className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-                  <span className="text-zinc-400 block text-[10px]">Conduct & Attitude</span>
-                  <span className="font-bold text-emerald-400">{fullEmployee?.behaviorScore ?? 95}%</span>
+                <div className="px-3 py-1.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50">
+                  <span className="text-zinc-500 dark:text-zinc-400 block text-[10px]">Conduct & Attitude</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{fullEmployee?.behaviorScore ?? 95}%</span>
                 </div>
               </div>
             </div>
@@ -407,10 +407,10 @@ export default function EmployeeDashboardPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs">
-                  <span className="text-zinc-300 font-medium">Sprint Deliverables & Attendance</span>
-                  <span className="font-mono text-indigo-400 font-semibold">{fullEmployee?.workScore ?? 96}%</span>
+                  <span className="text-zinc-700 dark:text-zinc-300 font-medium">Sprint Deliverables & Attendance</span>
+                  <span className="font-mono text-indigo-600 dark:text-indigo-400 font-semibold">{fullEmployee?.workScore ?? 96}%</span>
                 </div>
-                <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-1.5 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
                   <div
                     className="h-full bg-indigo-500 rounded-full"
                     style={{ width: `${fullEmployee?.workScore ?? 96}%` }}
@@ -420,10 +420,10 @@ export default function EmployeeDashboardPage() {
 
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs">
-                  <span className="text-zinc-300 font-medium">Conduct, Mentorship & Collaboration</span>
-                  <span className="font-mono text-emerald-400 font-semibold">{fullEmployee?.behaviorScore ?? 95}%</span>
+                  <span className="text-zinc-700 dark:text-zinc-300 font-medium">Conduct, Mentorship & Collaboration</span>
+                  <span className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">{fullEmployee?.behaviorScore ?? 95}%</span>
                 </div>
-                <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-1.5 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
                   <div
                     className="h-full bg-emerald-500 rounded-full"
                     style={{ width: `${fullEmployee?.behaviorScore ?? 95}%` }}
@@ -442,27 +442,27 @@ export default function EmployeeDashboardPage() {
       >
         {/* Card 1: Web Punch Clock with Mode Selector */}
         <motion.div variants={itemFadeUp} whileHover={{ y: -3, transition: { duration: 0.16 } }} className="h-full">
-          <Card className="p-4 flex flex-col justify-between h-full min-h-[240px] relative overflow-hidden border-indigo-500/30 bg-gradient-to-b from-zinc-900 to-indigo-950/20">
+          <Card className="p-4 flex flex-col justify-between h-full min-h-[240px] relative overflow-hidden border-indigo-500/30 bg-white dark:bg-gradient-to-b dark:from-zinc-900 dark:to-indigo-950/20">
             <div>
               <div className="flex items-center justify-between pb-1">
-                <span className="text-xs font-medium text-zinc-400">Web Punch Clock</span>
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Web Punch Clock</span>
                 <Badge variant={statusBadgeVariant} dot size="sm">
                   {isClockedIn ? "Active Shift" : isClockedOut ? "Completed" : "Offline"}
                 </Badge>
               </div>
 
-              <div className="mt-2 text-2xl font-bold font-mono tracking-tight text-zinc-100 flex items-baseline gap-1.5">
-                <Clock className="w-5 h-5 text-indigo-400 animate-pulse" />
+              <div className="mt-2 text-2xl font-bold font-mono tracking-tight text-zinc-900 dark:text-zinc-100 flex items-baseline gap-1.5">
+                <Clock className="w-5 h-5 text-indigo-500 dark:text-indigo-400 animate-pulse" />
                 <span>{liveTime || "09:00:00 AM"}</span>
               </div>
 
-              <p className="text-[11px] text-zinc-400 mt-1 font-medium truncate">
+              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1 font-medium truncate">
                 {statusText}
               </p>
 
               {/* Work Mode Selector (Office / WFH / On-Duty) */}
               {!isClockedIn && !isClockedOut && (
-                <div className="mt-3 grid grid-cols-3 gap-1 p-1 rounded-lg bg-zinc-950/70 border border-zinc-800 text-[10px]">
+                <div className="mt-3 grid grid-cols-3 gap-1 p-1 rounded-lg bg-zinc-100 dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800 text-[10px]">
                   {["Office (HQ)", "WFH", "On-Duty"].map((m) => (
                     <button
                       key={m}
@@ -471,7 +471,7 @@ export default function EmployeeDashboardPage() {
                       className={`py-1 px-1.5 rounded font-semibold transition-colors ${
                         workMode === m
                           ? "bg-indigo-600 text-white"
-                          : "text-zinc-400 hover:text-zinc-200"
+                          : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
                       }`}
                     >
                       {m === "Office (HQ)" ? "Office" : m}
@@ -481,7 +481,7 @@ export default function EmployeeDashboardPage() {
               )}
             </div>
 
-            <div className="mt-auto pt-3 border-t border-zinc-800">
+            <div className="mt-auto pt-3 border-t border-zinc-100 dark:border-zinc-800">
               <Button
                 className="w-full font-semibold text-xs"
                 variant={isClockedIn ? "danger" : "primary"}
@@ -505,23 +505,23 @@ export default function EmployeeDashboardPage() {
           <Card className="p-4 flex flex-col justify-between h-full min-h-[240px]">
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-zinc-400">Weekly Hours Logged</span>
-                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Weekly Hours Logged</span>
+                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 dark:text-indigo-400">
                   <Clock className="w-4 h-4" />
                 </div>
               </div>
 
               <div className="mt-2 flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold font-mono text-zinc-100">
+                <span className="text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                   {weeklyHours.logged}
                 </span>
-                <span className="text-sm font-semibold text-zinc-400 font-mono">
+                <span className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 font-mono">
                   / {weeklyHours.target} hrs
                 </span>
               </div>
 
               <div className="mt-3 space-y-1">
-                <div className="h-2 w-full rounded-full bg-zinc-800 overflow-hidden">
+                <div className="h-2 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${Math.min(100, weeklyHours.percentage)}%` }}
@@ -529,14 +529,14 @@ export default function EmployeeDashboardPage() {
                     className="h-full bg-indigo-500 rounded-full"
                   />
                 </div>
-                <div className="flex justify-between text-[10px] text-zinc-400 pt-0.5">
+                <div className="flex justify-between text-[10px] text-zinc-500 dark:text-zinc-400 pt-0.5">
                   <span>{weeklyHours.percentage}% logged</span>
                   <span>{weeklyHours.remaining}h remaining</span>
                 </div>
               </div>
             </div>
 
-            <div className="text-[11px] text-zinc-500 pt-2 border-t border-zinc-800/80 mt-auto">
+            <div className="text-[11px] text-zinc-500 pt-2 border-t border-zinc-100 dark:border-zinc-800/80 mt-auto">
               Target: {weeklyHours.target} hrs/wk • {assignedShift.name}
             </div>
           </Card>
@@ -547,14 +547,14 @@ export default function EmployeeDashboardPage() {
           <Card className="p-4 flex flex-col justify-between h-full min-h-[240px]">
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-zinc-400">Lates This Month</span>
-                <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400">
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Lates This Month</span>
+                <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 dark:text-amber-400">
                   <AlertTriangle className="w-4 h-4" />
                 </div>
               </div>
 
               <div className="mt-2 flex items-center gap-2">
-                <span className="text-2xl font-bold font-mono text-amber-400">
+                <span className="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400">
                   {latesThisMonth}
                 </span>
                 <Badge
@@ -569,24 +569,24 @@ export default function EmployeeDashboardPage() {
                 </Badge>
               </div>
 
-              <div className="mt-2 p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] leading-tight">
+              <div className="mt-2 p-2 rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[11px] leading-tight">
                 {isLatePenaltyReached ? (
-                  <p className="text-rose-400 font-medium">
+                  <p className="text-rose-600 dark:text-rose-400 font-medium">
                     {lateThreshold} lates reached: {effectivePolicies.latePenaltyDays ?? 0.5}-day deduction applied per Tab 04.
                   </p>
                 ) : isNearLatePenalty ? (
-                  <p className="text-amber-400 font-medium">
+                  <p className="text-amber-600 dark:text-amber-400 font-medium">
                     Warning: {Math.max(1, lateThreshold - latesThisMonth)} more late arrival triggers a {effectivePolicies.latePenaltyDays ?? 0.5}-day penalty.
                   </p>
                 ) : (
-                  <p className="text-zinc-400">
+                  <p className="text-zinc-600 dark:text-zinc-400">
                     Shift starts {assignedShift.effectiveStartTime} ({effectivePolicies.graceMinutes}m grace). {Math.max(0, lateThreshold - latesThisMonth)} late check-ins remaining before penalty.
                   </p>
                 )}
               </div>
             </div>
 
-            <div className="text-[10px] text-zinc-500 pt-2 border-t border-zinc-800/80 mt-auto">
+            <div className="text-[10px] text-zinc-500 pt-2 border-t border-zinc-100 dark:border-zinc-800/80 mt-auto">
               Tab 04 Policy: {lateThreshold} lates = {effectivePolicies.latePenaltyDays ?? 0.5} day deduction
             </div>
           </Card>
@@ -597,40 +597,40 @@ export default function EmployeeDashboardPage() {
           <Card className="p-4 flex flex-col justify-between h-full min-h-[240px]">
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-zinc-400">Leave Balance Summary</span>
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Leave Balance Summary</span>
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 dark:text-emerald-400">
                   <CalendarDays className="w-4 h-4" />
                 </div>
               </div>
 
-              <div className="mt-2 text-2xl font-bold font-mono text-zinc-100">
+              <div className="mt-2 text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">
                 {(balances.annual || 0) + (balances.sick || 0) + (balances.casual || 0)}{" "}
-                <span className="text-sm font-normal text-zinc-400">Days Available</span>
+                <span className="text-sm font-normal text-zinc-500 dark:text-zinc-400">Days Available</span>
               </div>
 
               <div className="mt-2.5 space-y-1.5 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-400 text-[11px]">Annual Leave</span>
-                  <span className="font-mono font-semibold text-emerald-400">
+                  <span className="text-zinc-500 dark:text-zinc-400 text-[11px]">Annual Leave</span>
+                  <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
                     {balances.annual} / {leaveQuotas.annual} left
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-400 text-[11px]">Sick Leave</span>
-                  <span className="font-mono font-semibold text-amber-400">
+                  <span className="text-zinc-500 dark:text-zinc-400 text-[11px]">Sick Leave</span>
+                  <span className="font-mono font-semibold text-amber-600 dark:text-amber-400">
                     {balances.sick} / {leaveQuotas.sick} left
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-zinc-400 text-[11px]">Casual Leave</span>
-                  <span className="font-mono font-semibold text-indigo-400">
+                  <span className="text-zinc-500 dark:text-zinc-400 text-[11px]">Casual Leave</span>
+                  <span className="font-mono font-semibold text-indigo-600 dark:text-indigo-400">
                     {balances.casual} / {leaveQuotas.casual} left
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="text-[10px] text-zinc-500 pt-2 border-t border-zinc-800/80 mt-auto">
+            <div className="text-[10px] text-zinc-500 pt-2 border-t border-zinc-100 dark:border-zinc-800/80 mt-auto">
               Tab 09 Quota: {leaveQuotas.annual} Annual • {leaveQuotas.sick} Sick • {leaveQuotas.casual} Casual
             </div>
           </Card>
@@ -645,14 +645,14 @@ export default function EmployeeDashboardPage() {
         variants={itemFadeUp}
         className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch"
       >
-        <Card className="lg:col-span-2 flex flex-col justify-between h-full">
+        <Card className="lg:col-span-2 flex flex-col justify-between h-full bg-white dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800">
           <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3">
             <div>
               <CardTitle className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-indigo-400 shrink-0" />
+                <Calendar className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
                 <span>My Monthly Attendance Calendar</span>
               </CardTitle>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                 Synchronized with Shifts, Public Holidays, WFH/On-Duty, and Approved Leaves. Click any day to inspect.
               </p>
             </div>
@@ -661,7 +661,7 @@ export default function EmployeeDashboardPage() {
             </Badge>
           </CardHeader>
           <CardContent className="space-y-4 flex-1 flex flex-col justify-between">
-            <div className="grid grid-cols-7 gap-1.5 text-center text-[11px] font-semibold text-zinc-400 pb-1 border-b border-zinc-800">
+            <div className="grid grid-cols-7 gap-1.5 text-center text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 pb-1 border-b border-zinc-100 dark:border-zinc-800">
               <span>Sun</span>
               <span>Mon</span>
               <span>Tue</span>
@@ -675,30 +675,30 @@ export default function EmployeeDashboardPage() {
               {calendarDays.map((item) => {
                 const isSelected = selectedCalendarDay?.day === item.day;
 
-                let cellColor = "border-zinc-800 bg-zinc-900/40 text-zinc-400";
-                let dotColor = "bg-zinc-600";
+                let cellColor = "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-zinc-700 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/50";
+                let dotColor = "bg-zinc-400 dark:bg-zinc-600";
 
                 if (item.status === "Present" || item.status === "Off-Day Work" || item.status === "Holiday Work") {
-                  cellColor = "border-emerald-500/30 bg-emerald-950/20 text-emerald-300 hover:bg-emerald-900/30";
-                  dotColor = "bg-emerald-400";
+                  cellColor = "border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30";
+                  dotColor = "bg-emerald-500 dark:bg-emerald-400";
                 } else if (item.status === "WFH" || item.status === "On-Duty") {
-                  cellColor = "border-cyan-500/30 bg-cyan-950/20 text-cyan-300 hover:bg-cyan-900/30";
-                  dotColor = "bg-cyan-400";
+                  cellColor = "border-cyan-300 dark:border-cyan-500/30 bg-cyan-50 dark:bg-cyan-950/20 text-cyan-800 dark:text-cyan-300 hover:bg-cyan-100 dark:hover:bg-cyan-900/30";
+                  dotColor = "bg-cyan-500 dark:bg-cyan-400";
                 } else if (item.status === "Late" || item.status === "Missing Punch") {
-                  cellColor = "border-amber-500/30 bg-amber-950/20 text-amber-300 hover:bg-amber-900/30";
-                  dotColor = "bg-amber-400";
+                  cellColor = "border-amber-300 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/30";
+                  dotColor = "bg-amber-500 dark:bg-amber-400";
                 } else if (item.status === "Half-Day") {
-                  cellColor = "border-purple-500/30 bg-purple-950/20 text-purple-300 hover:bg-purple-900/30";
-                  dotColor = "bg-purple-400";
+                  cellColor = "border-purple-300 dark:border-purple-500/30 bg-purple-50 dark:bg-purple-950/20 text-purple-800 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/30";
+                  dotColor = "bg-purple-500 dark:bg-purple-400";
                 } else if (item.status === "Leave" || item.status === "Holiday") {
-                  cellColor = "border-blue-500/30 bg-blue-950/20 text-blue-300 hover:bg-blue-900/30";
-                  dotColor = "bg-blue-400";
+                  cellColor = "border-blue-300 dark:border-blue-500/30 bg-blue-50 dark:bg-blue-950/20 text-blue-800 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30";
+                  dotColor = "bg-blue-500 dark:bg-blue-400";
                 } else if (item.status === "Absent") {
-                  cellColor = "border-rose-500/30 bg-rose-950/20 text-rose-300 hover:bg-rose-900/30";
-                  dotColor = "bg-rose-400";
+                  cellColor = "border-rose-300 dark:border-rose-500/30 bg-rose-50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/30";
+                  dotColor = "bg-rose-500 dark:bg-rose-400";
                 } else if (item.status === "Weekend") {
-                  cellColor = "border-zinc-900 bg-zinc-950/50 text-zinc-600";
-                  dotColor = "bg-zinc-700";
+                  cellColor = "border-zinc-200 dark:border-zinc-900 bg-zinc-100/60 dark:bg-zinc-950/50 text-zinc-400 dark:text-zinc-600";
+                  dotColor = "bg-zinc-300 dark:bg-zinc-700";
                 }
 
                 return (
@@ -719,10 +719,10 @@ export default function EmployeeDashboardPage() {
             </div>
 
             {selectedCalendarDay && (
-              <div className="p-3.5 rounded-xl border border-zinc-800 bg-zinc-900/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-zinc-100 font-mono">
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100 font-mono">
                       {selectedCalendarDay.date} ({selectedCalendarDay.dayOfWeek})
                     </span>
                     <Badge
@@ -742,25 +742,25 @@ export default function EmployeeDashboardPage() {
                       {selectedCalendarDay.status}
                     </Badge>
                   </div>
-                  <p className="text-zinc-400">{selectedCalendarDay.details}</p>
+                  <p className="text-zinc-600 dark:text-zinc-400">{selectedCalendarDay.details}</p>
                 </div>
 
                 <div className="flex items-center gap-4 text-[11px] font-mono shrink-0">
                   <div>
                     <span className="text-zinc-500 block">Check-In</span>
-                    <span className="text-zinc-200 font-semibold">
+                    <span className="text-zinc-900 dark:text-zinc-200 font-semibold">
                       {selectedCalendarDay.clockIn || "--:--"}
                     </span>
                   </div>
                   <div>
                     <span className="text-zinc-500 block">Check-Out</span>
-                    <span className="text-zinc-200 font-semibold">
+                    <span className="text-zinc-900 dark:text-zinc-200 font-semibold">
                       {selectedCalendarDay.clockOut || "--:--"}
                     </span>
                   </div>
                   <div>
                     <span className="text-zinc-500 block">Duration</span>
-                    <span className="text-indigo-400 font-semibold">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
                       {selectedCalendarDay.totalHours || "--"}
                     </span>
                   </div>
@@ -769,7 +769,7 @@ export default function EmployeeDashboardPage() {
             )}
 
             {/* Color Legend */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-zinc-800 text-[11px] text-zinc-400 mt-auto">
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800 text-[11px] text-zinc-500 dark:text-zinc-400 mt-auto">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 <span>Present</span>
@@ -791,7 +791,7 @@ export default function EmployeeDashboardPage() {
                 <span>Leave / Holiday</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-400 dark:bg-zinc-600" />
                 <span>Off Day</span>
               </div>
             </div>
@@ -799,52 +799,52 @@ export default function EmployeeDashboardPage() {
         </Card>
 
         {/* Latest Payslip Card */}
-        <Card className="lg:col-span-1 flex flex-col justify-between h-full border-indigo-500/20 bg-gradient-to-b from-zinc-900 via-zinc-900 to-indigo-950/20">
+        <Card className="lg:col-span-1 flex flex-col justify-between h-full border-indigo-500/20 bg-white dark:bg-gradient-to-b dark:from-zinc-900 dark:via-zinc-900 dark:to-indigo-950/20">
           <CardHeader className="flex flex-col items-start gap-1 pb-3">
             <div className="flex items-center justify-between w-full">
               <CardTitle className="flex items-center gap-2">
-                <CreditCard className="w-4 h-4 text-indigo-400 shrink-0" />
+                <CreditCard className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
                 <span>Latest Payslip</span>
               </CardTitle>
               <Badge variant={latestPayslip?.status === "Finalized" ? "success" : "info"} size="sm" className="shrink-0">
                 {latestPayslip?.status || "Active"}
               </Badge>
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
               {latestPayslip?.period || "Current Cycle"} • Method: {latestPayslip?.calculationMethod || "WorkingDays"}
             </p>
           </CardHeader>
           <CardContent className="space-y-4 flex-1 flex flex-col justify-between">
-            <div className="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800 space-y-3">
+            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 space-y-3">
               <div className="flex items-baseline justify-between">
-                <span className="text-xs text-zinc-400">Net Take-Home Pay</span>
-                <span className="text-2xl font-bold font-mono text-emerald-400">
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">Net Take-Home Pay</span>
+                <span className="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(latestPayslip?.netPay || 0)}
                 </span>
               </div>
 
-              <div className="space-y-1.5 text-xs pt-2 border-t border-zinc-800/80">
-                <div className="flex justify-between text-zinc-400">
+              <div className="space-y-1.5 text-xs pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
+                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                   <span>Gross Earnings (Tab 10)</span>
-                  <span className="font-mono text-zinc-200">
+                  <span className="font-mono text-zinc-900 dark:text-zinc-200">
                     {formatCurrency(latestPayslip?.totalGross || 0)}
                   </span>
                 </div>
                 {(latestPayslip?.overtimePay || 0) > 0 && (
-                  <div className="flex justify-between text-emerald-400">
+                  <div className="flex justify-between text-emerald-600 dark:text-emerald-400">
                     <span>Overtime ({latestPayslip.overtimeHours}h)</span>
                     <span className="font-mono">+{formatCurrency(latestPayslip.overtimePay)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-zinc-400">
+                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                   <span>Tax Slabs & PF/EOBI</span>
-                  <span className="font-mono text-rose-400">
+                  <span className="font-mono text-rose-600 dark:text-rose-400">
                     -{formatCurrency((latestPayslip?.tax ?? latestPayslip?.totalTaxes ?? 0) + (latestPayslip?.pfDeduction || 0) + (latestPayslip?.eobiDeduction || 0))}
                   </span>
                 </div>
-                <div className="flex justify-between text-zinc-400">
+                <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                   <span>Attendance / Late Penalties</span>
-                  <span className="font-mono text-rose-400">
+                  <span className="font-mono text-rose-600 dark:text-rose-400">
                     -{formatCurrency(latestPayslip?.attendanceDeduction || 0)}
                   </span>
                 </div>
@@ -871,76 +871,10 @@ export default function EmployeeDashboardPage() {
               <div className="text-center pt-1">
                 <Link
                   href="/payroll"
-                  className="text-xs text-indigo-400 hover:text-indigo-300 font-medium inline-flex items-center gap-1"
+                  className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-medium inline-flex items-center gap-1"
                 >
                   Browse Finalized Payslips <ArrowRight className="w-3 h-3" />
                 </Link>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* 1.5 Performance Tier & Career Ranking Card */}
-      <motion.div variants={itemFadeUp}>
-        <Card className="border-indigo-500/20 bg-gradient-to-r from-zinc-900 via-zinc-900 to-indigo-950/20">
-          <CardContent className="py-4 px-5">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
-                  <Award className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-zinc-100">
-                      My Performance Tier & Workforce Ranking
-                    </h3>
-                    <RankBadge rank={fullEmployee?.ranking || employee.ranking || "Rank B"} size="sm" />
-                  </div>
-                  <p className="text-xs text-zinc-400 mt-0.5">
-                    Your dynamic rank is evaluated by HR based on sprint delivery output, task completion velocity, and team collaboration.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4 text-xs font-mono shrink-0">
-                <div className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-                  <span className="text-zinc-400 block text-[10px]">Work Delivery</span>
-                  <span className="font-bold text-indigo-400">{fullEmployee?.workScore ?? 96}%</span>
-                </div>
-                <div className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50">
-                  <span className="text-zinc-400 block text-[10px]">Conduct & Attitude</span>
-                  <span className="font-bold text-emerald-400">{fullEmployee?.behaviorScore ?? 95}%</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Progress Bars */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-zinc-300 font-medium">Sprint Deliverables & Attendance</span>
-                  <span className="font-mono text-indigo-400 font-semibold">{fullEmployee?.workScore ?? 96}%</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
-                  <div
-                    className="h-full bg-indigo-500 rounded-full"
-                    style={{ width: `${fullEmployee?.workScore ?? 96}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-zinc-300 font-medium">Conduct, Mentorship & Collaboration</span>
-                  <span className="font-mono text-emerald-400 font-semibold">{fullEmployee?.behaviorScore ?? 95}%</span>
-                </div>
-                <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
-                  <div
-                    className="h-full bg-emerald-500 rounded-full"
-                    style={{ width: `${fullEmployee?.behaviorScore ?? 95}%` }}
-                  />
-                </div>
               </div>
             </div>
           </CardContent>
@@ -961,10 +895,10 @@ export default function EmployeeDashboardPage() {
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  <CalendarDays className="w-4 h-4 text-indigo-400 shrink-0" />
+                  <CalendarDays className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
                   <span>My Leave Requests</span>
                 </CardTitle>
-                <p className="text-xs text-zinc-400 mt-0.5">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                   Automatically validates quotas, weekly offs, holidays, blackout dates, and sandwich rules.
                 </p>
               </div>
@@ -998,14 +932,14 @@ export default function EmployeeDashboardPage() {
                     <TableBody>
                       {leaveRequests.map((req) => (
                         <TableRow key={req.id}>
-                          <TableCell className="font-medium text-xs text-zinc-100">{req.leaveType}</TableCell>
-                          <TableCell className="text-xs text-zinc-300">
+                          <TableCell className="font-medium text-xs text-zinc-900 dark:text-zinc-100">{req.leaveType}</TableCell>
+                          <TableCell className="text-xs text-zinc-700 dark:text-zinc-300">
                             {req.startDate} to {req.endDate}{" "}
                             <span className="text-[10px] text-zinc-500 font-mono">
                               ({req.daysCount} d)
                             </span>
                           </TableCell>
-                          <TableCell className="text-xs text-zinc-400 max-w-xs truncate">{req.reason}</TableCell>
+                          <TableCell className="text-xs text-zinc-600 dark:text-zinc-400 max-w-xs truncate">{req.reason}</TableCell>
                           <TableCell>
                             <Badge
                               variant={
@@ -1026,7 +960,7 @@ export default function EmployeeDashboardPage() {
                                 type="button"
                                 onClick={() => handleCancelLeave(req.id)}
                                 title="Withdraw pending leave"
-                                className="p-1 rounded text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                                className="p-1 rounded text-zinc-400 hover:text-rose-500 hover:bg-rose-500/10 transition-colors"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
@@ -1046,10 +980,10 @@ export default function EmployeeDashboardPage() {
             <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  <FileEdit className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <FileEdit className="w-4 h-4 text-cyan-500 dark:text-cyan-400 shrink-0" />
                   <span>My Correction, WFH & OT Requests</span>
                 </CardTitle>
-                <p className="text-xs text-zinc-400 mt-0.5">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                   Submit missing punches, field visits, WFH days, or overtime claims within {config?.attendanceRule?.correctionWindowDays ?? 7} days.
                 </p>
               </div>
@@ -1065,7 +999,7 @@ export default function EmployeeDashboardPage() {
             </CardHeader>
             <CardContent>
               {myCorrections.length === 0 ? (
-                <div className="p-6 text-center text-xs text-zinc-400">
+                <div className="p-6 text-center text-xs text-zinc-500 dark:text-zinc-400">
                   No attendance correction or WFH requests submitted yet.
                 </div>
               ) : (
@@ -1083,11 +1017,11 @@ export default function EmployeeDashboardPage() {
                     <TableBody>
                       {myCorrections.map((c) => (
                         <TableRow key={c.id}>
-                          <TableCell className="font-medium text-xs text-zinc-100">{c.requestType}</TableCell>
-                          <TableCell className="text-xs font-mono text-zinc-300">
+                          <TableCell className="font-medium text-xs text-zinc-900 dark:text-zinc-100">{c.requestType}</TableCell>
+                          <TableCell className="text-xs font-mono text-zinc-700 dark:text-zinc-300">
                             {c.date} • {c.requestedTime}
                           </TableCell>
-                          <TableCell className="text-xs text-zinc-400 max-w-xs truncate">{c.reason}</TableCell>
+                          <TableCell className="text-xs text-zinc-600 dark:text-zinc-400 max-w-xs truncate">{c.reason}</TableCell>
                           <TableCell>
                             <Badge
                               variant={
@@ -1108,7 +1042,7 @@ export default function EmployeeDashboardPage() {
                                 type="button"
                                 onClick={() => handleDeleteCorrection(c.id)}
                                 title="Withdraw pending request"
-                                className="p-1 rounded text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                                className="p-1 rounded text-zinc-400 hover:text-rose-500 hover:bg-rose-500/10 transition-colors"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
@@ -1128,16 +1062,16 @@ export default function EmployeeDashboardPage() {
             <CardHeader className="flex flex-row items-center justify-between pb-3">
               <div>
                 <CardTitle className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Clock className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
                   <span>Recent Verified Shift Logs</span>
                 </CardTitle>
-                <p className="text-xs text-zinc-400 mt-0.5">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                   Timestamps and status evaluations from your latest shifts.
                 </p>
               </div>
               <Link
                 href="/attendance"
-                className="text-xs text-indigo-400 hover:text-indigo-300 font-medium inline-flex items-center gap-1 shrink-0"
+                className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-medium inline-flex items-center gap-1 shrink-0"
               >
                 Full Board <ArrowRight className="w-3 h-3" />
               </Link>
@@ -1157,17 +1091,17 @@ export default function EmployeeDashboardPage() {
                   <TableBody>
                     {recentShifts.map((shift) => (
                       <TableRow key={shift.day}>
-                        <TableCell className="font-mono text-xs font-semibold text-zinc-200">
+                        <TableCell className="font-mono text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                           {shift.date}{" "}
                           <span className="text-[10px] text-zinc-500 font-normal">({shift.dayOfWeek})</span>
                         </TableCell>
-                        <TableCell className="text-xs text-zinc-300 font-mono">
+                        <TableCell className="text-xs text-zinc-700 dark:text-zinc-300 font-mono">
                           {shift.clockIn || "--:--"}
                         </TableCell>
-                        <TableCell className="text-xs text-zinc-300 font-mono">
+                        <TableCell className="text-xs text-zinc-700 dark:text-zinc-300 font-mono">
                           {shift.clockOut || "--:--"}
                         </TableCell>
-                        <TableCell className="text-xs font-mono font-medium text-indigo-400">
+                        <TableCell className="text-xs font-mono font-medium text-indigo-600 dark:text-indigo-400">
                           {shift.totalHours || "--"}
                         </TableCell>
                         <TableCell className="text-right">
@@ -1200,14 +1134,14 @@ export default function EmployeeDashboardPage() {
           <CardHeader className="pb-3 flex flex-col items-start gap-1">
             <div className="flex items-center justify-between w-full">
               <CardTitle className="flex items-center gap-2">
-                <Megaphone className="w-4 h-4 text-amber-400 shrink-0" />
+                <Megaphone className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
                 <span>Policy & Holiday Noticeboard</span>
               </CardTitle>
               <Badge variant="warning" size="sm" className="shrink-0">
                 Live Sync
               </Badge>
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Active rules, shift schedules, and upcoming public holidays.
             </p>
           </CardHeader>
@@ -1216,7 +1150,7 @@ export default function EmployeeDashboardPage() {
               {announcements.map((ann) => (
                 <div
                   key={ann.id}
-                  className="p-3 rounded-xl border border-zinc-800 bg-zinc-900/50 space-y-2 hover:border-zinc-700 transition-colors"
+                  className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 space-y-2 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span
@@ -1226,17 +1160,17 @@ export default function EmployeeDashboardPage() {
                     </span>
                     <span className="text-[10px] text-zinc-500 font-mono">{ann.date}</span>
                   </div>
-                  <h4 className="text-xs font-semibold text-zinc-100 leading-snug">{ann.title}</h4>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">{ann.summary}</p>
+                  <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 leading-snug">{ann.title}</h4>
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">{ann.summary}</p>
                   <div className="text-[10px] text-zinc-500 font-medium pt-1">Posted by {ann.author}</div>
                 </div>
               ))}
             </div>
 
-            <div className="pt-3 text-center border-t border-zinc-800/80 mt-auto">
+            <div className="pt-3 text-center border-t border-zinc-100 dark:border-zinc-800/80 mt-auto">
               <Link
                 href="/documents"
-                className="text-xs text-indigo-400 hover:text-indigo-300 font-medium inline-flex items-center gap-1"
+                className="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-medium inline-flex items-center gap-1"
               >
                 View Policy Handbooks & Docs <ArrowRight className="w-3 h-3" />
               </Link>

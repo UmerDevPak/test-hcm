@@ -290,7 +290,7 @@ export default function EmployeesPage() {
             className={`p-1.5 rounded-md ${
               viewMode === "table"
                 ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                : "text-zinc-400 hover:text-zinc-200"
+                : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
             }`}
           >
             <List className="w-4 h-4" />
@@ -300,7 +300,7 @@ export default function EmployeesPage() {
             className={`p-1.5 rounded-md ${
               viewMode === "grid"
                 ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                : "text-zinc-400 hover:text-zinc-200"
+                : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
@@ -647,10 +647,10 @@ export default function EmployeesPage() {
                     </div>
                   </div>
 
-                  <div className="my-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 space-y-1.5 text-xs text-zinc-400">
+                  <div className="my-4 pt-3 border-t border-zinc-100 dark:border-zinc-800/80 space-y-1.5 text-xs text-zinc-500 dark:text-zinc-400">
                     <div className="flex justify-between items-center">
                       <span>Performance Tier</span>
-                      <div className="flex items-center gap-1.5 font-mono text-[11px] text-zinc-200">
+                      <div className="flex items-center gap-1.5 font-mono text-[11px] text-zinc-900 dark:text-zinc-200">
                         <span>Work {emp.workScore ?? 85}%</span>
                         <span>•</span>
                         <span>Conduct {emp.behaviorScore ?? 85}%</span>
@@ -658,17 +658,17 @@ export default function EmployeesPage() {
                     </div>
                     <div className="flex justify-between">
                       <span>Department</span>
-                      <span className="font-medium text-zinc-200">{emp.department}</span>
+                      <span className="font-medium text-zinc-900 dark:text-zinc-200">{emp.department}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Compensation</span>
-                      <span className="font-mono font-medium text-zinc-200">
+                      <span className="font-mono font-medium text-zinc-900 dark:text-zinc-200">
                         {formatCurrency(emp.annualSalary)}/yr
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Email</span>
-                      <span className="text-zinc-300 truncate max-w-[180px]">{emp.email}</span>
+                      <span className="text-zinc-700 dark:text-zinc-300 truncate max-w-[180px]">{emp.email}</span>
                     </div>
                   </div>
 

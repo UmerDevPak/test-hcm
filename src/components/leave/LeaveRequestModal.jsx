@@ -145,24 +145,24 @@ export function LeaveRequestModal({ isOpen, onClose, onSubmitted }) {
         {preview && (
           <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
             <div className="flex items-center justify-between">
-              <span className="text-zinc-400">Calendar Span</span>
-              <span className="font-mono text-zinc-200">{preview.totalCalendarDays || 0} day(s)</span>
+              <span className="text-zinc-500 dark:text-zinc-400">Calendar Span</span>
+              <span className="font-mono text-zinc-900 dark:text-zinc-200">{preview.totalCalendarDays || 0} day(s)</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-zinc-400">Skipped Weekly Offs / Public Holidays</span>
-              <span className="font-mono text-emerald-400">
+              <span className="text-zinc-500 dark:text-zinc-400">Skipped Weekly Offs / Public Holidays</span>
+              <span className="font-mono text-emerald-600 dark:text-emerald-400">
                 {preview.skippedWeekends || 0} off • {preview.skippedHolidays || 0} holiday(s)
               </span>
             </div>
             {preview.sandwichDaysAdded > 0 && (
-              <div className="flex items-center justify-between text-amber-400">
+              <div className="flex items-center justify-between text-amber-600 dark:text-amber-400">
                 <span>Sandwich Rule Days Added</span>
                 <span className="font-mono font-bold">+{preview.sandwichDaysAdded} day(s)</span>
               </div>
             )}
-            <div className="flex items-center justify-between pt-1.5 border-t border-zinc-800">
-              <span className="font-semibold text-zinc-200">Net Chargeable Leave Days</span>
-              <span className="font-bold text-indigo-400 font-mono text-sm">
+            <div className="flex items-center justify-between pt-1.5 border-t border-zinc-200 dark:border-zinc-800">
+              <span className="font-semibold text-zinc-900 dark:text-zinc-200">Net Chargeable Leave Days</span>
+              <span className="font-bold text-indigo-600 dark:text-indigo-400 font-mono text-sm">
                 {preview.chargeableDays || 0} working day(s)
               </span>
             </div>

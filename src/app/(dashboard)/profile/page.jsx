@@ -55,10 +55,10 @@ export default function ProfilePage() {
   return (
     <div className="space-y-6 animate-fade-in max-w-4xl">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-zinc-100">
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
           My Account & Role Scope
         </h1>
-        <p className="text-sm text-zinc-400 mt-0.5">
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
           View your authenticated HCM Lite identity, department assignment, and portrait preset.
         </p>
       </div>
@@ -74,28 +74,28 @@ export default function ProfilePage() {
           />
           <div className="space-y-2 min-w-0 flex-1">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <h2 className="text-xl font-bold text-zinc-100">{user?.displayName}</h2>
+              <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">{user?.displayName}</h2>
               <Badge variant="info" size="sm">
                 {ROLE_LABELS[canonicalRole]}
               </Badge>
               <RankBadge rank={employeeRecord?.ranking || "Rank A"} size="sm" showTier />
             </div>
-            <p className="text-xs text-zinc-400">{ROLE_DESCRIPTIONS[canonicalRole]}</p>
-            <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-zinc-300">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400">{ROLE_DESCRIPTIONS[canonicalRole]}</p>
+            <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-zinc-700 dark:text-zinc-300">
               <span className="inline-flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 text-zinc-500" />
+                <Mail className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
                 {user?.email}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Building2 className="w-3.5 h-3.5 text-zinc-500" />
+                <Building2 className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
                 Department: {user?.department || "Executive"}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <BadgeCheck className="w-3.5 h-3.5 text-indigo-400" />
+                <BadgeCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                 ID: {user?.employeeId || "EMP-001"}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                <Shield className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 {user?.jobTitle || ROLE_LABELS[canonicalRole]}
               </span>
             </div>
@@ -104,16 +104,16 @@ export default function ProfilePage() {
       </Card>
 
       {/* Talent Tier & Score Standing Card */}
-      <Card className="border-indigo-500/20 bg-gradient-to-r from-zinc-900 via-zinc-900 to-indigo-950/20">
+      <Card className="border-indigo-500/20 bg-white dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-900 dark:to-indigo-950/20 shadow-sm">
         <CardContent className="p-5 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-200 dark:border-zinc-800 pb-3">
             <div className="flex items-center gap-2.5">
-              <Award className="w-5 h-5 text-indigo-400" />
+              <Award className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
               <div>
-                <h3 className="text-sm font-semibold text-zinc-100">
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                   Performance Standing & Career Tier
                 </h3>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400">
                   Dynamic categorization based on sprint throughput velocity and workplace conduct.
                 </p>
               </div>
@@ -122,56 +122,56 @@ export default function ProfilePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-3.5 rounded-xl bg-zinc-800/40 border border-zinc-700/40 space-y-1.5">
+            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/40 space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-zinc-200">Work Output & Delivery</span>
-                <span className="font-mono font-bold text-indigo-400">{employeeRecord?.workScore ?? 95}%</span>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-200">Work Output & Delivery</span>
+                <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400">{employeeRecord?.workScore ?? 95}%</span>
               </div>
-              <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+              <div className="h-1.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
                 <div
                   className="h-full bg-indigo-500 rounded-full"
                   style={{ width: `${employeeRecord?.workScore ?? 95}%` }}
                 />
               </div>
-              <p className="text-[10px] text-zinc-400">
+              <p className="text-[10px] text-zinc-500 dark:text-zinc-400">
                 Measures sprint tickets completed, task delivery SLAs, and punctual clock-ins.
               </p>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-zinc-800/40 border border-zinc-700/40 space-y-1.5">
+            <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/40 space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-zinc-200">Behavior & Team Conduct</span>
-                <span className="font-mono font-bold text-emerald-400">{employeeRecord?.behaviorScore ?? 95}%</span>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-200">Behavior & Team Conduct</span>
+                <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">{employeeRecord?.behaviorScore ?? 95}%</span>
               </div>
-              <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+              <div className="h-1.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
                 <div
                   className="h-full bg-emerald-500 rounded-full"
                   style={{ width: `${employeeRecord?.behaviorScore ?? 95}%` }}
                 />
               </div>
-              <p className="text-[10px] text-zinc-400">
+              <p className="text-[10px] text-zinc-500 dark:text-zinc-400">
                 Measures peer collaboration, problem ownership, communication, and mentoring.
               </p>
             </div>
           </div>
 
           {employeeRecord?.promotionHistory && employeeRecord.promotionHistory.length > 0 && (
-            <div className="pt-3 border-t border-zinc-800/80">
-              <span className="text-xs font-semibold text-zinc-300 block mb-2 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800/80">
+              <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 block mb-2 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                 Promotion & Tier Advancement History
               </span>
               <div className="space-y-1.5">
                 {employeeRecord.promotionHistory.map((h, i) => (
                   <div
                     key={h.id || i}
-                    className="p-2.5 rounded-lg bg-zinc-800/30 border border-zinc-700/30 flex items-center justify-between text-xs"
+                    className="p-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-700/30 flex items-center justify-between text-xs"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-zinc-400 font-mono text-[11px]">{formatDate(h.promotedAt)}</span>
+                      <span className="text-zinc-500 dark:text-zinc-400 font-mono text-[11px]">{formatDate(h.promotedAt)}</span>
                       <RankBadge rank={h.toRank} size="xs" />
                     </div>
-                    <span className="text-[11px] text-zinc-300 truncate max-w-xs">{h.reason}</span>
+                    <span className="text-[11px] text-zinc-700 dark:text-zinc-300 truncate max-w-xs">{h.reason}</span>
                   </div>
                 ))}
               </div>
@@ -198,8 +198,8 @@ export default function ProfilePage() {
                   onClick={() => handleSelectAvatar(preset)}
                   className={`relative rounded-xl border p-3 flex flex-col items-center gap-2 transition-all ${
                     isSelected
-                      ? "border-indigo-500 bg-indigo-500/10"
-                      : "border-zinc-800 bg-zinc-950/60 hover:border-zinc-700"
+                      ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10"
+                      : "border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/60 hover:border-zinc-300 dark:hover:border-zinc-700"
                   }`}
                 >
                   {isSelected && (
@@ -212,7 +212,7 @@ export default function ProfilePage() {
                     alt={preset.label}
                     className="w-14 h-14 rounded-full"
                   />
-                  <span className="text-[11px] font-medium text-zinc-300 text-center">
+                  <span className="text-[11px] font-medium text-zinc-700 dark:text-zinc-300 text-center">
                     {preset.label.split(" (")[0]}
                   </span>
                 </button>

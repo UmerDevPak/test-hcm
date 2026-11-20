@@ -132,20 +132,20 @@ export function RunPayrollModal({ isOpen, onClose, onCompleted, defaultMode = nu
 
         <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-800 space-y-1.5 text-xs">
           <div className="flex justify-between">
-            <span className="text-zinc-400">Active Workforce</span>
-            <span className="font-semibold text-zinc-200">{staffCount} Personnel</span>
+            <span className="text-zinc-500 dark:text-zinc-400">Active Workforce</span>
+            <span className="font-semibold text-zinc-900 dark:text-zinc-200">{staffCount} Personnel</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-zinc-400">Tab 10 Calculation Method</span>
-            <span className="font-mono text-indigo-300">{salaryMethod}</span>
+            <span className="text-zinc-500 dark:text-zinc-400">Tab 10 Calculation Method</span>
+            <span className="font-mono text-indigo-600 dark:text-indigo-300">{salaryMethod}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-zinc-400">Absence / Late Base</span>
-            <span className="font-mono text-zinc-300">{deductionBase} Salary</span>
+            <span className="text-zinc-500 dark:text-zinc-400">Absence / Late Base</span>
+            <span className="font-mono text-zinc-700 dark:text-zinc-300">{deductionBase} Salary</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-zinc-400">Attendance Lock Rule</span>
-            <span className="text-amber-400 font-medium">
+            <span className="text-zinc-500 dark:text-zinc-400">Attendance Lock Rule</span>
+            <span className="text-amber-600 dark:text-amber-400 font-medium">
               {mode === "Finalized" && isAdmin
                 ? `Locks Attendance <= ${periodEnd}`
                 : "Unlocked while in Draft"}

@@ -306,14 +306,14 @@ export default function RecruitmentPage() {
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-1.5 text-xs text-zinc-400 mt-auto">
+              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-1.5 text-xs text-zinc-500 dark:text-zinc-400 mt-auto">
                 <div className="flex justify-between">
                   <span>Location</span>
-                  <span className="text-zinc-200">{job.location}</span>
+                  <span className="text-zinc-900 dark:text-zinc-200 font-medium">{job.location}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Target Range</span>
-                  <span className="font-mono text-zinc-200">{job.salaryRange}</span>
+                  <span className="font-mono text-zinc-900 dark:text-zinc-200 font-medium">{job.salaryRange}</span>
                 </div>
               </div>
             </Card>

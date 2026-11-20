@@ -132,15 +132,15 @@ export function PromotionRecommendationModal({
             />
           </div>
         ) : (
-          <div className="p-3 rounded-xl bg-zinc-800/40 border border-zinc-700/50 flex items-center justify-between">
+          <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 flex items-center justify-between">
             <div>
-              <div className="text-xs font-semibold text-zinc-100">{activeEmployee.name}</div>
-              <div className="text-[11px] text-zinc-400">
+              <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{activeEmployee.name}</div>
+              <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
                 {activeEmployee.jobTitle} • {activeEmployee.department}
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-zinc-400">Current:</span>
+              <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Current:</span>
               <RankBadge rank={activeEmployee.ranking || "Rank B"} size="sm" />
             </div>
           </div>
@@ -149,19 +149,19 @@ export function PromotionRecommendationModal({
         {/* Target Rank Selection */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
               Current Rank
             </label>
-            <div className="p-2.5 rounded-lg bg-zinc-800/40 border border-zinc-700/40 flex items-center gap-2">
+            <div className="p-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/40 flex items-center gap-2">
               <RankBadge rank={activeEmployee?.ranking || "Rank B"} size="sm" />
-              <span className="text-xs text-zinc-400">
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">
                 (Current Tier)
               </span>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
               Recommended Target Rank *
             </label>
             <Select
@@ -178,17 +178,17 @@ export function PromotionRecommendationModal({
         </div>
 
         {/* Scores */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3.5 rounded-xl bg-zinc-800/20 border border-zinc-800">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/20 border border-zinc-200 dark:border-zinc-800">
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-semibold text-zinc-200">
+              <label className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                 Work Output Score
               </label>
-              <span className="text-xs font-mono font-bold text-indigo-400">
+              <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400">
                 {workScore} / 100
               </span>
             </div>
-            <p className="text-[10px] text-zinc-400 mb-2">
+            <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mb-2">
               KPIs, sprint deliverables, project SLAs & attendance punctuality.
             </p>
             <input
@@ -203,14 +203,14 @@ export function PromotionRecommendationModal({
 
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-semibold text-zinc-200">
+              <label className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                 Behavior & Conduct Score
               </label>
-              <span className="text-xs font-mono font-bold text-emerald-400">
+              <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
                 {behaviorScore} / 100
               </span>
             </div>
-            <p className="text-[10px] text-zinc-400 mb-2">
+            <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mb-2">
               Team collaboration, attitude, ethics, mentoring & peer alignment.
             </p>
             <input
@@ -226,12 +226,12 @@ export function PromotionRecommendationModal({
 
         {/* Work Justification */}
         <div>
-          <label className="block text-xs font-medium text-zinc-300 mb-1">
+          <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
             Work Performance Justification & Evidence *
           </label>
           <textarea
             rows={2}
-            className="w-full rounded-lg bg-zinc-800/50 border border-zinc-700/60 p-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full rounded-lg bg-white dark:bg-zinc-800/50 border border-zinc-300 dark:border-zinc-700/60 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Cite sprint metrics, OKR achievements, or technical problem solving..."
             value={workJustification}
             onChange={(e) => setWorkJustification(e.target.value)}
@@ -241,12 +241,12 @@ export function PromotionRecommendationModal({
 
         {/* Behavior Justification */}
         <div>
-          <label className="block text-xs font-medium text-zinc-300 mb-1">
+          <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
             Behavioral Conduct & Cultural Impact Justification *
           </label>
           <textarea
             rows={2}
-            className="w-full rounded-lg bg-zinc-800/50 border border-zinc-700/60 p-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full rounded-lg bg-white dark:bg-zinc-800/50 border border-zinc-300 dark:border-zinc-700/60 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             placeholder="Describe teamwork attitude, leadership initiative, communication and conflict resolution..."
             value={behaviorJustification}
             onChange={(e) => setBehaviorJustification(e.target.value)}
@@ -255,7 +255,7 @@ export function PromotionRecommendationModal({
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-between pt-3 border-t border-zinc-800">
+        <div className="flex items-center justify-between pt-3 border-t border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center gap-1.5 text-[11px] text-zinc-400">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Transfers to Admin Executive Portal for approval</span>

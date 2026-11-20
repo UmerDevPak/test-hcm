@@ -145,10 +145,10 @@ export default function ComplaintsPage() {
   });
 
   const urgencyLevels = [
-    { level: "Urgent", color: "bg-rose-500", text: "text-rose-400", bar: "from-rose-500 to-rose-600" },
-    { level: "High", color: "bg-amber-500", text: "text-amber-400", bar: "from-amber-500 to-amber-600" },
-    { level: "Medium", color: "bg-indigo-500", text: "text-indigo-400", bar: "from-indigo-500 to-indigo-600" },
-    { level: "Low", color: "bg-zinc-500", text: "text-zinc-400", bar: "from-zinc-500 to-zinc-600" },
+    { level: "Urgent", color: "bg-rose-500", text: "text-rose-600 dark:text-rose-400", bar: "from-rose-500 to-rose-600" },
+    { level: "High", color: "bg-amber-500", text: "text-amber-600 dark:text-amber-400", bar: "from-amber-500 to-amber-600" },
+    { level: "Medium", color: "bg-indigo-500", text: "text-indigo-600 dark:text-indigo-400", bar: "from-indigo-500 to-indigo-600" },
+    { level: "Low", color: "bg-zinc-500", text: "text-zinc-600 dark:text-zinc-400", bar: "from-zinc-500 to-zinc-600" },
   ];
   const urgencyStats = urgencyLevels.map((u) => {
     const count = complaints.filter((c) => c.urgency === u.level).length;
@@ -335,13 +335,13 @@ export default function ComplaintsPage() {
   const getUrgencyBadge = (urgency) => {
     switch (urgency) {
       case "Urgent":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/30 animate-pulse">Urgent</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30 animate-pulse">Urgent</span>;
       case "High":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30">High</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30">High</span>;
       case "Medium":
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">Medium</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30">Medium</span>;
       default:
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-400 border border-zinc-500/30">Low</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/30">Low</span>;
     }
   };
 
@@ -355,36 +355,36 @@ export default function ComplaintsPage() {
       {/* Header Banner */}
       <motion.div
         variants={itemFadeUp}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-r from-zinc-900/90 via-zinc-900/50 to-zinc-950 shadow-elevated relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-gradient-to-r dark:from-zinc-900/90 dark:via-zinc-900/50 dark:to-zinc-950 shadow-sm dark:shadow-elevated relative overflow-hidden"
       >
         <div className="absolute top-0 right-0 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-2 max-w-2xl min-w-0">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-semibold">
             <ShieldAlert className="w-3.5 h-3.5" />
             <span>Corporate Grievance Redressal System</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 dark:bg-rose-400 animate-pulse" />
           </div>
 
-          <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight text-zinc-100">
+          <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100">
             Workforce Complaints & Grievances
           </h1>
 
-          <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
             {activeRole === "ADMIN" && (
               <>
-                <strong className="text-zinc-200">Executive Authority Portal:</strong> Review HR investigation findings, authorize disciplinary remedies, and grant final executive approval for escalated workplace grievances.
+                <strong className="text-zinc-900 dark:text-zinc-200">Executive Authority Portal:</strong> Review HR investigation findings, authorize disciplinary remedies, and grant final executive approval for escalated workplace grievances.
               </>
             )}
             {activeRole === "HR" && (
               <>
-                <strong className="text-zinc-200">Primary Grievance Custodian:</strong> Intake workplace complaints, conduct confidential inquiries, mediate disputes, and escalate complex issues to Executive Admin for authorization.
+                <strong className="text-zinc-900 dark:text-zinc-200">Primary Grievance Custodian:</strong> Intake workplace complaints, conduct confidential inquiries, mediate disputes, and escalate complex issues to Executive Admin for authorization.
               </>
             )}
             {activeRole === "EMPLOYEE" && (
               <>
-                <strong className="text-zinc-200">Confidential Employee Helpdesk:</strong> File grievances with optional anonymous whistleblowing protection. Track case progress in real-time through HR triage and executive resolution.
+                <strong className="text-zinc-900 dark:text-zinc-200">Confidential Employee Helpdesk:</strong> File grievances with optional anonymous whistleblowing protection. Track case progress in real-time through HR triage and executive resolution.
               </>
             )}
           </p>
@@ -410,14 +410,14 @@ export default function ComplaintsPage() {
           variants={itemFadeUp}
           whileHover={{ y: -4, transition: { duration: 0.16 } }}
           whileTap={{ scale: 0.985 }}
-          className="p-4 sm:p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm space-y-2 hover:border-zinc-700 transition-colors"
+          className="p-4 sm:p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm space-y-2 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
         >
-          <span className="text-xs font-medium text-zinc-400">Total Cases Logged</span>
+          <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Total Cases Logged</span>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold tracking-tight text-zinc-100">{totalCount}</span>
+            <span className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{totalCount}</span>
             <span className="text-[10px] font-mono text-zinc-500">Corporate Registry</span>
           </div>
-          <div className="h-1 w-full rounded-full bg-zinc-800 overflow-hidden mt-1">
+          <div className="h-1 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden mt-1">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
@@ -433,12 +433,12 @@ export default function ComplaintsPage() {
           whileTap={{ scale: 0.985 }}
           className="p-4 sm:p-5 rounded-2xl border border-amber-500/20 bg-amber-500/5 shadow-sm space-y-2 hover:border-amber-500/40 transition-colors"
         >
-          <span className="text-xs font-medium text-amber-400">Pending HR Intake</span>
+          <span className="text-xs font-medium text-amber-600 dark:text-amber-400">Pending HR Intake</span>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold tracking-tight text-amber-300">{pendingTriageCount}</span>
-            <span className="text-[10px] font-mono text-amber-500">Awaiting Assignment</span>
+            <span className="text-2xl font-bold tracking-tight text-amber-700 dark:text-amber-300">{pendingTriageCount}</span>
+            <span className="text-[10px] font-mono text-amber-600 dark:text-amber-500">Awaiting Assignment</span>
           </div>
-          <div className="h-1 w-full rounded-full bg-zinc-800 overflow-hidden mt-1">
+          <div className="h-1 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden mt-1">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${totalCount > 0 ? (pendingTriageCount / totalCount) * 100 : 0}%` }}
@@ -457,12 +457,12 @@ export default function ComplaintsPage() {
           {escalatedToAdminCount > 0 && (
             <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-purple-500 animate-ping" />
           )}
-          <span className="text-xs font-medium text-purple-400">Escalated to Admin</span>
+          <span className="text-xs font-medium text-purple-600 dark:text-purple-400">Escalated to Admin</span>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold tracking-tight text-purple-300">{escalatedToAdminCount}</span>
-            <span className="text-[10px] font-mono text-purple-400 uppercase">Requires Sign-off</span>
+            <span className="text-2xl font-bold tracking-tight text-purple-700 dark:text-purple-300">{escalatedToAdminCount}</span>
+            <span className="text-[10px] font-mono text-purple-600 dark:text-purple-400 uppercase">Requires Sign-off</span>
           </div>
-          <div className="h-1 w-full rounded-full bg-zinc-800 overflow-hidden mt-1">
+          <div className="h-1 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden mt-1">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${totalCount > 0 ? (escalatedToAdminCount / totalCount) * 100 : 0}%` }}
@@ -478,12 +478,12 @@ export default function ComplaintsPage() {
           whileTap={{ scale: 0.985 }}
           className="p-4 sm:p-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 shadow-sm space-y-2 hover:border-emerald-500/40 transition-colors"
         >
-          <span className="text-xs font-medium text-emerald-400">Resolved & Closed</span>
+          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Resolved & Closed</span>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold tracking-tight text-emerald-300">{resolvedCount}</span>
-            <span className="text-[10px] font-mono text-emerald-500">Remediated</span>
+            <span className="text-2xl font-bold tracking-tight text-emerald-700 dark:text-emerald-300">{resolvedCount}</span>
+            <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-500">Remediated</span>
           </div>
-          <div className="h-1 w-full rounded-full bg-zinc-800 overflow-hidden mt-1">
+          <div className="h-1 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden mt-1">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${totalCount > 0 ? (resolvedCount / totalCount) * 100 : 0}%` }}
@@ -502,17 +502,17 @@ export default function ComplaintsPage() {
         variants={itemFadeUp}
       >
         <div className="p-5 sm:p-6 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800/80 pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/80 pb-3">
             <div>
-              <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-rose-400" />
+              <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-rose-500 dark:text-rose-400" />
                 Grievance Telemetry & Intake Analytics
               </h2>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                 Real-time breakdown of logged incidents across corporate categories and priority levels.
               </p>
             </div>
-            <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-800 text-zinc-300 self-start sm:self-auto border border-zinc-700">
+            <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 self-start sm:self-auto border border-zinc-200 dark:border-zinc-700">
               {totalCount} Total Case Distribution
             </span>
           </div>
@@ -520,21 +520,21 @@ export default function ComplaintsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left: Category Breakdown with animated gradient bars */}
             <div className="space-y-3">
-              <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block">
+              <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider block">
                 Category Distribution
               </span>
               <div className="space-y-2.5">
                 {categoryStats.map((cat) => (
                   <div key={cat.id} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-zinc-300 font-medium truncate">{cat.label}</span>
+                      <span className="text-zinc-800 dark:text-zinc-300 font-medium truncate">{cat.label}</span>
                       <div className="flex items-center gap-2 shrink-0 font-mono">
-                        <span className="text-zinc-400 text-[11px]">{cat.count} {cat.count === 1 ? "case" : "cases"}</span>
-                        <span className="font-semibold text-zinc-200">{cat.percent}%</span>
+                        <span className="text-zinc-500 dark:text-zinc-400 text-[11px]">{cat.count} {cat.count === 1 ? "case" : "cases"}</span>
+                        <span className="font-semibold text-zinc-900 dark:text-zinc-200">{cat.percent}%</span>
                       </div>
                     </div>
                     {/* Animated Progress Bar */}
-                    <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+                    <div className="h-1.5 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${Math.max(cat.percent, cat.count > 0 ? 8 : 0)}%` }}
@@ -551,7 +551,7 @@ export default function ComplaintsPage() {
             {/* Right: Urgency Severity Matrix */}
             <div className="space-y-3 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block mb-3">
+                <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider block mb-3">
                   Priority Severity Matrix
                 </span>
                 <div className="grid grid-cols-2 gap-2.5">
@@ -559,22 +559,22 @@ export default function ComplaintsPage() {
                     <motion.div
                       key={u.level}
                       whileHover={{ y: -2, transition: { duration: 0.15 } }}
-                      className="p-3 rounded-xl border border-zinc-800 bg-zinc-950/60 space-y-2"
+                      className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 space-y-2"
                     >
                       <div className="flex items-center justify-between text-xs">
                         <span className={cn("font-bold text-xs uppercase tracking-wider", u.text)}>
                           {u.level}
                         </span>
-                        <span className="font-mono text-zinc-400 text-[11px] font-semibold">
+                        <span className="font-mono text-zinc-500 dark:text-zinc-400 text-[11px] font-semibold">
                           {u.percent}%
                         </span>
                       </div>
                       <div className="flex items-baseline justify-between">
-                        <span className="text-xl font-extrabold font-mono text-zinc-100">{u.count}</span>
+                        <span className="text-xl font-extrabold font-mono text-zinc-900 dark:text-zinc-100">{u.count}</span>
                         <span className="text-[10px] text-zinc-500">tickets</span>
                       </div>
                       {/* Animated Bar */}
-                      <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+                      <div className="h-1.5 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${u.percent}%` }}
@@ -588,12 +588,12 @@ export default function ComplaintsPage() {
               </div>
 
               {/* Policy Note Callout */}
-              <div className="p-3.5 rounded-xl border border-rose-500/20 bg-rose-950/20 text-xs text-rose-300 space-y-1 mt-3">
+              <div className="p-3.5 rounded-xl border border-rose-200 dark:border-rose-500/20 bg-rose-50 dark:bg-rose-950/20 text-xs text-rose-800 dark:text-rose-300 space-y-1 mt-3">
                 <div className="font-semibold flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-rose-400" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
                   Anti-Retaliation Policy Protection
                 </div>
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                   Whistleblower submissions are cryptographically encrypted. Anonymous filings strip filer metadata and employee IP identifiers.
                 </p>
               </div>
@@ -623,7 +623,7 @@ export default function ComplaintsPage() {
                 "px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all duration-200 active:scale-[0.98]",
                 activeTab === tab.id
                   ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-bold shadow-sm"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40"
+                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/40"
               )}
             >
               {tab.label}
@@ -634,20 +634,20 @@ export default function ComplaintsPage() {
         {/* Search & Urgency dropdown */}
         <div className="flex items-center gap-2">
           <div className="relative flex-1 sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
             <input
               type="text"
               placeholder="Search case, subject, filer..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
 
           <select
             value={urgencyFilter}
             onChange={(e) => setUrgencyFilter(e.target.value)}
-            className="px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs text-zinc-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           >
             <option value="ALL">All Priorities</option>
             <option value="Urgent">Urgent Only</option>
@@ -676,16 +676,16 @@ export default function ComplaintsPage() {
               <div
                 key={item.id}
                 className={cn(
-                  "p-5 sm:p-6 rounded-2xl border transition-all duration-150 bg-white dark:bg-zinc-900/60 shadow-sm space-y-4 hover:border-zinc-700",
+                  "p-5 sm:p-6 rounded-2xl border transition-all duration-150 bg-white dark:bg-zinc-900/60 shadow-sm space-y-4 hover:border-zinc-300 dark:hover:border-zinc-700",
                   item.status === "ESCALATED_TO_ADMIN"
-                    ? "border-purple-500/40 bg-purple-950/10"
+                    ? "border-purple-300 dark:border-purple-500/40 bg-purple-50/40 dark:bg-purple-950/10"
                     : "border-zinc-200 dark:border-zinc-800"
                 )}
               >
                 {/* Top Row: Case Number, Badges, Urgency, Status */}
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-xs px-2 py-0.5 rounded-lg bg-zinc-800 text-zinc-200 border border-zinc-700">
+                    <span className="font-mono font-bold text-xs px-2 py-0.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700">
                       {item.caseNumber}
                     </span>
                     <span className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-full border", categoryObj.color)}>
@@ -706,33 +706,33 @@ export default function ComplaintsPage() {
 
                 {/* Main Content */}
                 <div className="space-y-1.5">
-                  <h3 className="text-base sm:text-lg font-bold text-zinc-100 tracking-tight">
+                  <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-3">
                     {item.description}
                   </p>
                 </div>
 
                 {/* Desired Remedy Callout */}
                 {item.desiredRemedy && (
-                  <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/80 text-xs text-zinc-300 space-y-1">
-                    <span className="font-semibold text-zinc-400 block text-[10px] uppercase tracking-wider">
+                  <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800/80 text-xs space-y-1">
+                    <span className="font-semibold text-zinc-500 dark:text-zinc-400 block text-[10px] uppercase tracking-wider">
                       Desired Filer Remedy:
                     </span>
-                    <p className="text-zinc-200">{item.desiredRemedy}</p>
+                    <p className="text-zinc-800 dark:text-zinc-200 font-medium">{item.desiredRemedy}</p>
                   </div>
                 )}
 
                 {/* Escalation details if active */}
                 {item.status === "ESCALATED_TO_ADMIN" && item.escalationDetails && (
-                  <div className="p-3.5 rounded-xl border border-purple-500/30 bg-purple-950/20 text-xs text-purple-200 space-y-1.5 animate-pulse">
-                    <div className="flex items-center gap-2 font-bold text-purple-300 text-xs">
-                      <ShieldAlert className="w-4 h-4 text-purple-400" />
+                  <div className="p-3.5 rounded-xl border border-purple-200 dark:border-purple-500/30 bg-purple-50 dark:bg-purple-950/20 text-xs text-purple-900 dark:text-purple-200 space-y-1.5 animate-pulse">
+                    <div className="flex items-center gap-2 font-bold text-purple-700 dark:text-purple-300 text-xs">
+                      <ShieldAlert className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                       <span>Executive Escalation Briefing:</span>
                     </div>
-                    <p className="text-zinc-300 font-medium">{item.escalationDetails.reason}</p>
-                    <p className="text-[11px] text-purple-300/80">
+                    <p className="text-zinc-800 dark:text-zinc-300 font-medium">{item.escalationDetails.reason}</p>
+                    <p className="text-[11px] text-purple-700 dark:text-purple-300/80">
                       <strong>Requested Admin Action:</strong> {item.escalationDetails.requestedAdminAction}
                     </p>
                   </div>
@@ -740,13 +740,13 @@ export default function ComplaintsPage() {
 
                 {/* Progress Step Bar */}
                 <div className="pt-2">
-                  <div className="flex items-center justify-between text-[11px] text-zinc-400 mb-1.5 font-medium">
-                    <span className={item.timeline.length >= 1 ? "text-indigo-400 font-semibold" : ""}>1. Intake Logged</span>
-                    <span className={item.assignedInvestigator ? "text-indigo-400 font-semibold" : ""}>2. HR Investigation</span>
-                    <span className={item.escalationDetails ? "text-purple-400 font-semibold" : ""}>3. Executive Admin Escalation</span>
-                    <span className={item.status === "RESOLVED" ? "text-emerald-400 font-semibold" : ""}>4. Remediation Closed</span>
+                  <div className="flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400 mb-1.5 font-medium">
+                    <span className={item.timeline.length >= 1 ? "text-indigo-600 dark:text-indigo-400 font-semibold" : ""}>1. Intake Logged</span>
+                    <span className={item.assignedInvestigator ? "text-indigo-600 dark:text-indigo-400 font-semibold" : ""}>2. HR Investigation</span>
+                    <span className={item.escalationDetails ? "text-purple-600 dark:text-purple-400 font-semibold" : ""}>3. Executive Admin Escalation</span>
+                    <span className={item.status === "RESOLVED" ? "text-emerald-600 dark:text-emerald-400 font-semibold" : ""}>4. Remediation Closed</span>
                   </div>
-                  <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                  <div className="w-full bg-zinc-100 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
                     <div
                       className={cn(
                         "h-full transition-all duration-500 rounded-full",
@@ -765,13 +765,13 @@ export default function ComplaintsPage() {
                 {/* Footer Controls & Role Based Actions */}
                 <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   {/* Filer info */}
-                  <div className="flex items-center gap-2 text-xs text-zinc-400">
-                    <div className="w-6 h-6 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-300 font-bold text-[10px]">
-                      {item.isAnonymous ? <Lock className="w-3 h-3 text-amber-400" /> : <User className="w-3 h-3 text-cyan-400" />}
+                  <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+                    <div className="w-6 h-6 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-300 font-bold text-[10px]">
+                      {item.isAnonymous ? <Lock className="w-3 h-3 text-amber-500" /> : <User className="w-3 h-3 text-indigo-500" />}
                     </div>
                     <span>
                       Filed by:{" "}
-                      <strong className="text-zinc-200">
+                      <strong className="text-zinc-900 dark:text-zinc-200">
                         {item.isAnonymous ? "Anonymous Whistleblower" : item.filedBy?.name}
                       </strong>{" "}
                       ({item.filedBy?.department || "Staff"})
@@ -783,7 +783,7 @@ export default function ComplaintsPage() {
                     {/* View Details Drawer */}
                     <button
                       onClick={() => setSelectedComplaint(item)}
-                      className="px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-800/80 hover:bg-zinc-800 text-xs font-semibold text-zinc-200 transition-colors flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/80 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-semibold text-zinc-700 dark:text-zinc-200 transition-colors flex items-center gap-1.5"
                     >
                       <span>View Dossier & Timeline</span>
                       <ChevronRight className="w-3.5 h-3.5" />

@@ -389,14 +389,14 @@ export default function HrDashboardPage() {
         <motion.div
           variants={itemFadeUp}
           whileHover={{ y: -4, transition: { duration: 0.16 } }}
-          className="rounded-xl border border-zinc-800/80 bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] transition-colors hover:border-zinc-700/80 hover:shadow-md"
+          className="rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] shadow-sm transition-colors hover:border-zinc-300 dark:hover:border-zinc-700/80 hover:shadow-md"
         >
           <div className="flex items-start justify-between gap-2 min-h-[28px]">
-            <span className="text-xs font-medium text-zinc-400">Total Workforce</span>
+            <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">Total Workforce</span>
             <Users className="w-4 h-4 text-zinc-400 shrink-0" />
           </div>
           <div className="mt-auto pt-2">
-            <div className="text-2xl font-bold font-mono tracking-tight text-zinc-100">
+            <div className="text-2xl font-bold font-mono tracking-tight text-zinc-900 dark:text-zinc-100">
               {totalEmployees}
             </div>
             <div className="text-[11px] text-zinc-500 mt-1 truncate">
@@ -408,19 +408,19 @@ export default function HrDashboardPage() {
         <motion.div
           variants={itemFadeUp}
           whileHover={{ y: -4, transition: { duration: 0.16 } }}
-          className="rounded-xl border border-zinc-800/80 bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] transition-colors hover:border-emerald-500/30 hover:shadow-md"
+          className="rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] shadow-sm transition-colors hover:border-emerald-500/30 hover:shadow-md"
         >
           <div className="flex items-start justify-between gap-2 min-h-[28px]">
-            <span className="text-xs font-medium text-zinc-400">Present Today</span>
+            <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">Present Today</span>
             <Badge variant="success" dot size="sm" className="shrink-0">
               Active
             </Badge>
           </div>
           <div className="mt-auto pt-2">
-            <div className="text-2xl font-bold font-mono tracking-tight text-emerald-400">
+            <div className="text-2xl font-bold font-mono tracking-tight text-emerald-600 dark:text-emerald-400">
               {presentToday}
             </div>
-            <div className="text-[11px] text-emerald-500/80 mt-1 flex items-center gap-1 truncate">
+            <div className="text-[11px] text-emerald-600 dark:text-emerald-500/80 mt-1 flex items-center gap-1 truncate">
               <CheckCircle2 className="w-3 h-3 shrink-0" />
               <span>{Math.round((presentToday / (totalEmployees || 1)) * 100)}% attendance</span>
             </div>
@@ -430,19 +430,19 @@ export default function HrDashboardPage() {
         <motion.div
           variants={itemFadeUp}
           whileHover={{ y: -4, transition: { duration: 0.16 } }}
-          className="rounded-xl border border-zinc-800/80 bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] transition-colors hover:border-amber-500/30 hover:shadow-md"
+          className="rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] shadow-sm transition-colors hover:border-amber-500/30 hover:shadow-md"
         >
           <div className="flex items-start justify-between gap-2 min-h-[28px]">
-            <span className="text-xs font-medium text-zinc-400">Late Today</span>
+            <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">Late Today</span>
             <Badge variant="warning" dot size="sm" className="shrink-0">
               &gt; {cutoffLabel}
             </Badge>
           </div>
           <div className="mt-auto pt-2">
-            <div className="text-2xl font-bold font-mono tracking-tight text-amber-400">
+            <div className="text-2xl font-bold font-mono tracking-tight text-amber-600 dark:text-amber-400">
               {lateToday}
             </div>
-            <div className="text-[11px] text-amber-500/80 mt-1 truncate">
+            <div className="text-[11px] text-amber-600 dark:text-amber-500/80 mt-1 truncate">
               Grace {graceMinutes}m elapsed
             </div>
           </div>
@@ -451,52 +451,52 @@ export default function HrDashboardPage() {
         <motion.div
           variants={itemFadeUp}
           whileHover={{ y: -4, transition: { duration: 0.16 } }}
-          className="rounded-xl border border-zinc-800/80 bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] transition-colors hover:border-indigo-500/30 hover:shadow-md"
+          className="rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] shadow-sm transition-colors hover:border-indigo-500/30 hover:shadow-md"
         >
           <div className="flex items-start justify-between gap-2 min-h-[28px]">
-            <span className="text-xs font-medium text-zinc-400">On Leave Today</span>
+            <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">On Leave Today</span>
             <Badge variant="info" dot size="sm" className="shrink-0">
               Approved
             </Badge>
           </div>
           <div className="mt-auto pt-2">
-            <div className="text-2xl font-bold font-mono tracking-tight text-indigo-400">
+            <div className="text-2xl font-bold font-mono tracking-tight text-indigo-600 dark:text-indigo-400">
               {onLeaveToday}
             </div>
-            <div className="text-[11px] text-indigo-400/80 mt-1 truncate">Scheduled absence</div>
+            <div className="text-[11px] text-indigo-600 dark:text-indigo-400/80 mt-1 truncate">Scheduled absence</div>
           </div>
         </motion.div>
 
         <motion.div
           variants={itemFadeUp}
           whileHover={{ y: -4, transition: { duration: 0.16 } }}
-          className="rounded-xl border border-zinc-800/80 bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] transition-colors hover:border-purple-500/30 hover:shadow-md"
+          className="rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/70 p-4 flex flex-col justify-between h-full min-h-[120px] shadow-sm transition-colors hover:border-purple-500/30 hover:shadow-md"
         >
           <div className="flex items-start justify-between gap-2 min-h-[28px]">
-            <span className="text-xs font-medium text-zinc-400 leading-tight">Pending Approvals</span>
+            <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400 leading-tight">Pending Approvals</span>
             <Badge variant="purple" dot size="sm" className="shrink-0">
               Action Req
             </Badge>
           </div>
           <div className="mt-auto pt-2">
-            <div className="text-2xl font-bold font-mono tracking-tight text-purple-400">
+            <div className="text-2xl font-bold font-mono tracking-tight text-purple-600 dark:text-purple-400">
               {pendingItems.length}
             </div>
-            <div className="text-[11px] text-purple-400/80 mt-1 truncate">Leaves + Corrections</div>
+            <div className="text-[11px] text-purple-600 dark:text-purple-400/80 mt-1 truncate">Leaves + Corrections</div>
           </div>
         </motion.div>
       </motion.div>
 
       {/* Biometric Device Health & Unmapped Users Operations Strip */}
       <motion.div variants={itemFadeUp}>
-        <Card className="border-emerald-500/20 bg-zinc-900/70">
+        <Card className="border-emerald-500/20 bg-white dark:bg-zinc-900/70 shadow-sm">
           <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3">
             <div>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Cpu className="w-4 h-4 text-emerald-400" />
+                <Cpu className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Biometric Terminals & Unmapped Device Users (Tabs 01 & 02)
               </CardTitle>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-0.5">
                 {deviceSummary.onlineDevices ?? 0} of {deviceSummary.totalDevices ?? 0} terminals online •{" "}
                 {deviceSummary.unmappedUsersCount ?? 0} unmapped biometric user template(s) detected.
               </p>
@@ -523,11 +523,11 @@ export default function HrDashboardPage() {
               {(deviceSummary.devices || []).map((dev) => (
                 <div
                   key={dev.id}
-                  className="p-3 rounded-xl border border-zinc-800 bg-zinc-950/60 flex items-center justify-between gap-2 text-xs"
+                  className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/60 flex items-center justify-between gap-2 text-xs"
                 >
                   <div className="min-w-0">
-                    <div className="font-semibold text-zinc-100 truncate">{dev.name}</div>
-                    <div className="text-[10px] font-mono text-zinc-400 truncate">
+                    <div className="font-semibold text-zinc-900 dark:text-zinc-100 truncate">{dev.name}</div>
+                    <div className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 truncate">
                       {dev.serialNumber} • {dev.branch}
                     </div>
                   </div>
@@ -548,26 +548,26 @@ export default function HrDashboardPage() {
             </div>
 
             {(deviceSummary.unmappedDeviceUsers || []).length > 0 && (
-              <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-950/20 space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-500/20 pb-3">
+              <div className="p-4 rounded-xl border border-amber-300 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-950/20 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200 dark:border-amber-500/20 pb-3">
                   <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-400">
+                    <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
                       <AlertTriangle className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-semibold text-amber-200 flex items-center gap-2">
+                      <div className="text-xs font-semibold text-amber-900 dark:text-amber-200 flex items-center gap-2">
                         Unmapped Biometric Device Users
                         <Badge variant="warning" size="sm">
                           {deviceSummary.unmappedDeviceUsers.length} Pending
                         </Badge>
                       </div>
-                      <p className="text-[11px] text-zinc-400 mt-0.5">
+                      <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
                         These terminal user IDs record punches that cannot be credited to timesheets until linked to an employee profile.
                       </p>
                     </div>
                   </div>
                   <Link href="/settings">
-                    <Button size="xs" variant="ghost" className="text-xs text-amber-300 hover:text-amber-200">
+                    <Button size="xs" variant="ghost" className="text-xs text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200">
                       Settings Tab 02 →
                     </Button>
                   </Link>
@@ -577,14 +577,14 @@ export default function HrDashboardPage() {
                   {deviceSummary.unmappedDeviceUsers.map((du) => (
                     <div
                       key={du.deviceUserId}
-                      className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-zinc-900/90 border border-zinc-800/90 hover:border-amber-500/40 transition-all group"
+                      className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800/90 hover:border-amber-500/40 transition-all group shadow-xs"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <span className="font-mono text-[11px] font-bold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded shrink-0">
+                        <span className="font-mono text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded shrink-0">
                           #{du.deviceUserId}
                         </span>
                         <div className="min-w-0">
-                          <div className="text-xs font-medium text-zinc-200 truncate group-hover:text-amber-200 transition-colors">
+                          <div className="text-xs font-medium text-zinc-900 dark:text-zinc-200 truncate group-hover:text-amber-600 dark:group-hover:text-amber-200 transition-colors">
                             {du.name}
                           </div>
                           <div className="text-[10px] text-zinc-500 truncate">
@@ -596,7 +596,7 @@ export default function HrDashboardPage() {
                         size="xs"
                         variant="outline"
                         icon={Link2}
-                        className="shrink-0 text-[11px] h-7 px-2.5 border-zinc-700 hover:border-amber-500/50 hover:bg-amber-500/10 text-zinc-300 hover:text-amber-200"
+                        className="shrink-0 text-[11px] h-7 px-2.5 border-zinc-300 dark:border-zinc-700 hover:border-amber-500/50 hover:bg-amber-500/10 text-zinc-700 dark:text-zinc-300 hover:text-amber-700 dark:hover:text-amber-200"
                         onClick={() => {
                           setMappingUser(du);
                           setTargetEmployeeId(employeesList[0]?.id || "");
@@ -640,13 +640,13 @@ export default function HrDashboardPage() {
             </CardHeader>
             <CardContent>
               {pendingItems.length === 0 ? (
-                <div className="p-8 text-center text-xs text-zinc-400 space-y-1">
-                  <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto opacity-70 mb-2" />
-                  <p className="font-semibold text-zinc-200">Inbox Zero!</p>
+                <div className="p-8 text-center text-xs text-zinc-500 dark:text-zinc-400 space-y-1">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-500 dark:text-emerald-400 mx-auto opacity-70 mb-2" />
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-200">Inbox Zero!</p>
                   <p>All employee leave requests and attendance adjustments have been reviewed.</p>
                 </div>
               ) : (
-                <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950/40">
+                <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40">
                   <Table containerClassName="border-0 rounded-none overflow-x-auto scrollbar-thin">
                     <TableHeader>
                       <TableRow>
@@ -659,13 +659,13 @@ export default function HrDashboardPage() {
                     </TableHeader>
                     <TableBody>
                       {pendingItems.map((item) => (
-                        <TableRow key={item.id} className="hover:bg-zinc-800/40 transition-colors">
-                          <TableCell className="font-medium text-xs text-zinc-100">
+                        <TableRow key={item.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors">
+                          <TableCell className="font-medium text-xs text-zinc-900 dark:text-zinc-100">
                             <div className="flex items-center gap-2">
                               <Avatar name={item.employeeName} id={item.employeeId} size="sm" />
                               <div>
                                 <div>{item.employeeName}</div>
-                                <span className="block text-[10px] text-zinc-400 font-mono">
+                                <span className="block text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
                                   {item.employeeId}
                                 </span>
                               </div>
@@ -679,10 +679,10 @@ export default function HrDashboardPage() {
                               {item.category}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-xs text-zinc-300">
+                          <TableCell className="text-xs text-zinc-700 dark:text-zinc-300">
                             {item.details}
                           </TableCell>
-                          <TableCell className="text-xs text-zinc-400 max-w-xs truncate" title={item.reason}>
+                          <TableCell className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xs truncate" title={item.reason}>
                             {item.reason}
                           </TableCell>
                           <TableCell className="text-right">
@@ -690,7 +690,7 @@ export default function HrDashboardPage() {
                               <Button
                                 size="sm"
                                 variant="outline"
-                                className="text-emerald-400 border-emerald-500/30 hover:bg-emerald-950/40 text-xs px-2 py-1"
+                                className="text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-xs px-2 py-1"
                                 icon={Check}
                                 onClick={() => handleApprove(item)}
                               >
@@ -699,7 +699,7 @@ export default function HrDashboardPage() {
                               <Button
                                 size="sm"
                                 variant="ghost"
-                                className="text-rose-400 hover:bg-rose-950/40 text-xs px-2 py-1"
+                                className="text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs px-2 py-1"
                                 icon={X}
                                 onClick={() => handleReject(item)}
                               >
@@ -709,7 +709,7 @@ export default function HrDashboardPage() {
                                 type="button"
                                 onClick={() => handleDeleteInboxItem(item)}
                                 title="Delete / Dismiss request"
-                                className="p-1 rounded-lg text-zinc-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                                className="p-1 rounded-lg text-zinc-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
@@ -730,14 +730,14 @@ export default function HrDashboardPage() {
           <Card className="h-full flex flex-col">
             <CardHeader className="pb-3 flex flex-col items-start gap-1">
               <div className="flex items-center justify-between w-full">
-                <CardTitle className="text-base font-semibold text-zinc-100">
+                <CardTitle className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
                   Lateness Watchlist
                 </CardTitle>
                 <Badge variant="warning" size="sm" className="shrink-0">
                   Live Threshold
                 </Badge>
               </div>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Check-ins past {cutoffLabel} ({shiftStart} + {graceMinutes}m grace).
               </p>
             </CardHeader>
@@ -750,15 +750,15 @@ export default function HrDashboardPage() {
                 lateWatchlist.map((emp) => (
                   <div
                     key={emp.id}
-                    className="flex items-center justify-between gap-2 p-2.5 rounded-xl border border-zinc-800 bg-zinc-900/60"
+                    className="flex items-center justify-between gap-2 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <Avatar src={emp.avatar} name={emp.name} size="sm" />
                       <div className="min-w-0">
-                        <p className="text-xs font-semibold text-zinc-100 truncate">
+                        <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">
                           {emp.name}
                         </p>
-                        <p className="text-[10px] text-zinc-400 truncate">
+                        <p className="text-[10px] text-zinc-500 dark:text-zinc-400 truncate">
                           {emp.department} • Avg: {emp.avgCheckIn}
                         </p>
                       </div>
@@ -772,7 +772,7 @@ export default function HrDashboardPage() {
                         type="button"
                         onClick={() => handleSendLateWarning(emp)}
                         title="Log punctuality warning to Audit Trail"
-                        className="p-1 rounded-lg text-zinc-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors"
+                        className="p-1 rounded-lg text-zinc-400 hover:text-amber-500 hover:bg-amber-50 dark:hover:bg-amber-500/10 transition-colors"
                       >
                         <Bell className="w-3.5 h-3.5" />
                       </button>
@@ -792,19 +792,19 @@ export default function HrDashboardPage() {
         viewport={scrollViewport}
         variants={itemFadeUp}
       >
-        <Card className="border-indigo-500/20 bg-gradient-to-br from-zinc-900 via-zinc-900 to-indigo-950/20">
-          <CardHeader className="pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800">
+        <Card className="border-indigo-500/20 bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:via-zinc-900 dark:to-indigo-950/20 shadow-sm">
+          <CardHeader className="pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800">
             <div>
               <div className="flex items-center gap-2">
-                <Award className="w-5 h-5 text-indigo-400" />
-                <CardTitle className="text-base font-bold text-zinc-100">
+                <Award className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                <CardTitle className="text-base font-bold text-zinc-900 dark:text-zinc-100">
                   Talent Categorization & Executive Promotion Recommendations
                 </CardTitle>
                 <Badge variant="purple" size="sm">
                   Rank A / B / C Framework
                 </Badge>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
                 Evaluate employees based on sprint work output and conduct. HR recommendations route directly to Admin for executive sign-off.
               </p>
             </div>
@@ -822,56 +822,56 @@ export default function HrDashboardPage() {
           <CardContent className="space-y-6 pt-5">
             {/* 3 Tier Distribution Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              <div className="p-4 rounded-xl border border-purple-500/30 bg-purple-950/20 space-y-2">
+              <div className="p-4 rounded-xl border border-purple-200 dark:border-purple-500/30 bg-purple-50 dark:bg-purple-950/20 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-purple-300">Rank A · Top Performers</span>
+                  <span className="text-xs font-semibold text-purple-700 dark:text-purple-300">Rank A · Top Performers</span>
                   <RankBadge rank="Rank A" size="xs" />
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold font-mono text-purple-200">
+                  <span className="text-2xl font-bold font-mono text-purple-900 dark:text-purple-200">
                     {rankingStats?.counts?.["Rank A"] ?? 0}
                   </span>
-                  <span className="text-xs text-purple-400">
+                  <span className="text-xs text-purple-700 dark:text-purple-400">
                     ({rankingStats?.percentages?.["Rank A"] ?? 0}% of workforce)
                   </span>
                 </div>
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                   Sprint velocity ≥ 90%, zero disciplinary flags, leadership standard.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20 space-y-2">
+              <div className="p-4 rounded-xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/20 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-emerald-300">Rank B · Core Contributors</span>
+                  <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300">Rank B · Core Contributors</span>
                   <RankBadge rank="Rank B" size="xs" />
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold font-mono text-emerald-200">
+                  <span className="text-2xl font-bold font-mono text-emerald-900 dark:text-emerald-200">
                     {rankingStats?.counts?.["Rank B"] ?? 0}
                   </span>
-                  <span className="text-xs text-emerald-400">
+                  <span className="text-xs text-emerald-700 dark:text-emerald-400">
                     ({rankingStats?.percentages?.["Rank B"] ?? 0}% of workforce)
                   </span>
                 </div>
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                   Solid deliverable completion, dependable collaboration, standard punctuality.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-950/20 space-y-2">
+              <div className="p-4 rounded-xl border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-950/20 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-amber-300">Rank C · Developing Tier</span>
+                  <span className="text-xs font-semibold text-amber-700 dark:text-amber-300">Rank C · Developing Tier</span>
                   <RankBadge rank="Rank C" size="xs" />
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold font-mono text-amber-200">
+                  <span className="text-2xl font-bold font-mono text-amber-900 dark:text-amber-200">
                     {rankingStats?.counts?.["Rank C"] ?? 0}
                   </span>
-                  <span className="text-xs text-amber-400">
+                  <span className="text-xs text-amber-700 dark:text-amber-400">
                     ({rankingStats?.percentages?.["Rank C"] ?? 0}% of workforce)
                   </span>
                 </div>
-                <p className="text-[11px] text-zinc-400">
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                   Requires technical coaching, probation support, or attendance alignment.
                 </p>
               </div>
@@ -880,21 +880,21 @@ export default function HrDashboardPage() {
             {/* Recommendations Log Table */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h4 className="text-xs font-semibold text-zinc-200 uppercase tracking-wider flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <h4 className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                   HR Promotion Nominations & Executive Status
                 </h4>
-                <span className="text-xs text-zinc-400">
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">
                   {recommendations.length} total recommendations
                 </span>
               </div>
 
               {recommendations.length === 0 ? (
-                <div className="p-6 text-center text-xs text-zinc-400 rounded-xl border border-zinc-800 bg-zinc-950/40">
+                <div className="p-6 text-center text-xs text-zinc-500 dark:text-zinc-400 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/40">
                   No promotion recommendations submitted yet. Click "Recommend Promotion" to evaluate an employee.
                 </div>
               ) : (
-                <div className="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-950/60">
+                <div className="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/60">
                   <Table containerClassName="border-0 rounded-none overflow-x-auto scrollbar-thin">
                     <TableHeader>
                       <TableRow>
@@ -908,33 +908,33 @@ export default function HrDashboardPage() {
                     </TableHeader>
                     <TableBody>
                       {recommendations.map((rec) => (
-                        <TableRow key={rec.id} className="hover:bg-zinc-900/60">
-                          <TableCell className="font-medium text-xs text-zinc-100">
+                        <TableRow key={rec.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/60">
+                          <TableCell className="font-medium text-xs text-zinc-900 dark:text-zinc-100">
                             <div>
-                              <div className="font-semibold text-zinc-100">{rec.employeeName}</div>
-                              <div className="text-[10px] text-zinc-400">{rec.jobTitle} • {rec.department}</div>
+                              <div className="font-semibold text-zinc-900 dark:text-zinc-100">{rec.employeeName}</div>
+                              <div className="text-[10px] text-zinc-500 dark:text-zinc-400">{rec.jobTitle} • {rec.department}</div>
                             </div>
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-1.5 text-xs">
                               <RankBadge rank={rec.currentRank} size="xs" />
-                              <span className="text-zinc-500">→</span>
+                              <span className="text-zinc-400 dark:text-zinc-500">→</span>
                               <RankBadge rank={rec.recommendedRank} size="xs" />
                             </div>
                           </TableCell>
                           <TableCell className="text-xs max-w-xs">
-                            <div className="font-mono text-[11px] font-bold text-indigo-400 mb-0.5">
+                            <div className="font-mono text-[11px] font-bold text-indigo-600 dark:text-indigo-400 mb-0.5">
                               Score: {rec.workScore}/100
                             </div>
-                            <p className="text-zinc-300 text-[11px] line-clamp-2" title={rec.workJustification}>
+                            <p className="text-zinc-700 dark:text-zinc-300 text-[11px] line-clamp-2" title={rec.workJustification}>
                               {rec.workJustification}
                             </p>
                           </TableCell>
                           <TableCell className="text-xs max-w-xs">
-                            <div className="font-mono text-[11px] font-bold text-emerald-400 mb-0.5">
+                            <div className="font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 mb-0.5">
                               Score: {rec.behaviorScore}/100
                             </div>
-                            <p className="text-zinc-300 text-[11px] line-clamp-2" title={rec.behaviorJustification}>
+                            <p className="text-zinc-700 dark:text-zinc-300 text-[11px] line-clamp-2" title={rec.behaviorJustification}>
                               {rec.behaviorJustification}
                             </p>
                           </TableCell>
@@ -953,13 +953,13 @@ export default function HrDashboardPage() {
                               {rec.status === "Pending Admin Review" ? "Pending Admin" : rec.status}
                             </Badge>
                           </TableCell>
-                          <TableCell className="text-xs text-zinc-400 max-w-xs">
+                          <TableCell className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xs">
                             {rec.adminDecisionNotes ? (
-                              <p className="text-[11px] text-zinc-300 italic">
+                              <p className="text-[11px] text-zinc-700 dark:text-zinc-300 italic">
                                 "{rec.adminDecisionNotes}"
                               </p>
                             ) : (
-                              <span className="text-zinc-500 text-[11px]">Awaiting Admin review</span>
+                              <span className="text-zinc-400 dark:text-zinc-500 text-[11px]">Awaiting Admin review</span>
                             )}
                           </TableCell>
                         </TableRow>
@@ -993,35 +993,35 @@ export default function HrDashboardPage() {
           <CardContent className="space-y-6">
             <AttendanceTrendChart />
 
-            <div className="border-t border-zinc-800/80 pt-4">
-              <div className="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-3">
+            <div className="border-t border-zinc-200 dark:border-zinc-800/80 pt-4">
+              <div className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider mb-3">
                 Presence Ratios by Department
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5">
                 {departmentAttendance.map((d) => (
                   <div
                     key={d.department}
-                    className="p-3.5 rounded-xl border border-zinc-800 bg-zinc-900/50 space-y-2.5"
+                    className="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 space-y-2.5"
                   >
-                    <div className="font-semibold text-xs text-zinc-200">{d.department}</div>
+                    <div className="font-semibold text-xs text-zinc-900 dark:text-zinc-200">{d.department}</div>
                     <div className="space-y-1.5 text-[11px]">
                       <div className="flex justify-between">
-                        <span className="text-zinc-400">Present</span>
-                        <span className="font-semibold text-emerald-400">{d.presentRate}%</span>
+                        <span className="text-zinc-500 dark:text-zinc-400">Present</span>
+                        <span className="font-semibold text-emerald-600 dark:text-emerald-400">{d.presentRate}%</span>
                       </div>
-                      <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+                      <div className="h-1.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
                         <div
                           className="h-full bg-emerald-500 rounded-full"
                           style={{ width: `${d.presentRate}%` }}
                         />
                       </div>
                       <div className="flex justify-between pt-1">
-                        <span className="text-zinc-400">On Leave</span>
-                        <span className="text-indigo-400">{d.leaveRate}%</span>
+                        <span className="text-zinc-500 dark:text-zinc-400">On Leave</span>
+                        <span className="text-indigo-600 dark:text-indigo-400 font-medium">{d.leaveRate}%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-zinc-400">Absent / Unpaid</span>
-                        <span className="text-rose-400">{d.absentRate}%</span>
+                        <span className="text-zinc-500 dark:text-zinc-400">Absent / Unpaid</span>
+                        <span className="text-rose-600 dark:text-rose-400 font-medium">{d.absentRate}%</span>
                       </div>
                     </div>
                   </div>

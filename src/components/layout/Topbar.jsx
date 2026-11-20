@@ -43,8 +43,8 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between gap-2 sm:gap-4 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 px-3 sm:px-6 backdrop-blur-md">
-      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 mr-2">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between gap-3 sm:gap-4 border-b border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-950/80 px-3 sm:px-6 backdrop-blur-md">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0">
         <button
           onClick={onOpenSidebar}
           aria-label="Open menu"
@@ -62,25 +62,26 @@ export function Topbar({ onOpenSidebar, onOpenCommandPalette }) {
           </span>
         </Link>
 
-        {/* Desktop & Laptop Command Palette Search - Fully responsive, collision-free */}
+        {/* Desktop Search Bar (1024px+ where mobile hamburger & logo are hidden) */}
         <button
           onClick={onOpenCommandPalette}
-          className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all flex-1 max-w-[200px] lg:max-w-xs justify-between min-w-0 overflow-hidden"
+          className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all w-64 xl:w-72 justify-between shrink-0 shadow-sm"
         >
-          <div className="flex items-center gap-2 min-w-0 truncate">
+          <div className="flex items-center gap-2 min-w-0">
             <Search className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
             <span className="truncate">Search or command...</span>
           </div>
-          <kbd className="hidden xl:inline-flex items-center gap-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 shrink-0">
+          <kbd className="inline-flex items-center gap-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-500 shrink-0">
             <Command className="w-2.5 h-2.5" /> K
           </kbd>
         </button>
 
-        {/* Mobile & Small Tablet Quick Search Icon */}
+        {/* Mobile & Tablet Quick Search Icon (<1024px) - zero collision risk */}
         <button
           onClick={onOpenCommandPalette}
           aria-label="Search or command palette"
-          className="md:hidden p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors shrink-0"
+          title="Search or command palette (Ctrl+K)"
+          className="lg:hidden p-1.5 sm:p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors shrink-0"
         >
           <Search className="w-4 h-4" />
         </button>

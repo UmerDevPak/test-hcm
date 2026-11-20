@@ -362,34 +362,34 @@ export default function TasksPage() {
       {/* 1. Header Banner */}
       <motion.div
         variants={itemFadeUp}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-indigo-950/40 border border-zinc-800 shadow-elevated relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-6 rounded-2xl bg-white dark:bg-gradient-to-r dark:from-zinc-900 dark:via-zinc-900/95 dark:to-indigo-950/40 border border-zinc-200 dark:border-zinc-800 shadow-sm dark:shadow-elevated relative overflow-hidden"
       >
         <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-1.5 min-w-0 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
             <CheckSquare className="w-3.5 h-3.5" />
             <span>Corporate Task & Deliverables Ledger</span>
           </div>
 
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-50">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             Task Orchestration & Deliverable Review
           </h1>
 
-          <p className="text-xs text-zinc-400 leading-relaxed">
+          <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
             {isAdmin && (
               <>
-                <strong className="text-zinc-200">Executive Command:</strong> Monitor cross-departmental OKR milestones, unblock organizational bottlenecks, and audit throughput velocity.
+                <strong className="text-zinc-900 dark:text-zinc-200">Executive Command:</strong> Monitor cross-departmental OKR milestones, unblock organizational bottlenecks, and audit throughput velocity.
               </>
             )}
             {isHR && (
               <>
-                <strong className="text-zinc-200">Operational Quality Assurance:</strong> Review employee deliverable submissions, verify compliance, award performance scores, and approve or request revisions.
+                <strong className="text-zinc-900 dark:text-zinc-200">Operational Quality Assurance:</strong> Review employee deliverable submissions, verify compliance, award performance scores, and approve or request revisions.
               </>
             )}
             {isEmployee && (
               <>
-                <strong className="text-zinc-200">Self-Service Workspace:</strong> View your assigned milestones, track progress, upload proof deliverables (links & files), and inspect HR evaluation notes.
+                <strong className="text-zinc-900 dark:text-zinc-200">Self-Service Workspace:</strong> View your assigned milestones, track progress, upload proof deliverables (links & files), and inspect HR evaluation notes.
               </>
             )}
           </p>
@@ -416,14 +416,14 @@ export default function TasksPage() {
         <motion.div
           variants={itemFadeUp}
           whileHover={{ y: -3, transition: { duration: 0.16 } }}
-          className="p-4 sm:p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm space-y-2 hover:border-zinc-700 transition-colors"
+          className="p-4 sm:p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm space-y-2 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
         >
-          <span className="text-xs font-medium text-zinc-400">Total Tracked Tasks</span>
+          <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Total Tracked Tasks</span>
           <div className="flex items-baseline justify-between">
-            <span className="text-2xl font-bold font-mono text-zinc-100">{stats?.total || 5}</span>
+            <span className="text-2xl font-bold font-mono text-zinc-900 dark:text-zinc-100">{stats?.total || 5}</span>
             <span className="text-[10px] text-zinc-500 font-mono">Org Registry</span>
           </div>
-          <div className="h-1 w-full rounded-full bg-zinc-800 overflow-hidden mt-1">
+          <div className="h-1 w-full rounded-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden mt-1">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
@@ -514,16 +514,16 @@ export default function TasksPage() {
         variants={itemFadeUp}
         className="p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm space-y-4"
       >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800/80 pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800/80 pb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+            <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-200">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-200">
                 Departmental Delivery Velocity & Completion Matrix
               </h3>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                 Real-time throughput metrics calculated from verified HR approvals.
               </p>
             </div>
@@ -537,15 +537,15 @@ export default function TasksPage() {
           {(stats?.deptStats || []).map((dept) => (
             <div
               key={dept.name}
-              className="p-3 rounded-xl border border-zinc-800/80 bg-zinc-900/40 space-y-2"
+              className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-900/40 space-y-2"
             >
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-zinc-200 truncate">{dept.name}</span>
-                <span className="font-mono text-[11px] font-bold text-indigo-400">
+                <span className="font-semibold text-zinc-900 dark:text-zinc-200 truncate">{dept.name}</span>
+                <span className="font-mono text-[11px] font-bold text-indigo-600 dark:text-indigo-400">
                   {dept.rate}%
                 </span>
               </div>
-              <div className="h-1.5 w-full rounded-full bg-zinc-800 overflow-hidden">
+              <div className="h-1.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: `${Math.max(dept.rate, 6)}%` }}
@@ -584,7 +584,7 @@ export default function TasksPage() {
                 "px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all duration-150",
                 activeTab === tab.id
                   ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-bold shadow-sm"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/40"
+                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/40"
               )}
             >
               {tab.label}
@@ -593,13 +593,13 @@ export default function TasksPage() {
         </div>
 
         <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
           <input
             type="text"
             placeholder="Search task, assignee, department..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           />
         </div>
       </motion.div>
@@ -685,25 +685,25 @@ export default function TasksPage() {
                       )}
                     </div>
 
-                    <h2 className="text-base sm:text-lg font-bold text-zinc-100">
+                    <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100">
                       {t.title}
                     </h2>
 
-                    <p className="text-xs text-zinc-400 leading-relaxed">
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                       {t.description}
                     </p>
                   </div>
 
                   {/* Due Date & Assignee */}
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-1 text-xs shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-zinc-800">
-                    <div className="flex items-center gap-1.5 text-zinc-400">
-                      <Calendar className="w-3.5 h-3.5 text-zinc-500" />
-                      <span>Due: <strong className="text-zinc-200">{formatDate(t.dueDate)}</strong></span>
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-1 text-xs shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-zinc-200 dark:border-zinc-800">
+                    <div className="flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400">
+                      <Calendar className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
+                      <span>Due: <strong className="text-zinc-900 dark:text-zinc-200">{formatDate(t.dueDate)}</strong></span>
                     </div>
 
                     <div className="flex items-center gap-2 mt-1">
                       <Avatar src={t.assignedTo?.avatar} name={t.assignedTo?.name} size="xs" />
-                      <span className="font-medium text-zinc-300 text-xs">
+                      <span className="font-medium text-zinc-800 dark:text-zinc-300 text-xs">
                         {t.assignedTo?.name}
                       </span>
                     </div>
@@ -712,10 +712,10 @@ export default function TasksPage() {
 
                 {/* Deliverable Snapshot (If submitted) */}
                 {t.deliverable && (
-                  <div className="p-4 rounded-xl border border-indigo-500/20 bg-indigo-950/20 space-y-2 text-xs">
+                  <div className="p-4 rounded-xl border border-indigo-200 dark:border-indigo-500/20 bg-indigo-50/60 dark:bg-indigo-950/20 space-y-2 text-xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-indigo-300 flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-indigo-400" />
+                      <span className="font-semibold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                         Submitted Deliverable Package
                       </span>
                       <span className="text-[10px] text-zinc-500 font-mono">
@@ -723,7 +723,7 @@ export default function TasksPage() {
                       </span>
                     </div>
 
-                    <p className="text-zinc-300 bg-zinc-900/80 p-2.5 rounded-lg border border-zinc-800/80 font-mono text-[11px] leading-relaxed">
+                    <p className="text-zinc-800 dark:text-zinc-300 bg-white dark:bg-zinc-900/80 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800/80 font-mono text-[11px] leading-relaxed">
                       {t.deliverable.notes}
                     </p>
 
@@ -733,13 +733,13 @@ export default function TasksPage() {
                           href={t.deliverable.link}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-indigo-400 hover:text-indigo-300 font-medium underline underline-offset-4"
+                          className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium underline underline-offset-4"
                         >
                           Inspection Link / PR <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
                       {t.deliverable.fileName && (
-                        <span className="inline-flex items-center gap-1 text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
+                        <span className="inline-flex items-center gap-1 text-zinc-700 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-800">
                           <FileText className="w-3 h-3 text-zinc-500" />
                           {t.deliverable.fileName}
                         </span>
@@ -754,8 +754,8 @@ export default function TasksPage() {
                     className={cn(
                       "p-3.5 rounded-xl border text-xs space-y-1.5",
                       t.hrReview.decision === "APPROVED"
-                        ? "border-emerald-500/20 bg-emerald-950/20"
-                        : "border-rose-500/20 bg-rose-950/20"
+                        ? "border-emerald-200 dark:border-emerald-500/20 bg-emerald-50/60 dark:bg-emerald-950/20 text-emerald-900 dark:text-emerald-200"
+                        : "border-rose-200 dark:border-rose-500/20 bg-rose-50/60 dark:bg-rose-950/20 text-rose-900 dark:text-rose-200"
                     )}
                   >
                     <div className="flex items-center justify-between">
@@ -1016,7 +1016,7 @@ export default function TasksPage() {
               onChange={(e) =>
                 setCreateFormData({ ...createFormData, description: e.target.value })
               }
-              className="w-full rounded-xl text-xs bg-zinc-900 border border-zinc-800 p-3 text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full rounded-xl text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-3 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
 
@@ -1076,20 +1076,20 @@ export default function TasksPage() {
           </div>
 
           {isAdmin && (
-            <label className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer pt-1">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer pt-1">
               <input
                 type="checkbox"
                 checked={createFormData.isExecutiveOkr}
                 onChange={(e) =>
                   setCreateFormData({ ...createFormData, isExecutiveOkr: e.target.checked })
                 }
-                className="rounded border-zinc-800 bg-zinc-900 text-indigo-600 focus:ring-0"
+                className="rounded border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-indigo-600 focus:ring-0"
               />
               Designate as Company-Wide Strategic OKR Milestone
             </label>
           )}
 
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-zinc-800">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-zinc-200 dark:border-zinc-800">
             <Button variant="ghost" type="button" onClick={() => setIsCreateModalOpen(false)}>
               Cancel
             </Button>

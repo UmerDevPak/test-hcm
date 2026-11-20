@@ -287,9 +287,9 @@ export default function LeavePage() {
       {/* Upcoming Public Holidays Strip */}
       {upcomingHolidays.length > 0 && (
         <motion.div variants={itemFadeUp}>
-          <Card className="p-3.5 border-indigo-500/20 bg-zinc-900/60">
+          <Card className="p-3.5 border-indigo-500/20 bg-white dark:bg-zinc-900/60 shadow-sm">
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-              <div className="flex items-center gap-2 text-indigo-300 font-semibold">
+              <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-300 font-semibold">
                 <Calendar className="w-4 h-4" />
                 <span>Configured Public Holidays (Auto-Skipped in Leave Days):</span>
               </div>
@@ -364,7 +364,7 @@ export default function LeavePage() {
                       <TableCell className="text-zinc-400 text-xs">
                         {formatDate(req.startDate)} → {formatDate(req.endDate)}
                       </TableCell>
-                      <TableCell className="font-mono font-medium text-zinc-200">
+                      <TableCell className="font-mono font-medium text-zinc-900 dark:text-zinc-200">
                         {req.daysCount} d
                       </TableCell>
                       <TableCell className="text-zinc-400 max-w-xs truncate" title={req.reason}>

@@ -143,24 +143,24 @@ export function EmployeeModal({ isOpen, onClose, employee = null, onSaved }) {
               </span>
             </div>
 
-            <div className="space-y-2 text-xs divide-y divide-zinc-800/60 pt-1">
+            <div className="space-y-2 text-xs divide-y divide-zinc-200 dark:divide-zinc-800/60 pt-1">
               <div className="pt-1.5 flex items-center justify-between">
-                <span className="text-zinc-400">Employee Name:</span>
-                <span className="font-semibold text-zinc-100">{createdCredentials.name}</span>
+                <span className="text-zinc-500 dark:text-zinc-400">Employee Name:</span>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-100">{createdCredentials.name}</span>
               </div>
               <div className="pt-1.5 flex items-center justify-between">
-                <span className="text-zinc-400">Work Email (Login):</span>
-                <span className="font-mono text-zinc-100 font-semibold">{createdCredentials.email}</span>
+                <span className="text-zinc-500 dark:text-zinc-400">Work Email (Login):</span>
+                <span className="font-mono text-zinc-900 dark:text-zinc-100 font-semibold">{createdCredentials.email}</span>
               </div>
               <div className="pt-1.5 flex items-center justify-between">
-                <span className="text-zinc-400">Temporary Password:</span>
-                <span className="font-mono text-amber-300 font-bold bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800 select-all">
+                <span className="text-zinc-500 dark:text-zinc-400">Temporary Password:</span>
+                <span className="font-mono text-amber-700 dark:text-amber-300 font-bold bg-amber-50 dark:bg-zinc-900 px-2 py-0.5 rounded border border-amber-200 dark:border-zinc-800 select-all">
                   {createdCredentials.temporaryPassword}
                 </span>
               </div>
               <div className="pt-1.5 flex items-center justify-between">
-                <span className="text-zinc-400">Assigned Role:</span>
-                <span className="text-zinc-200">{ROLE_LABELS[createdCredentials.role] || createdCredentials.role}</span>
+                <span className="text-zinc-500 dark:text-zinc-400">Assigned Role:</span>
+                <span className="text-zinc-800 dark:text-zinc-200 font-medium">{ROLE_LABELS[createdCredentials.role] || createdCredentials.role}</span>
               </div>
             </div>
 

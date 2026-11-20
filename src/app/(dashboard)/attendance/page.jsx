@@ -320,7 +320,7 @@ export default function AttendancePage() {
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-all ${
                     locationType === "Office (HQ)"
                       ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                      : "text-zinc-400 hover:text-zinc-200"
+                      : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
                   }`}
                 >
                   <Building className="w-3.5 h-3.5" /> Office
@@ -331,7 +331,7 @@ export default function AttendancePage() {
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-all ${
                     locationType === "WFH"
                       ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                      : "text-zinc-400 hover:text-zinc-200"
+                      : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
                   }`}
                 >
                   <Laptop className="w-3.5 h-3.5" /> WFH
@@ -342,7 +342,7 @@ export default function AttendancePage() {
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-medium transition-all ${
                     locationType === "On-Duty"
                       ? "bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm"
-                      : "text-zinc-400 hover:text-zinc-200"
+                      : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
                   }`}
                 >
                   <Briefcase className="w-3.5 h-3.5" /> On-Duty
@@ -441,12 +441,12 @@ export default function AttendancePage() {
                             )}
                           </div>
                         </TableCell>
-                        <TableCell className="text-zinc-400 text-xs">{r.location || "Office (HQ)"}</TableCell>
-                        <TableCell className="font-mono text-zinc-200">{r.clockIn || "—"}</TableCell>
-                        <TableCell className="font-mono text-zinc-200">
+                        <TableCell className="text-zinc-500 dark:text-zinc-400 text-xs">{r.location || "Office (HQ)"}</TableCell>
+                        <TableCell className="font-mono text-zinc-900 dark:text-zinc-200">{r.clockIn || "—"}</TableCell>
+                        <TableCell className="font-mono text-zinc-900 dark:text-zinc-200">
                           {r.clockOut || (r.clockIn ? "Working..." : "—")}
                         </TableCell>
-                        <TableCell className="font-mono text-zinc-400">
+                        <TableCell className="font-mono text-zinc-500 dark:text-zinc-400">
                           {r.totalHours || (r.clockIn ? "In progress" : "0 hrs")}
                         </TableCell>
                       </TableRow>
@@ -470,7 +470,7 @@ export default function AttendancePage() {
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Corrections, WFH & Overtime Requests</CardTitle>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
                 {canManage
                   ? "Approve or reject employee missing punches, WFH days, and overtime claims."
                   : "Track your submitted attendance regularization, WFH, and field-duty claims."}
@@ -482,7 +482,7 @@ export default function AttendancePage() {
           </CardHeader>
           <CardContent className="p-0">
             {corrections.length === 0 ? (
-              <div className="p-6 text-center text-xs text-zinc-400">
+              <div className="p-6 text-center text-xs text-zinc-500 dark:text-zinc-400">
                 No correction, WFH, or OT requests found.
               </div>
             ) : (
@@ -501,13 +501,13 @@ export default function AttendancePage() {
                   <TableBody>
                     {corrections.map((c) => (
                       <TableRow key={c.id}>
-                        <TableCell className="font-medium text-xs text-zinc-100">
+                        <TableCell className="font-medium text-xs text-zinc-900 dark:text-zinc-100">
                           {c.employeeName}
                         </TableCell>
                         <TableCell>
                           <Badge variant="neutral" size="sm">{c.requestType}</Badge>
                         </TableCell>
-                        <TableCell className="font-mono text-xs text-zinc-300">
+                        <TableCell className="font-mono text-xs text-zinc-700 dark:text-zinc-300">
                           {c.date} • {c.requestedTime}
                           {c.requestedClockOut ? ` - ${c.requestedClockOut}` : ""}
                         </TableCell>

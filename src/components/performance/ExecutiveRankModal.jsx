@@ -121,15 +121,15 @@ export function ExecutiveRankModal({
             />
           </div>
         ) : (
-          <div className="p-3 rounded-xl bg-zinc-800/40 border border-zinc-700/50 flex items-center justify-between">
+          <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 flex items-center justify-between">
             <div>
-              <div className="text-xs font-semibold text-zinc-100">{activeEmployee.name}</div>
-              <div className="text-[11px] text-zinc-400">
+              <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">{activeEmployee.name}</div>
+              <div className="text-[11px] text-zinc-500 dark:text-zinc-400">
                 {activeEmployee.jobTitle} • {activeEmployee.department}
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-zinc-400">Current:</span>
+              <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Current:</span>
               <RankBadge rank={activeEmployee.ranking || "Rank B"} size="sm" />
             </div>
           </div>
@@ -137,16 +137,16 @@ export function ExecutiveRankModal({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
               Current Rank
             </label>
-            <div className="p-2.5 rounded-lg bg-zinc-800/40 border border-zinc-700/40 flex items-center gap-2">
+            <div className="p-2.5 rounded-lg bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/40 flex items-center gap-2">
               <RankBadge rank={activeEmployee?.ranking || "Rank B"} size="sm" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+            <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
               New Assigned Rank *
             </label>
             <Select
@@ -162,13 +162,13 @@ export function ExecutiveRankModal({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 rounded-xl bg-zinc-800/30 border border-zinc-800">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800">
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-semibold text-zinc-200">
+              <label className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                 Work Score
               </label>
-              <span className="text-xs font-mono font-bold text-indigo-400">
+              <span className="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400">
                 {workScore} / 100
               </span>
             </div>
@@ -184,10 +184,10 @@ export function ExecutiveRankModal({
 
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-semibold text-zinc-200">
+              <label className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                 Behavior Score
               </label>
-              <span className="text-xs font-mono font-bold text-emerald-400">
+              <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
                 {behaviorScore} / 100
               </span>
             </div>
@@ -203,12 +203,12 @@ export function ExecutiveRankModal({
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-zinc-300 mb-1">
+          <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1">
             Executive Decision & Citation *
           </label>
           <textarea
             rows={2}
-            className="w-full rounded-lg bg-zinc-800/50 border border-zinc-700/60 p-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full rounded-lg bg-white dark:bg-zinc-800/50 border border-zinc-300 dark:border-zinc-700/60 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
             placeholder="Reason for rank adjustment or promotion celebration remark..."
             value={reason}
             onChange={(e) => setReason(e.target.value)}
@@ -216,7 +216,7 @@ export function ExecutiveRankModal({
           />
         </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-zinc-800">
+        <div className="flex items-center justify-between pt-3 border-t border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Immediately syncs to database & audit log</span>

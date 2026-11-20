@@ -19,21 +19,21 @@ import { db, auth, isLiveFirebaseConfigured } from "@/lib/firebase/client";
 const STORAGE_KEY = "hcm_lite_complaints";
 
 export const COMPLAINT_CATEGORIES = [
-  { id: "HARASSMENT", label: "Workplace Harassment", color: "text-rose-400 bg-rose-500/10 border-rose-500/20" },
-  { id: "PAYROLL_COMPENSATION", label: "Compensation & Payroll Dispute", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
-  { id: "MANAGER_MISCONDUCT", label: "Manager Misconduct / Leadership", color: "text-purple-400 bg-purple-500/10 border-purple-500/20" },
-  { id: "WORKPLACE_SAFETY", label: "Workplace Safety & Ergonomics", color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" },
-  { id: "DISCRIMINATION", label: "Ethics, DEI & Discrimination", color: "text-rose-400 bg-rose-500/10 border-rose-500/20" },
-  { id: "POLICY_VIOLATION", label: "Corporate Policy Violation", color: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20" },
-  { id: "OTHER", label: "General Workplace Grievance", color: "text-zinc-400 bg-zinc-500/10 border-zinc-500/20" },
+  { id: "HARASSMENT", label: "Workplace Harassment", color: "text-rose-700 dark:text-rose-400 bg-rose-500/10 border-rose-500/30" },
+  { id: "PAYROLL_COMPENSATION", label: "Compensation & Payroll Dispute", color: "text-amber-700 dark:text-amber-400 bg-amber-500/10 border-amber-500/30" },
+  { id: "MANAGER_MISCONDUCT", label: "Manager Misconduct / Leadership", color: "text-purple-700 dark:text-purple-400 bg-purple-500/10 border-purple-500/30" },
+  { id: "WORKPLACE_SAFETY", label: "Workplace Safety & Ergonomics", color: "text-cyan-700 dark:text-cyan-400 bg-cyan-500/10 border-cyan-500/30" },
+  { id: "DISCRIMINATION", label: "Ethics, DEI & Discrimination", color: "text-rose-700 dark:text-rose-400 bg-rose-500/10 border-rose-500/30" },
+  { id: "POLICY_VIOLATION", label: "Corporate Policy Violation", color: "text-indigo-700 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/30" },
+  { id: "OTHER", label: "General Workplace Grievance", color: "text-zinc-700 dark:text-zinc-400 bg-zinc-500/10 border-zinc-500/30" },
 ];
 
 export const COMPLAINT_STATUS = {
-  PENDING_HR: { label: "Pending HR Triage", color: "text-amber-400 bg-amber-500/10 border-amber-500/30", step: 1 },
-  INVESTIGATING: { label: "Under HR Investigation", color: "text-indigo-400 bg-indigo-500/10 border-indigo-500/30", step: 2 },
-  ESCALATED_TO_ADMIN: { label: "Escalated for Admin Approval", color: "text-purple-400 bg-purple-500/10 border-purple-500/30", step: 3 },
-  APPROVED_BY_ADMIN: { label: "Admin Approved - Resolving", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30", step: 4 },
-  RESOLVED: { label: "Resolved & Closed", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30", step: 4 },
+  PENDING_HR: { label: "Pending HR Triage", color: "text-amber-700 dark:text-amber-400 bg-amber-500/10 border-amber-500/30", step: 1 },
+  INVESTIGATING: { label: "Under HR Investigation", color: "text-indigo-700 dark:text-indigo-400 bg-indigo-500/10 border-indigo-500/30", step: 2 },
+  ESCALATED_TO_ADMIN: { label: "Escalated for Admin Approval", color: "text-purple-700 dark:text-purple-400 bg-purple-500/10 border-purple-500/30", step: 3 },
+  APPROVED_BY_ADMIN: { label: "Admin Approved - Resolving", color: "text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/30", step: 4 },
+  RESOLVED: { label: "Resolved & Closed", color: "text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border-emerald-500/30", step: 4 },
 };
 
 export const INITIAL_COMPLAINTS = [
