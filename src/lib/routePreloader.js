@@ -6,6 +6,8 @@ import { payrollService } from "@/services/payrollService";
 import { reportService } from "@/services/reportService";
 import { hcmConfigService } from "@/services/hcmConfigService";
 import { correctionService } from "@/services/correctionService";
+import { taskService } from "@/services/taskService";
+import { complaintService } from "@/services/complaintService";
 
 // Track routes already preloaded (RSC + page JS chunk) in this browser session
 const preloadedRoutes = new Set();
@@ -290,10 +292,13 @@ export function warmDashboardDataCaches({ role, user } = {}) {
         hcmConfigService.getConfig(),
         employeeService.getAllEmployees(),
         attendanceService.getTodayRecords(),
+        attendanceService.getStats(),
         leaveService.getAllRequests(),
         leaveService.getEmployeeBalances(employeeId),
         payrollService.getAllPayrollRuns(),
         correctionService.getAllCorrections(),
+        taskService.getTasks(),
+        complaintService.getComplaints(),
       ]);
 
       if (canonical === "ADMIN") {

@@ -77,8 +77,8 @@ let lastCorrectionsFetch = 0;
 
 export const correctionService = {
   peekCachedCorrections({ status = "", employeeId = "" } = {}) {
-    if (!memoryCorrectionsCache) return null;
-    let list = [...memoryCorrectionsCache];
+    const source = memoryCorrectionsCache || getLocalCorrections();
+    let list = [...source];
     if (status) list = list.filter((c) => c.status === status);
     if (employeeId) list = list.filter((c) => c.employeeId === employeeId);
     return list;

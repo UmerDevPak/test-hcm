@@ -51,11 +51,17 @@ export default function TasksPage() {
   const isHR = activeRole === "HR";
   const isEmployee = activeRole === "EMPLOYEE";
 
-  const [tasks, setTasks] = useState([]);
-  const [stats, setStats] = useState(null);
+  const [tasks, setTasks] = useState(() =>
+    taskService.peekCachedTasks({
+      role: activeRole,
+      userEmail: user?.email,
+      employeeId: user?.employeeId,
+    }) || []
+  );
+  const [stats, setStats] = useState(() => taskService.peekCachedStats());
   const [activeTab, setActiveTab] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState(() => employeeService.peekCachedEmployees() || []);
 
   // Modals
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);

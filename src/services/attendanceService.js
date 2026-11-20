@@ -437,6 +437,29 @@ export const attendanceService = {
     return { updatedCount };
   },
 
+  /**
+   * Synchronously peek attendance statistics for instant 0ms dashboard/ledger render
+   */
+  peekCachedAttendanceStats() {
+    if (typeof window === "undefined") return null;
+    const records = this.peekCachedTodayRecords() || [];
+    const employees = employeeService.peekCachedEmployees() || [];
+    const totalEmployees = employees.length || 8;
+    const present = records.filter((r) => ["Present", "Late", "WFH", "On-Duty", "Holiday Work", "Off-Day Work"].includes(r.status)).length;
+    const onLeave = records.filter((r) => r.status === "On Leave").length;
+    const late = records.filter((r) => r.isLate || r.status === "Late").length;
+    const absent = Math.max(0, totalEmployees - (present + onLeave));
+
+    return {
+      totalEmployees,
+      present,
+      late,
+      onLeave,
+      absent,
+      presentRate: Math.round((present / (totalEmployees || 1)) * 100),
+    };
+  },
+
   async getAttendanceStats(existingRecords = null) {
     const [records, employees] = await Promise.all([
       Array.isArray(existingRecords) ? existingRecords : this.getTodayRecords(),

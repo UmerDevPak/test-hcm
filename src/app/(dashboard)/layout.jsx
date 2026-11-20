@@ -63,7 +63,6 @@ export default function DashboardLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [pendingHref, setPendingHref] = useState(null);
-  const [showSkeleton, setShowSkeleton] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -72,26 +71,8 @@ export default function DashboardLayout({ children }) {
   // Clear pending route state as soon as Next.js commits the new pathname
   useEffect(() => {
     setPendingHref(null);
-    setShowSkeleton(false);
     markRoutePrefetched(pathname);
   }, [pathname]);
-
-  // Debounce skeleton display so preloaded routes switch directly without a skeleton flash
-  useEffect(() => {
-    if (!pendingHref || pendingHref === pathname) {
-      setShowSkeleton(false);
-      return;
-    }
-    const skeletonTimer = setTimeout(() => setShowSkeleton(true), 140);
-    const safetyTimer = setTimeout(() => {
-      setPendingHref(null);
-      setShowSkeleton(false);
-    }, 6000);
-    return () => {
-      clearTimeout(skeletonTimer);
-      clearTimeout(safetyTimer);
-    };
-  }, [pendingHref, pathname]);
 
   const handleNavigate = (href) => {
     setSidebarOpen(false);
@@ -101,7 +82,6 @@ export default function DashboardLayout({ children }) {
   };
 
   const isNavigating = Boolean(pendingHref && pendingHref !== pathname);
-  const showPendingSkeleton = isNavigating && showSkeleton;
 
   // Keyboard shortcut for Cmd+K / Ctrl+K
   useEffect(() => {
@@ -206,8 +186,7 @@ export default function DashboardLayout({ children }) {
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-6 sm:px-6 sm:py-8 lg:px-8">
           <div className="mx-auto max-w-7xl min-w-0 w-full">
-            {showPendingSkeleton && <DashboardRouteSkeleton />}
-            <div className={showPendingSkeleton ? "hidden" : "space-y-6 sm:space-y-8 min-w-0 w-full"}>
+            <div className="space-y-6 sm:space-y-8 min-w-0 w-full">
               {children}
             </div>
           </div>

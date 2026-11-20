@@ -35,9 +35,35 @@ const AuthContext = createContext({
 });
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [role, setRole] = useState(ROLES.EMPLOYEE);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      const cached = localStorage.getItem(STORAGE_SESSION);
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [role, setRole] = useState(() => {
+    if (typeof window === "undefined") return ROLES.EMPLOYEE;
+    try {
+      const cached = localStorage.getItem(STORAGE_SESSION);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed?.role) return normalizeRole(parsed.role);
+      }
+    } catch {}
+    return ROLES.EMPLOYEE;
+  });
+  const [loading, setLoading] = useState(() => {
+    if (typeof window === "undefined") return true;
+    try {
+      const cached = localStorage.getItem(STORAGE_SESSION);
+      return !cached;
+    } catch {
+      return true;
+    }
+  });
 
   useEffect(() => {
     try {
@@ -56,7 +82,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 400);
     return () => clearTimeout(timer);
   }, []);
 

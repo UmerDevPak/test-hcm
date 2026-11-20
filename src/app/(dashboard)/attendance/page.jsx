@@ -36,21 +36,30 @@ export default function AttendancePage() {
   const { user, isAdmin, isHR } = useAuth();
   const { notifySuccess, notifyError, notifyInfo } = useNotification();
 
+  const employeeId = user?.employeeId || "EMP-001";
+  const canManage = isAdmin || isHR;
+
   const [records, setRecords] = useState(
     () => attendanceService.peekCachedTodayRecords() || []
   );
-  const [corrections, setCorrections] = useState([]);
-  const [stats, setStats] = useState(null);
-  const [todayPunch, setTodayPunch] = useState(null);
-  const [config, setConfig] = useState(null);
+  const [corrections, setCorrections] = useState(
+    () => correctionService.peekCachedCorrections(canManage ? {} : { employeeId }) || []
+  );
+  const [stats, setStats] = useState(
+    () => attendanceService.peekCachedAttendanceStats()
+  );
+  const [todayPunch, setTodayPunch] = useState(() => {
+    const list = attendanceService.peekCachedTodayRecords() || [];
+    return list.find((r) => r.employeeId === employeeId) || null;
+  });
+  const [config, setConfig] = useState(
+    () => hcmConfigService.peekCachedConfig()
+  );
   const [locationType, setLocationType] = useState("Office (HQ)");
   const [loading, setLoading] = useState(false);
   const [reprocessing, setReprocessing] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
   const [isCorrectionModalOpen, setIsCorrectionModalOpen] = useState(false);
-
-  const employeeId = user?.employeeId || "EMP-001";
-  const canManage = isAdmin || isHR;
 
   const refreshData = async (force = false) => {
     const [allRecords, punch, corrList, cfg] = await Promise.all([

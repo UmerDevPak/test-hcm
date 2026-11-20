@@ -37,10 +37,14 @@ export default function LeavePage() {
   const employeeId = user?.employeeId || "EMP-001";
 
   const [requests, setRequests] = useState(
-    () => leaveService.peekCachedRequests() || []
+    () => leaveService.peekCachedRequests(canReview ? {} : { employeeId }) || []
   );
-  const [balances, setBalances] = useState(null);
-  const [config, setConfig] = useState(null);
+  const [balances, setBalances] = useState(
+    () => leaveService.peekCachedBalances(employeeId)
+  );
+  const [config, setConfig] = useState(
+    () => hcmConfigService.peekCachedConfig()
+  );
   const [activeTab, setActiveTab] = useState("ALL");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdjustModalOpen, setIsAdjustModalOpen] = useState(false);

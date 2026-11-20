@@ -45,7 +45,13 @@ export default function ComplaintsPage() {
   const { user, role } = useAuth();
   const { notifySuccess, notifyError } = useNotification();
 
-  const [complaints, setComplaints] = useState([]);
+  const [complaints, setComplaints] = useState(() =>
+    complaintService.getComplaints({
+      role,
+      userEmail: user?.email,
+      employeeId: user?.employeeId,
+    }) || []
+  );
   const [activeTab, setActiveTab] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [urgencyFilter, setUrgencyFilter] = useState("ALL");

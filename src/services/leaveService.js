@@ -115,11 +115,17 @@ export const leaveService = {
   },
 
   peekCachedRequests({ status = "", employeeId = "" } = {}) {
-    if (!memoryLeaveRequestsCache) return null;
-    let result = [...memoryLeaveRequestsCache];
+    const source = memoryLeaveRequestsCache || getRequests();
+    let result = [...source];
     if (status) result = result.filter((r) => r.status === status);
     if (employeeId) result = result.filter((r) => r.employeeId === employeeId);
     return result;
+  },
+
+  peekCachedBalances(employeeId) {
+    if (typeof window === "undefined") return null;
+    const balances = getBalances();
+    return balances[employeeId] || { annual: 14, sick: 8, casual: 10, vacation: 14, compOff: 2 };
   },
 
   async getEmployeeBalances(employeeId) {

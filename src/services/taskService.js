@@ -191,6 +191,55 @@ function deleteTaskFromFirestore(taskId) {
 
 export const taskService = {
   /**
+   * Synchronously peek tasks from local cache for instant 0ms mount
+   */
+  peekCachedTasks({ role = "EMPLOYEE", userEmail = "", employeeId = "" } = {}) {
+    if (typeof window === "undefined") return INITIAL_TASKS;
+    const tasks = getStoredTasks();
+    const normRole = (role || "").toUpperCase();
+    if (normRole === "ADMIN" || normRole === "HR") return tasks;
+    return tasks.filter(
+      (t) =>
+        (employeeId && t.assignedTo?.id === employeeId) ||
+        (userEmail && t.assignedTo?.email?.toLowerCase() === userEmail.toLowerCase())
+    );
+  },
+
+  /**
+   * Synchronously peek telemetry stats from local cache for instant 0ms mount
+   */
+  peekCachedStats() {
+    if (typeof window === "undefined") return null;
+    const tasks = getStoredTasks();
+    const total = tasks.length;
+    const submittedForReview = tasks.filter((t) => t.status === TASK_STATUS.SUBMITTED).length;
+    const approved = tasks.filter((t) => t.status === TASK_STATUS.APPROVED).length;
+    const inProgress = tasks.filter((t) => t.status === TASK_STATUS.IN_PROGRESS).length;
+    const revision = tasks.filter((t) => t.status === TASK_STATUS.REVISION_REQUESTED).length;
+    const todo = tasks.filter((t) => t.status === TASK_STATUS.TODO).length;
+    const completionRate = total > 0 ? Math.round((approved / total) * 100) : 0;
+
+    const departments = ["Engineering", "Finance", "Human Resources", "Product", "Executive"];
+    const deptStats = departments.map((dept) => {
+      const deptTasks = tasks.filter((t) => t.department === dept);
+      const done = deptTasks.filter((t) => t.status === TASK_STATUS.APPROVED).length;
+      const rate = deptTasks.length > 0 ? Math.round((done / deptTasks.length) * 100) : 0;
+      return { name: dept, total: deptTasks.length, done, rate };
+    });
+
+    return {
+      total,
+      submittedForReview,
+      approved,
+      inProgress,
+      revision,
+      todo,
+      completionRate,
+      deptStats,
+    };
+  },
+
+  /**
    * Get all tasks filtered by role and user (instant local with background Firestore sync)
    */
   async getTasks({ role = "EMPLOYEE", userEmail = "", employeeId = "" } = {}) {

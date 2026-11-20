@@ -230,7 +230,7 @@ export function Sidebar({ isOpen, onClose, pendingHref, onNavigate }) {
                     <Link
                       key={item.name}
                       href={item.href}
-                      prefetch={false}
+                      prefetch={true}
                       onMouseEnter={() => prefetchRoute(item.href)}
                       onFocus={() => prefetchRoute(item.href)}
                       onTouchStart={() => prefetchRoute(item.href)}
@@ -268,7 +268,7 @@ export function Sidebar({ isOpen, onClose, pendingHref, onNavigate }) {
             <div className="flex items-center gap-2.5">
               <Link
                 href="/profile"
-                prefetch={false}
+                prefetch={true}
                 onMouseEnter={() => prefetchRoute("/profile")}
                 onClick={() => handleLinkClick("/profile")}
                 className="flex items-center gap-2.5 flex-1 min-w-0 group touch-manipulation"
